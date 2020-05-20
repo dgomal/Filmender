@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="Number of results">
+        <SeekBarPreference
+            android:key="results"
+            android:title="Results"
+            app:min="1"
+            android:max="20"
+            android:defaultValue="9"
+            app:showSeekBarValue="true"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Filter by type">
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/type_labels"
+            android:entryValues="@array/type_values"
+            android:key="type"
+            android:title="Type"
+            android:summary="%s"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Filter by year">
+        <ListPreference
+            android:defaultValue="1960"
+            android:entries="@array/year_values"
+            android:entryValues="@array/year_values"
+            android:key="yearFrom"
+            android:title="From"
+            android:summary="%s"/>
+
+        <ListPreference
+            android:defaultValue="2020"
+            android:entries="@array/year_values"
+            android:entryValues="@array/year_values"
+            android:key="yearTo"
+            android:title="To"
+            android:summary="%s"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Filter by rating">
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/rating_values"
+            android:entryValues="@array/rating_values"
+            android:key="rating"
+            android:title="Minimum"
+            android:summary="%s"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Filter by genre">
+        <MultiSelectListPreference
+            android:entries="@array/genre_labels"
+            android:entryValues="@array/genre_values"
+            android:defaultValue="@array/genre_values"
+            android:key="genres"
+            android:title="Genre"
+            android:dialogTitle="Genres"/>
+    </PreferenceCategory>
+</PreferenceScreen>

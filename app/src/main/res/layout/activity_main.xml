@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.ui.activity.MainActivity">
+
+    <include
+        android:id="@+id/AppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        layout="@layout/app_bar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/NestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="true"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        app:layout_constraintTop_toBottomOf="@+id/AppBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="@dimen/activity_horizontal_margin_half">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView android:id="@+id/MoviesHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Movies"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/activity_horizontal_margin_half"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin_half"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/FragmentMovie"
+                android:name="com.bossdga.filmender.presentation.ui.fragment.MovieFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_movie" />
+
+            <TextView android:id="@+id/ShowsHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TV Shows"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/activity_horizontal_margin_half"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin_half"/>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/FragmentTVShow"
+                android:name="com.bossdga.filmender.presentation.ui.fragment.TVShowFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_tv_show"
+                android:layout_marginBottom="@dimen/activity_vertical_margin_four_times"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/BottomNavigationLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
+        android:padding="@dimen/activity_horizontal_margin_half">
+
+        <Button
+            android:id="@+id/TryAgainButton"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:background="@color/template_love_red"
+            android:text="Try Again"
+            style="?android:attr/buttonBarButtonStyle"/>
+
+        <Button
+            android:id="@+id/ShuffleButton"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:background="@color/template_love_red"
+            android:text="Feeling Lucky!"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/BottomNavigationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/BottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/bottom_navigation"
+            android:background="@color/white"
+            style="bottomNavigationStyle"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
