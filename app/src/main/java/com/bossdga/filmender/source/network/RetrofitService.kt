@@ -3,7 +3,6 @@ package com.bossdga.filmender.source.network
 import android.content.Context
 import com.bossdga.filmender.source.network.api.MovieAPI
 import com.bossdga.filmender.source.network.api.TVShowAPI
-import com.bossdga.filmender.util.PreferenceUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -42,9 +41,7 @@ object RetrofitService {
                 val originalHttpUrl = original.url()
 
                 val url = originalHttpUrl.newBuilder()
-                    .addQueryParameter("api_key", API_KEY)
-                    .addQueryParameter("vote_average.gte", PreferenceUtils.getRating(context))
-                    .addQueryParameter("with_genres", PreferenceUtils.getGenres(context)).build()
+                    .addQueryParameter("api_key", API_KEY).build()
                 val request = original.newBuilder().url(url).build()
                 println(">>>>>>>>>>>>>>> Request URL: " + request.url())
                 return chain.proceed(request)

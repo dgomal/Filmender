@@ -10,8 +10,8 @@ import io.reactivex.Observable
  * Repository to execute database and network operations
  */
 class MovieRepository(private val dao: MovieDao, private val api: MovieAPI) {
-    fun getMovies(page: Int, releaseDateGte: String?, releaseDateLte: String?): Observable<MovieResponse> {
-        return api.getMovies(page, releaseDateGte, releaseDateLte)
+    fun getMovies(page: Int, releaseDateGte: String?, releaseDateLte: String?, voteAverageGte: String?, withGenres: String?): Observable<MovieResponse> {
+        return api.getMovies(page, releaseDateGte, releaseDateLte, voteAverageGte, withGenres)
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getMovies();
     }

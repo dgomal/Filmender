@@ -53,7 +53,10 @@ class MovieFragment : BaseFragment() {
         mRecyclerView.setAdapter(adapter)
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
-        subscribeMovies(mainViewModel.loadMovies(PreferenceUtils.getYearFrom(activity as Context), PreferenceUtils.getYearTo(activity as Context)))
+        subscribeMovies(mainViewModel.loadMovies(PreferenceUtils.getYearFrom(activity as Context),
+            PreferenceUtils.getYearTo(activity as Context),
+            PreferenceUtils.getRating(activity as Context),
+            PreferenceUtils.getGenres(activity as Context)))
 
         return rootView
     }
@@ -95,6 +98,9 @@ class MovieFragment : BaseFragment() {
 
     fun refreshContent() {
         showProgressDialog()
-        subscribeMovies(mainViewModel.loadMovies(PreferenceUtils.getYearFrom(activity as Context), PreferenceUtils.getYearTo(activity as Context)))
+        subscribeMovies(mainViewModel.loadMovies(PreferenceUtils.getYearFrom(activity as Context),
+            PreferenceUtils.getYearTo(activity as Context),
+            PreferenceUtils.getRating(activity as Context),
+            PreferenceUtils.getGenres(activity as Context)))
     }
 }

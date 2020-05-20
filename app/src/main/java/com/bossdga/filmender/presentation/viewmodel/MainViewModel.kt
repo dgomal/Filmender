@@ -16,18 +16,18 @@ class MainViewModel(private val movieRepository: MovieRepository, private val tv
      * Method that returns an Observable of a Collection of movies
      * @return
      */
-    fun loadMovies(releaseDateGte: String?, releaseDateLte: String?): Observable<MovieResponse> {
-        return movieRepository.getMovies(1, releaseDateGte, releaseDateLte)
-            .flatMap{ movieResponse: MovieResponse -> movieRepository.getMovies(NumberUtils.getRandomNumberInRange(1, movieResponse.totalPages), releaseDateGte, releaseDateLte) }
+    fun loadMovies(releaseDateGte: String?, releaseDateLte: String?, voteAverageGte: String?, withGenres: String?): Observable<MovieResponse> {
+        return movieRepository.getMovies(1, releaseDateGte, releaseDateLte, voteAverageGte, withGenres)
+            .flatMap{ movieResponse: MovieResponse -> movieRepository.getMovies(NumberUtils.getRandomNumberInRange(1, movieResponse.totalPages), releaseDateGte, releaseDateLte, voteAverageGte, withGenres) }
     }
 
     /**
      * Method that returns an Observable of a Collection of tv shows
      * @return
      */
-    fun loadTVShows(airDateGte: String?, airDateLte: String?): Observable<TVShowResponse> {
-        return tvShowRepository.getTVShows(1, airDateGte, airDateLte)
-            .flatMap{ tvShowResponse: TVShowResponse -> tvShowRepository.getTVShows(NumberUtils.getRandomNumberInRange(1, tvShowResponse.totalPages), airDateGte, airDateLte) }
+    fun loadTVShows(airDateGte: String?, airDateLte: String?, voteAverageGte: String?, withGenres: String?): Observable<TVShowResponse> {
+        return tvShowRepository.getTVShows(1, airDateGte, airDateLte, voteAverageGte, withGenres)
+            .flatMap{ tvShowResponse: TVShowResponse -> tvShowRepository.getTVShows(NumberUtils.getRandomNumberInRange(1, tvShowResponse.totalPages), airDateGte, airDateLte, voteAverageGte, withGenres) }
     }
 
 }

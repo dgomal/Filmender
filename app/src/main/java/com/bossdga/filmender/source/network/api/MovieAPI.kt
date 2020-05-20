@@ -18,7 +18,9 @@ interface MovieAPI {
     @GET("/3/discover/movie")
     fun getMovies(@Query("page") page: Int,
                   @Query("release_date.gte") releaseDateGte: String?,
-                  @Query("release_date.lte") releaseDateLte: String?
+                  @Query("release_date.lte") releaseDateLte: String?,
+                  @Query("vote_average.gte") voteAverageGte: String?,
+                  @Query("with_genres") withGenres: String?
     ): Observable<MovieResponse>
 
     /**

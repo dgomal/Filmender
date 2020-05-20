@@ -52,7 +52,10 @@ class TVShowFragment : BaseFragment() {
         mRecyclerView.setAdapter(adapter)
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
-        subscribeTVShows(mainViewModel.loadTVShows(PreferenceUtils.getYearFrom(activity as Context), PreferenceUtils.getYearTo(activity as Context)))
+        subscribeTVShows(mainViewModel.loadTVShows(PreferenceUtils.getYearFrom(activity as Context),
+            PreferenceUtils.getYearTo(activity as Context),
+            PreferenceUtils.getRating(activity as Context),
+            PreferenceUtils.getGenres(activity as Context)))
 
         return rootView
     }
@@ -92,6 +95,9 @@ class TVShowFragment : BaseFragment() {
     }
 
     fun refreshContent() {
-        subscribeTVShows(mainViewModel.loadTVShows(PreferenceUtils.getYearFrom(activity as Context), PreferenceUtils.getYearTo(activity as Context)))
+        subscribeTVShows(mainViewModel.loadTVShows(PreferenceUtils.getYearFrom(activity as Context),
+            PreferenceUtils.getYearTo(activity as Context),
+            PreferenceUtils.getRating(activity as Context),
+            PreferenceUtils.getGenres(activity as Context)))
     }
 }
