@@ -17,7 +17,7 @@ class ViewModelFactory private constructor(private val movieRepository: MovieRep
             isAssignableFrom(MainViewModel::class.java) ->
                 MainViewModel(movieRepository, tvShowRepository)
             isAssignableFrom(DetailViewModel::class.java) ->
-                DetailViewModel()
+                DetailViewModel(movieRepository)
             else ->
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

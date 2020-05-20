@@ -47,6 +47,7 @@ class MovieFragment : BaseFragment() {
         adapter = MovieAdapter(activity as Context, object : OnItemClickListener {
             override fun onItemClick(content: BaseContent) {
                 val intent = Intent(activity, ContentDetailActivity::class.java)
+                intent.putExtra("id", content.id)
                 activity?.startActivity(intent)
             }
         })

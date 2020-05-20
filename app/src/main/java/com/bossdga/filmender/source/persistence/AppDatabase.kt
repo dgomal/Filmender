@@ -4,13 +4,16 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.bossdga.filmender.model.Movie
 import com.bossdga.filmender.model.TVShow
+import com.bossdga.filmender.model.converter.ListConverter
 
 /**
  * Class that represents a Room database
  */
 @Database(entities = [Movie::class, TVShow::class], version = 1)
+@TypeConverters(ListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
     abstract fun tvShowDao(): TVShowDao
@@ -25,6 +28,6 @@ abstract class AppDatabase : RoomDatabase() {
                 }
 
         private fun buildDatabase(context: Context) =
-                Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "template_db").build()
+                Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "filmender_db").build()
     }
 }

@@ -26,7 +26,8 @@ class TVShowAdapter(private var context: Context, private val listener: OnItemCl
         private val image: ImageView = v.findViewById(R.id.Image)
 
         fun bind(tvShow: TVShow, listener: OnItemClickListener) {
-            ImageUtils.setImage(image, tvShow.posterPath);
+            val imagePath: String? = if (tvShow.posterPath != null) tvShow.posterPath else tvShow.backdropPath
+            ImageUtils.setImage(image, imagePath);
 
             itemView.setOnClickListener { v: View? -> listener.onItemClick(tvShow) }
         }

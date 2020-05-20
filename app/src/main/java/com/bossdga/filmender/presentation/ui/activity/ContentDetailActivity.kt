@@ -6,6 +6,7 @@ import com.bossdga.filmender.R
 import com.bossdga.filmender.presentation.viewmodel.BaseViewModel
 import com.bossdga.filmender.presentation.viewmodel.DetailViewModel
 
+
 /**
  * Activity that provides the Event details
  */

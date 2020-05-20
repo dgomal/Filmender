@@ -26,7 +26,8 @@ class MovieAdapter(private var context: Context, private val listener: OnItemCli
         private val image: ImageView = v.findViewById(R.id.Image)
 
         fun bind(movie: Movie, listener: OnItemClickListener) {
-            ImageUtils.setImage(image, movie.posterPath);
+            val imagePath: String? = if (movie.posterPath != null) movie.posterPath else movie.backdropPath
+            ImageUtils.setImage(image, imagePath);
 
             itemView.setOnClickListener { v: View? -> listener.onItemClick(movie) }
         }

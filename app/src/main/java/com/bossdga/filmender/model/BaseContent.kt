@@ -5,5 +5,4 @@ package com.bossdga.filmender.model
  */
 interface BaseContent {
     var id: Int
-    var posterPath: String
 }

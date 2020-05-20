@@ -3,17 +3,21 @@ package com.bossdga.filmender.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.Expose
+import androidx.room.TypeConverters
+import com.bossdga.filmender.model.converter.ListConverter
 import com.google.gson.annotations.SerializedName
 
 /**
  * Class that represents a movie
  */
 @Entity(tableName = "movie")
-data class Movie(@PrimaryKey @ColumnInfo(name = "id") @Expose @SerializedName("id") override var id: Int,
-                 @ColumnInfo(name = "poster_path") @Expose @SerializedName("poster_path") override var posterPath: String,
-                 @ColumnInfo(name = "title") @Expose @SerializedName("title") var title: String,
-                 @ColumnInfo(name = "overview") @Expose @SerializedName("overview") var overview: String,
-                 @ColumnInfo(name = "release_date") @Expose @SerializedName("release_date") var releaseDate: String) : BaseContent {
+data class Movie(@PrimaryKey @ColumnInfo(name = "id") @SerializedName("id") override var id: Int,
+                 @ColumnInfo(name = "poster_path") @SerializedName("poster_path") var posterPath: String,
+                 @ColumnInfo(name = "backdrop_path") @SerializedName("backdrop_path") var backdropPath: String,
+                 @ColumnInfo(name = "title") @SerializedName("title") var title: String,
+                 @ColumnInfo(name = "overview") @SerializedName("overview") var overview: String,
+                 @ColumnInfo(name = "release_date") @SerializedName("release_date") var releaseDate: String,
+                 @ColumnInfo(name = "vote_average") @SerializedName("vote_average") var voteAverage: String,
+                 @SerializedName("genres") var genres: List<Genre>) : BaseContent {
 
 }
