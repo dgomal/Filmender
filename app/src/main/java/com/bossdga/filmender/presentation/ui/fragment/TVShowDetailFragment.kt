@@ -8,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.bossdga.filmender.R
-import com.bossdga.filmender.model.Movie
-import com.bossdga.filmender.presentation.viewmodel.DetailViewModel
+import com.bossdga.filmender.model.TVShow
+import com.bossdga.filmender.presentation.viewmodel.TVShowDetailViewModel
 import com.bossdga.filmender.util.ImageUtils.setImage
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,8 +20,8 @@ import io.reactivex.schedulers.Schedulers
 /**
  * A simple Fragment that will show Event details
  */
-class ContentDetailFragment : BaseFragment() {
-    private lateinit var detailViewModel: DetailViewModel
+class TVShowDetailFragment : BaseFragment() {
+    private lateinit var tvShowDetailViewModel: TVShowDetailViewModel
     private var contentId: Int? = 0
 
     private lateinit var image: ImageView
@@ -39,7 +39,7 @@ class ContentDetailFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_content_detail, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_tv_show_detail, container, false)
 
         image = rootView.findViewById(R.id.image)
         name = rootView.findViewById(R.id.name)
@@ -48,9 +48,9 @@ class ContentDetailFragment : BaseFragment() {
         overview = rootView.findViewById(R.id.overview)
         genre = rootView.findViewById(R.id.genre)
 
-        detailViewModel = ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
-        contentId = activity?.intent?.getIntExtra("id", 0)
-        subscribeContent(detailViewModel.loadContent(contentId))
+        tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
+        contentId = extras?.getIntExtra("id", 0)
+        subscribeTVShow(tvShowDetailViewModel.loadTVShow(contentId))
 
         return rootView
     }
@@ -71,25 +71,25 @@ class ContentDetailFragment : BaseFragment() {
      * Method that adds a Disposable to the CompositeDisposable
      * @param moviesObservable
      */
-    private fun subscribeContent(movieObservable: Observable<Movie>) {
-        disposable.add(movieObservable
+    private fun subscribeTVShow(tvShowObservable: Observable<TVShow>) {
+        disposable.add(tvShowObservable
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : DisposableObserver<Movie>() {
+            .subscribeWith(object : DisposableObserver<TVShow>() {
                 override fun onComplete() {}
 
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
                 }
 
-                override fun onNext(movie: Movie) {
+                override fun onNext(tvShow: TVShow) {
                     var genres = ""
-                    setImage(image, movie.posterPath)
-                    name.setText(movie.title)
-                    voteAverage.setText(movie.voteAverage)
-                    date.setText(movie.releaseDate)
-                    overview.setText(movie.overview)
-                    movie.genres.forEach { e -> genres = genres.plus(e.name).plus(" | ")}
+                    setImage(image, tvShow.posterPath)
+                    name.setText(tvShow.title)
+                    voteAverage.setText(tvShow.voteAverage)
+                    date.setText(tvShow.releaseDate)
+                    overview.setText(tvShow.overview)
+                    tvShow.genres.forEach { e -> genres = genres.plus(e.name).plus(" | ")}
                     genre.text = genres
                     hideProgressDialog()
                 }

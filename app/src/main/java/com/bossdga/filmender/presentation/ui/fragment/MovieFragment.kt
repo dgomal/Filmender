@@ -15,7 +15,7 @@ import com.bossdga.filmender.model.BaseContent
 import com.bossdga.filmender.model.Movie
 import com.bossdga.filmender.model.MovieResponse
 import com.bossdga.filmender.presentation.adapter.MovieAdapter
-import com.bossdga.filmender.presentation.ui.activity.ContentDetailActivity
+import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.bossdga.filmender.util.PreferenceUtils
 import io.reactivex.Observable
@@ -46,7 +46,7 @@ class MovieFragment : BaseFragment() {
         mRecyclerView.setLayoutManager(gridLayoutManager)
         adapter = MovieAdapter(activity as Context, object : OnItemClickListener {
             override fun onItemClick(content: BaseContent) {
-                val intent = Intent(activity, ContentDetailActivity::class.java)
+                val intent = Intent(activity, MovieDetailActivity::class.java)
                 intent.putExtra("id", content.id)
                 activity?.startActivity(intent)
             }

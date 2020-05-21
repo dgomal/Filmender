@@ -7,12 +7,12 @@ import io.reactivex.Observable
 /**
  * ViewModel that is used with the EventDetailActivity
  */
-class DetailViewModel(private val movieRepository: MovieRepository) : BaseViewModel()  {
+class MovieDetailViewModel(private val movieRepository: MovieRepository) : BaseViewModel()  {
     /**
-     * Method that returns an Observable of a Collection of movies
+     * Method that returns an Observable of a movie
      * @return
      */
-    fun loadContent(contentId: Int?): Observable<Movie> {
-        return movieRepository.getMovieDetails(contentId)
+    fun loadMovie(id: Int?): Observable<Movie> {
+        return movieRepository.getMovieDetails(id)
     }
 }

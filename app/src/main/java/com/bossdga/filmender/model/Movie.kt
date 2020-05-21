@@ -3,8 +3,6 @@ package com.bossdga.filmender.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import com.bossdga.filmender.model.converter.ListConverter
 import com.google.gson.annotations.SerializedName
 
 /**

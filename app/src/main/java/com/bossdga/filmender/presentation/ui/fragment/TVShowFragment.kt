@@ -15,7 +15,8 @@ import com.bossdga.filmender.model.BaseContent
 import com.bossdga.filmender.model.TVShow
 import com.bossdga.filmender.model.TVShowResponse
 import com.bossdga.filmender.presentation.adapter.TVShowAdapter
-import com.bossdga.filmender.presentation.ui.activity.ContentDetailActivity
+import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
+import com.bossdga.filmender.presentation.ui.activity.TVShowDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.bossdga.filmender.util.PreferenceUtils
 import io.reactivex.Observable
@@ -45,7 +46,8 @@ class TVShowFragment : BaseFragment() {
         mRecyclerView.setLayoutManager(gridLayoutManager)
         adapter = TVShowAdapter(activity as Context, object : OnItemClickListener {
             override fun onItemClick(content: BaseContent) {
-                val intent = Intent(activity, ContentDetailActivity::class.java)
+                val intent = Intent(activity, TVShowDetailActivity::class.java)
+                intent.putExtra("id", content.id)
                 activity?.startActivity(intent)
             }
         })

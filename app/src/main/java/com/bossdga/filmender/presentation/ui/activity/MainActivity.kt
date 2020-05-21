@@ -42,16 +42,14 @@ class MainActivity : BaseActivity<BaseViewModel>() {
         showsHeader = findViewById(R.id.ShowsHeader)
         showsFragment = findViewById(R.id.FragmentTVShow)
 
-        tryAgainButton.setOnClickListener(View.OnClickListener {
-            val fragmentMovie =
-                supportFragmentManager.findFragmentById(R.id.FragmentMovie) as MovieFragment
+        tryAgainButton.setOnClickListener {
+            val fragmentMovie = supportFragmentManager.findFragmentById(R.id.FragmentMovie) as MovieFragment
             fragmentMovie.refreshContent()
-            val fragmentTVShow =
-                supportFragmentManager.findFragmentById(R.id.FragmentTVShow) as TVShowFragment
+            val fragmentTVShow = supportFragmentManager.findFragmentById(R.id.FragmentTVShow) as TVShowFragment
             fragmentTVShow.refreshContent()
 
             setVisibility()
-        })
+        }
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.BottomNavigation)
         bottomNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)

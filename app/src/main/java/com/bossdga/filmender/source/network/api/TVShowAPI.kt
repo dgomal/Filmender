@@ -29,5 +29,5 @@ interface TVShowAPI {
      * @return
      */
     @GET("/3/tv/{tv_id}")
-    fun getTVShowDetails(@Path("tv_id") tvShowId: Int): Observable<TVShow>
+    fun getTVShowDetails(@Path("tv_id") tvShowId: Int?): Observable<TVShow>
 }

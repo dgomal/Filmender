@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.fragment.ContentDetailFragment"
-    tools:showIn="@layout/activity_content_detail">
+    tools:context=".presentation.ui.fragment.TVShowDetailFragment"
+    tools:showIn="@layout/activity_movie_detail">
 
     <ScrollView
         android:layout_width="match_parent"

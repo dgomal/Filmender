@@ -16,7 +16,7 @@ open class BaseFragment : Fragment(), ProgressDialogHandler {
     protected var disposable = CompositeDisposable()
     private lateinit var mProgressDialog: ProgressDialog
     private var showDialog = false
-    private var extras: Intent? = null
+    protected var extras: Intent? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

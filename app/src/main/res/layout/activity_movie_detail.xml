@@ -4,26 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.activity.ContentDetailActivity">
+    tools:context=".presentation.ui.activity.MovieDetailActivity">
 
     <include
         android:id="@+id/AppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContentDetail"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentMovieDetail"
         app:layout_constraintVertical_chainStyle="packed"
         layout="@layout/app_bar" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContentDetail"
-        android:name="com.bossdga.filmender.presentation.ui.fragment.ContentDetailFragment"
+        android:id="@+id/fragmentMovieDetail"
+        android:name="com.bossdga.filmender.presentation.ui.fragment.MovieDetailFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintTop_toBottomOf="@+id/AppBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout="@layout/fragment_content_detail" />
+        tools:layout="@layout/fragment_movie_detail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
