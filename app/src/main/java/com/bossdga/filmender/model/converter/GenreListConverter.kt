@@ -6,7 +6,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*
 
-class ListConverter {
+class GenreListConverter {
     var gson = Gson()
 
     @TypeConverter

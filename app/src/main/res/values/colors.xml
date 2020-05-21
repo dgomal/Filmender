@@ -1025,7 +1025,8 @@
     <color name="template_grey_medium_light">#c9c9c9</color>
     <color name="template_grey_medium">#999999</color>
     <color name="template_grey">#777</color>
-    <color name="template_grey_dark">#333</color>
+    <color name="template_grey_medium_dark">#333</color>
+    <color name="template_grey_dark">#161616</color>
     <color name="template_green">#29ceb6</color>
     <color name="template_green_dark">#01796F</color>
     <color name="template_yellow">#Fed669</color>

@@ -12,6 +12,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         card_view:cardElevation="1dp"
         card_view:cardCornerRadius="3dp"
+        android:backgroundTint="@color/template_grey_medium"
         android:layout_marginTop="@dimen/activity_vertical_margin_quarter"
         android:layout_marginBottom="@dimen/activity_vertical_margin_quarter"
         android:layout_marginEnd="@dimen/activity_vertical_margin_half"
