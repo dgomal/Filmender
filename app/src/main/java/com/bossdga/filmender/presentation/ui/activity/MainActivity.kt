@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.ViewModelProvider
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.R
 import com.bossdga.filmender.presentation.ui.fragment.MovieFragment
 import com.bossdga.filmender.presentation.ui.fragment.TVShowFragment
@@ -23,11 +24,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
  * Main Activity that holds several fragments
  */
 class MainActivity : BaseActivity<BaseViewModel>() {
-    private lateinit var mainViewModel: MainViewModel
     private lateinit var moviesHeader: TextView
     private lateinit var moviesFragment: FragmentContainerView
     private lateinit var showsHeader: TextView
     private lateinit var showsFragment: FragmentContainerView
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,14 +36,26 @@ class MainActivity : BaseActivity<BaseViewModel>() {
 
         setUpActionBar(R.string.title_activity_main, false)
 
-        val tryAgainButton: Button = findViewById(R.id.TryAgainButton)
-        val shuffleButton: Button = findViewById(R.id.ShuffleButton)
+        val fab: View = findViewById(R.id.fab)
+        fab.setOnClickListener { view ->
+            val intent = Intent(this, MovieDetailActivity::class.java)
+            startActivity(intent)
+        }
+        mSwipeRefreshLayout = findViewById(R.id.SwipeRefreshLayout)
+        mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
         moviesHeader = findViewById(R.id.MoviesHeader)
         moviesFragment = findViewById(R.id.FragmentMovie)
         showsHeader = findViewById(R.id.ShowsHeader)
         showsFragment = findViewById(R.id.FragmentTVShow)
 
-        tryAgainButton.setOnClickListener {
+        val bottomNavigation: BottomNavigationView = findViewById(R.id.BottomNavigation)
+        bottomNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+    }
+
+    /**
+     * Listener for swipe to refresh functionality
+     */
+    private val onRefreshListener = SwipeRefreshLayout.OnRefreshListener {
             val fragmentMovie = supportFragmentManager.findFragmentById(R.id.FragmentMovie) as MovieFragment
             fragmentMovie.refreshContent()
             val fragmentTVShow = supportFragmentManager.findFragmentById(R.id.FragmentTVShow) as TVShowFragment
@@ -50,10 +63,6 @@ class MainActivity : BaseActivity<BaseViewModel>() {
 
             setVisibility()
         }
-
-        val bottomNavigation: BottomNavigationView = findViewById(R.id.BottomNavigation)
-        bottomNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
-    }
 
     override fun createViewModel(): MainViewModel {
         return ViewModelProvider(this, factory).get(MainViewModel::class.java)

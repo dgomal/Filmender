@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.BaseContent
@@ -22,6 +23,8 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.view.*
+
 
 /**
  * Fragment that will show a movie
@@ -31,16 +34,17 @@ class MovieFragment : BaseFragment() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        showProgressDialog()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_movie, container, false)
 
+        mSwipeRefreshLayout = requireActivity().findViewById(R.id.SwipeRefreshLayout)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
         gridLayoutManager = GridLayoutManager(activity, 3)
         mRecyclerView.setLayoutManager(gridLayoutManager)
@@ -92,13 +96,16 @@ class MovieFragment : BaseFragment() {
                     override fun onNext(movieResponse: MovieResponse) {
                         val movieList: List<Movie> = movieResponse.results.take(PreferenceUtils.getResults(activity as Context)!!)
                         adapter.setItems(movieList)
-                        hideProgressDialog()
+                        // MAYBE HERE INSTEAD OF GETTING SWIPEREFRESHLAYOUT JUST USE INTERFACE AND TEEL THE ACTIVITY IT IS FINISHED SO ACTIVITY CAN DISMISS!!
+                        // MAYBE HERE INSTEAD OF GETTING SWIPEREFRESHLAYOUT JUST USE INTERFACE AND TEEL THE ACTIVITY IT IS FINISHED SO ACTIVITY CAN DISMISS!!
+                        // MAYBE HERE INSTEAD OF GETTING SWIPEREFRESHLAYOUT JUST USE INTERFACE AND TEEL THE ACTIVITY IT IS FINISHED SO ACTIVITY CAN DISMISS!!
+                        // MAYBE HERE INSTEAD OF GETTING SWIPEREFRESHLAYOUT JUST USE INTERFACE AND TEEL THE ACTIVITY IT IS FINISHED SO ACTIVITY CAN DISMISS!!
+                        mSwipeRefreshLayout.isRefreshing = false
                     }
                 }))
     }
 
     fun refreshContent() {
-        showProgressDialog()
         subscribeMovies(mainViewModel.loadMovies(PreferenceUtils.getYearFrom(activity as Context),
             PreferenceUtils.getYearTo(activity as Context),
             PreferenceUtils.getRating(activity as Context),

@@ -83,14 +83,12 @@ class MovieDetailFragment : BaseFragment() {
                 }
 
                 override fun onNext(movie: Movie) {
-                    var genres = ""
                     setImage(image, movie.posterPath)
                     name.setText(movie.title)
                     voteAverage.setText(movie.voteAverage)
                     date.setText(movie.releaseDate)
                     overview.setText(movie.overview)
-                    movie.genres.forEach { e -> genres = genres.plus(e.name).plus(" | ")}
-                    genre.text = genres
+                    genre.text = movie.genres.joinToString(separator = " | ") { it.name }
                     hideProgressDialog()
                 }
             }))
