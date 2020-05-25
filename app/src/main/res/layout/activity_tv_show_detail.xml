@@ -15,8 +15,8 @@
         layout="@layout/collapsing_app_bar" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentMovieDetail"
-        android:name="com.bossdga.filmender.presentation.ui.fragment.MovieDetailFragment"
+        android:id="@+id/fragmentTVShowDetail"
+        android:name="com.bossdga.filmender.presentation.ui.fragment.TVShowDetailFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>

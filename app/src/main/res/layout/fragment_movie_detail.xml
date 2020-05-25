@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/template_grey_medium_light"
                     android:textSize="14sp" />
-                
+
             </LinearLayout>
 
         </LinearLayout>

@@ -24,7 +24,7 @@ import io.reactivex.schedulers.Schedulers
  */
 class TVShowDetailFragment : BaseFragment() {
     private lateinit var tvShowDetailViewModel: TVShowDetailViewModel
-    private var contentId: Int? = 0
+    private var id: Int? = 0
 
     private lateinit var image: ImageView
     private lateinit var name: TextView
@@ -43,7 +43,7 @@ class TVShowDetailFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_tv_show_detail, container, false)
 
-        image = rootView.findViewById(R.id.image)
+        image = requireActivity().findViewById(R.id.image)
         name = rootView.findViewById(R.id.name)
         voteAverage = rootView.findViewById(R.id.voteAverage)
         date = rootView.findViewById(R.id.date)
@@ -51,8 +51,8 @@ class TVShowDetailFragment : BaseFragment() {
         genre = rootView.findViewById(R.id.genre)
 
         tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
-        contentId = extras?.getIntExtra("id", 0)
-        subscribeTVShow(tvShowDetailViewModel.loadTVShow(contentId,
+        id = extras?.getIntExtra("id", 0)
+        subscribeTVShow(tvShowDetailViewModel.loadTVShow(id,
             "videos,images"))
 
         return rootView
