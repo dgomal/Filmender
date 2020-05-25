@@ -9,4 +9,5 @@ class AppSettings(var context: Context, var name: String): Preferences(context, 
     var results by intPref()
     var type by stringPref()
     var genres by stringSetPref()
+    var image_url by stringPref()
 }

@@ -1,6 +1,7 @@
 package com.bossdga.filmender.source.network
 
 import android.content.Context
+import com.bossdga.filmender.source.network.api.ConfigurationAPI
 import com.bossdga.filmender.source.network.api.MovieAPI
 import com.bossdga.filmender.source.network.api.TVShowAPI
 import okhttp3.Interceptor
@@ -55,5 +56,9 @@ object RetrofitService {
 
     val tvShowApi: TVShowAPI by lazy {
         retrofitService().create(TVShowAPI::class.java)
+    }
+
+    val configurationApi: ConfigurationAPI by lazy {
+        retrofitService().create(ConfigurationAPI::class.java)
     }
 }

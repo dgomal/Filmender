@@ -10,12 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnItemClickListener
+import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
-import com.bossdga.filmender.model.BaseContent
-import com.bossdga.filmender.model.TVShow
-import com.bossdga.filmender.model.TVShowResponse
+import com.bossdga.filmender.model.content.BaseContent
+import com.bossdga.filmender.model.content.TVShow
+import com.bossdga.filmender.model.content.TVShowResponse
 import com.bossdga.filmender.presentation.adapter.TVShowAdapter
-import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.ui.activity.TVShowDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.bossdga.filmender.util.PreferenceUtils
@@ -32,6 +32,7 @@ class TVShowFragment : BaseFragment() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var onLoadingListener: OnLoadingListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +75,12 @@ class TVShowFragment : BaseFragment() {
         disposable.dispose()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        this.onLoadingListener = (context as OnLoadingListener)
+    }
+
     /**
      * Method that adds a Disposable to the CompositeDisposable
      * @param tvShowsObservable
@@ -92,6 +99,7 @@ class TVShowFragment : BaseFragment() {
                     override fun onNext(tvShowResponse: TVShowResponse) {
                         val showList: List<TVShow> = tvShowResponse.results.take(PreferenceUtils.getResults(activity as Context)!!)
                         adapter.setItems(showList)
+                        onLoadingListener.onFinishedLoading()
                     }
                 }))
     }

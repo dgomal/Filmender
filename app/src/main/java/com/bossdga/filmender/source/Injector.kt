@@ -29,4 +29,15 @@ object Injector {
         val db = AppDatabase.getInstance(application)
         return TVShowRepository(db.tvShowDao(), RetrofitService.tvShowApi)
     }
+
+    /**
+     * Provides a tv show repository
+     * @param application
+     * @return
+     */
+    @JvmStatic
+    fun provideApiConfigRepository(application: Application): ApiConfigRepository {
+        val db = AppDatabase.getInstance(application)
+        return ApiConfigRepository(db.apiConfigDao(), RetrofitService.configurationApi)
+    }
 }

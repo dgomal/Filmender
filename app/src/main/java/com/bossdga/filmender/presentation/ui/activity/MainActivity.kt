@@ -6,11 +6,14 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.presentation.ui.fragment.MovieFragment
 import com.bossdga.filmender.presentation.ui.fragment.TVShowFragment
@@ -23,12 +26,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 /**
  * Main Activity that holds several fragments
  */
-class MainActivity : BaseActivity<BaseViewModel>() {
-    private lateinit var moviesHeader: TextView
+class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
     private lateinit var moviesFragment: FragmentContainerView
-    private lateinit var showsHeader: TextView
     private lateinit var showsFragment: FragmentContainerView
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var fragmentMovie: MovieFragment
+    private lateinit var fragmentTVShow: TVShowFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +46,7 @@ class MainActivity : BaseActivity<BaseViewModel>() {
         }
         mSwipeRefreshLayout = findViewById(R.id.SwipeRefreshLayout)
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
-        moviesHeader = findViewById(R.id.MoviesHeader)
         moviesFragment = findViewById(R.id.FragmentMovie)
-        showsHeader = findViewById(R.id.ShowsHeader)
         showsFragment = findViewById(R.id.FragmentTVShow)
 
         val bottomNavigation: BottomNavigationView = findViewById(R.id.BottomNavigation)
@@ -56,13 +57,8 @@ class MainActivity : BaseActivity<BaseViewModel>() {
      * Listener for swipe to refresh functionality
      */
     private val onRefreshListener = SwipeRefreshLayout.OnRefreshListener {
-            val fragmentMovie = supportFragmentManager.findFragmentById(R.id.FragmentMovie) as MovieFragment
-            fragmentMovie.refreshContent()
-            val fragmentTVShow = supportFragmentManager.findFragmentById(R.id.FragmentTVShow) as TVShowFragment
-            fragmentTVShow.refreshContent()
-
-            setVisibility()
-        }
+        loadFragments()
+    }
 
     override fun createViewModel(): MainViewModel {
         return ViewModelProvider(this, factory).get(MainViewModel::class.java)
@@ -85,27 +81,28 @@ class MainActivity : BaseActivity<BaseViewModel>() {
         }
     }
 
-    private fun setVisibility() {
+    private fun loadFragments() {
+        fragmentMovie = supportFragmentManager.findFragmentById(R.id.FragmentMovie) as MovieFragment
+        fragmentTVShow = supportFragmentManager.findFragmentById(R.id.FragmentTVShow) as TVShowFragment
+
         val type: String? = PreferenceUtils.getType(this)
 
         when (type) {
             "0" -> {
-                moviesHeader.visibility = View.VISIBLE
-                moviesFragment.visibility = View.VISIBLE
-                showsHeader.visibility = View.VISIBLE
-                showsFragment.visibility = View.VISIBLE
+                attachFragment(fragmentMovie)
+                attachFragment(fragmentTVShow)
+                fragmentMovie.refreshContent()
+                fragmentTVShow.refreshContent()
             }
             "1" -> {
-                moviesHeader.visibility = View.VISIBLE
-                moviesFragment.visibility = View.VISIBLE
-                showsHeader.visibility = View.GONE
-                showsFragment.visibility = View.GONE
+                attachFragment(fragmentMovie)
+                detachFragment(fragmentTVShow)
+                fragmentMovie.refreshContent()
             }
             else -> {
-                moviesHeader.visibility = View.GONE
-                moviesFragment.visibility = View.GONE
-                showsHeader.visibility = View.VISIBLE
-                showsFragment.visibility = View.VISIBLE
+                attachFragment(fragmentTVShow)
+                detachFragment(fragmentMovie)
+                fragmentTVShow.refreshContent()
             }
         }
     }
@@ -120,5 +117,33 @@ class MainActivity : BaseActivity<BaseViewModel>() {
             }
             else -> false
         }
+    }
+
+    override fun onFinishedLoading() {
+        mSwipeRefreshLayout.isRefreshing = false
+    }
+
+    private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
+        beginTransaction().func().commit()
+    }
+
+    fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int){
+        supportFragmentManager.inTransaction { add(frameId, fragment) }
+    }
+
+    fun AppCompatActivity.attachFragment(fragment: Fragment){
+        supportFragmentManager.inTransaction { attach(fragment) }
+    }
+
+    fun AppCompatActivity.removeFragment(fragment: Fragment) {
+        supportFragmentManager.inTransaction{ remove(fragment) }
+    }
+
+    fun AppCompatActivity.detachFragment(fragment: Fragment) {
+        supportFragmentManager.inTransaction{ detach(fragment) }
+    }
+
+    fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
+        supportFragmentManager.inTransaction{ replace(frameId, fragment) }
     }
 }

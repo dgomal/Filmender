@@ -1,5 +1,6 @@
-package com.bossdga.filmender.model
+package com.bossdga.filmender.model.content
 
+import com.bossdga.filmender.model.content.Movie
 import com.google.gson.annotations.SerializedName
 
 /**

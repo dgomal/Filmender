@@ -1,6 +1,6 @@
 package com.bossdga.filmender.presentation.viewmodel
 
-import com.bossdga.filmender.model.TVShow
+import com.bossdga.filmender.model.content.TVShow
 import com.bossdga.filmender.source.TVShowRepository
 import io.reactivex.Observable
 
@@ -12,7 +12,7 @@ class TVShowDetailViewModel(private val tvShowRepository: TVShowRepository) : Ba
      * Method that returns an Observable of a movie
      * @return
      */
-    fun loadTVShow(id: Int?): Observable<TVShow> {
-        return tvShowRepository.getTVShowDetails(id)
+    fun loadTVShow(id: Int?, appendToResponse: String?): Observable<TVShow> {
+        return tvShowRepository.getTVShowDetails(id, appendToResponse)
     }
 }

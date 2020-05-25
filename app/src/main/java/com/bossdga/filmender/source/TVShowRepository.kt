@@ -1,7 +1,7 @@
 package com.bossdga.filmender.source
 
-import com.bossdga.filmender.model.TVShow
-import com.bossdga.filmender.model.TVShowResponse
+import com.bossdga.filmender.model.content.TVShow
+import com.bossdga.filmender.model.content.TVShowResponse
 import com.bossdga.filmender.source.network.api.TVShowAPI
 import com.bossdga.filmender.source.persistence.TVShowDao
 import io.reactivex.Observable
@@ -16,8 +16,8 @@ class TVShowRepository(private val dao: TVShowDao, private val api: TVShowAPI) {
         //return dao.getTVShows();
     }
 
-    fun getTVShowDetails(tvShowId: Int?): Observable<TVShow> {
-        return api.getTVShowDetails(tvShowId)
+    fun getTVShowDetails(tvShowId: Int?, appendToResponse: String?): Observable<TVShow> {
+        return api.getTVShowDetails(tvShowId, appendToResponse)
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getTVShowDetails(tvShowId);
     }

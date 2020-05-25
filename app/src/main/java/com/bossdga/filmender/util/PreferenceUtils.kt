@@ -34,4 +34,12 @@ object PreferenceUtils {
     fun getResults(context: Context): Int? {
         return AppSettings(context, "SETTINGS_PREFERENCES").results
     }
+
+    fun getImageUrl(context: Context): String? {
+        return AppSettings(context, "SETTINGS_PREFERENCES").image_url
+    }
+
+    fun setImageUrl(context: Context, imageUrl: String) {
+        AppSettings(context, "SETTINGS_PREFERENCES").image_url = imageUrl
+    }
 }

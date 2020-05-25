@@ -5,20 +5,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.bossdga.filmender.model.Movie
-import com.bossdga.filmender.model.TVShow
-import com.bossdga.filmender.model.converter.GenreListConverter
-import com.bossdga.filmender.model.converter.ImageListConverter
-import com.bossdga.filmender.model.converter.VideoListConverter
+import com.bossdga.filmender.model.ApiConfig
+import com.bossdga.filmender.model.content.Movie
+import com.bossdga.filmender.model.content.TVShow
+import com.bossdga.filmender.model.converter.*
 
 /**
  * Class that represents a Room database
  */
-@Database(entities = [Movie::class, TVShow::class], version = 1)
-@TypeConverters(GenreListConverter::class, VideoListConverter::class, ImageListConverter::class)
+@Database(entities = [Movie::class, TVShow::class, ApiConfig::class], version = 1)
+@TypeConverters(GenreListConverter::class, VideoListConverter::class, ImageListConverter::class, ImageConfigConverter::class, ImageConverter::class, VideoConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
     abstract fun tvShowDao(): TVShowDao
+    abstract fun apiConfigDao(): ApiConfigDao
 
     companion object {
         @Volatile

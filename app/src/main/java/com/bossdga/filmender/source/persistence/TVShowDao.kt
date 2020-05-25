@@ -2,7 +2,7 @@ package com.bossdga.filmender.source.persistence
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.bossdga.filmender.model.TVShow
+import com.bossdga.filmender.model.content.TVShow
 import io.reactivex.Observable
 
 /**

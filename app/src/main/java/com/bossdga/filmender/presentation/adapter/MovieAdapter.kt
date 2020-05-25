@@ -9,7 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
-import com.bossdga.filmender.model.Movie
+import com.bossdga.filmender.model.content.ImageType
+import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.util.ImageUtils
 import java.util.*
 
@@ -26,8 +27,7 @@ class MovieAdapter(private var context: Context, private val listener: OnItemCli
         private val image: ImageView = v.findViewById(R.id.Image)
 
         fun bind(movie: Movie, listener: OnItemClickListener) {
-            val imagePath: String? = if (movie.posterPath != null) movie.posterPath else movie.backdropPath
-            ImageUtils.setImage(image, imagePath);
+            ImageUtils.setImage(context, image, movie.posterPath, ImageType.POSTER)
 
             itemView.setOnClickListener { v: View? -> listener.onItemClick(movie) }
         }

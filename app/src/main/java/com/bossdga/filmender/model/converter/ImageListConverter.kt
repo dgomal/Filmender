@@ -1,7 +1,7 @@
 package com.bossdga.filmender.model.converter
 
 import androidx.room.TypeConverter
-import com.bossdga.filmender.model.Image
+import com.bossdga.filmender.model.content.Image
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*
@@ -10,7 +10,7 @@ class ImageListConverter {
     var gson = Gson()
 
     @TypeConverter
-    fun stringToList(data: String?): List<Image>? {
+    fun stringToimages(data: String?): List<Image>? {
 
         if (data == null){
             return Collections.emptyList()
@@ -20,7 +20,7 @@ class ImageListConverter {
     }
 
     @TypeConverter
-    fun listToString(genres: List<Image>?): String? {
-        return gson.toJson(genres)
+    fun imagesToString(images: List<Image>?): String? {
+        return gson.toJson(images)
     }
 }

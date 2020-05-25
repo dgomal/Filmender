@@ -40,39 +40,21 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
-                <TextView android:id="@+id/MoviesHeader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Movies"
-                    android:textColor="@color/template_grey_medium_light"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin_16"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin_8"/>
-
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/FragmentMovie"
                     android:name="com.bossdga.filmender.presentation.ui.fragment.MovieFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_movie" />
-
-                <TextView android:id="@+id/ShowsHeader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TV Shows"
-                    android:textColor="@color/template_grey_medium_light"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin_16"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin_8"/>
+                    tools:layout="@layout/fragment_movie"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin_16"/>
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/FragmentTVShow"
                     android:name="com.bossdga.filmender.presentation.ui.fragment.TVShowFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_tv_show"/>
+                    tools:layout="@layout/fragment_tv_show"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin_16"/>
 
             </LinearLayout>
 

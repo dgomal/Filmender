@@ -1,4 +1,4 @@
-package com.bossdga.filmender.model
+package com.bossdga.filmender.model.content
 
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey

@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.OnItemClickListener
+import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
-import com.bossdga.filmender.model.BaseContent
-import com.bossdga.filmender.model.Movie
-import com.bossdga.filmender.model.MovieResponse
+import com.bossdga.filmender.model.ApiConfig
+import com.bossdga.filmender.model.content.BaseContent
+import com.bossdga.filmender.model.content.Movie
+import com.bossdga.filmender.model.content.MovieResponse
 import com.bossdga.filmender.presentation.adapter.MovieAdapter
 import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
@@ -23,7 +25,6 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 /**
@@ -35,6 +36,7 @@ class MovieFragment : BaseFragment() {
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mainViewModel: MainViewModel
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var onLoadingListener: OnLoadingListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +65,8 @@ class MovieFragment : BaseFragment() {
             PreferenceUtils.getRating(activity as Context),
             PreferenceUtils.getGenres(activity as Context)))
 
+        subscribeApiConfig(mainViewModel.loadApiConfig())
+
         return rootView
     }
 
@@ -76,6 +80,12 @@ class MovieFragment : BaseFragment() {
         super.onDestroy()
 
         disposable.dispose()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        this.onLoadingListener = (context as OnLoadingListener)
     }
 
     /**
@@ -96,13 +106,30 @@ class MovieFragment : BaseFragment() {
                     override fun onNext(movieResponse: MovieResponse) {
                         val movieList: List<Movie> = movieResponse.results.take(PreferenceUtils.getResults(activity as Context)!!)
                         adapter.setItems(movieList)
-                        // MAYBE HERE INSTEAD OF GETTING SWIPEREFRESHLAYOUT JUST USE INTERFACE AND TEEL THE ACTIVITY IT IS FINISHED SO ACTIVITY CAN DISMISS!!
-                        // MAYBE HERE INSTEAD OF GETTING SWIPEREFRESHLAYOUT JUST USE INTERFACE AND TEEL THE ACTIVITY IT IS FINISHED SO ACTIVITY CAN DISMISS!!
-                        // MAYBE HERE INSTEAD OF GETTING SWIPEREFRESHLAYOUT JUST USE INTERFACE AND TEEL THE ACTIVITY IT IS FINISHED SO ACTIVITY CAN DISMISS!!
-                        // MAYBE HERE INSTEAD OF GETTING SWIPEREFRESHLAYOUT JUST USE INTERFACE AND TEEL THE ACTIVITY IT IS FINISHED SO ACTIVITY CAN DISMISS!!
-                        mSwipeRefreshLayout.isRefreshing = false
+                        onLoadingListener.onFinishedLoading()
                     }
                 }))
+    }
+
+    /**
+     * Method that adds a Disposable to the CompositeDisposable
+     * @param moviesObservable
+     */
+    private fun subscribeApiConfig(apiConfigObservable: Observable<ApiConfig>) {
+        disposable.add(apiConfigObservable
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableObserver<ApiConfig>() {
+                override fun onComplete() {}
+
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+
+                override fun onNext(apiConfig: ApiConfig) {
+                    PreferenceUtils.setImageUrl(activity as Context, apiConfig.images.secureBaseUrl)
+                }
+            }))
     }
 
     fun refreshContent() {

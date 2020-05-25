@@ -1,6 +1,6 @@
 package com.bossdga.filmender.presentation.viewmodel
 
-import com.bossdga.filmender.model.Movie
+import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.source.MovieRepository
 import io.reactivex.Observable
 
@@ -12,7 +12,7 @@ class MovieDetailViewModel(private val movieRepository: MovieRepository) : BaseV
      * Method that returns an Observable of a movie
      * @return
      */
-    fun loadMovie(id: Int?): Observable<Movie> {
-        return movieRepository.getMovieDetails(id)
+    fun loadMovie(id: Int?, appendToResponse: String?): Observable<Movie> {
+        return movieRepository.getMovieDetails(id, appendToResponse)
     }
 }

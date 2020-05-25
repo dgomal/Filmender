@@ -1,5 +1,6 @@
 package com.bossdga.filmender.presentation.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.bossdga.filmender.R
-import com.bossdga.filmender.model.TVShow
+import com.bossdga.filmender.model.content.ImageType
+import com.bossdga.filmender.model.content.TVShow
 import com.bossdga.filmender.presentation.viewmodel.TVShowDetailViewModel
 import com.bossdga.filmender.util.ImageUtils.setImage
 import io.reactivex.Observable
@@ -50,7 +52,8 @@ class TVShowDetailFragment : BaseFragment() {
 
         tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
         contentId = extras?.getIntExtra("id", 0)
-        subscribeTVShow(tvShowDetailViewModel.loadTVShow(contentId))
+        subscribeTVShow(tvShowDetailViewModel.loadTVShow(contentId,
+            "videos,images"))
 
         return rootView
     }
@@ -83,14 +86,12 @@ class TVShowDetailFragment : BaseFragment() {
                 }
 
                 override fun onNext(tvShow: TVShow) {
-                    var genres = ""
-                    setImage(image, tvShow.posterPath)
+                    setImage(activity as Context, image, tvShow.backdropPath, ImageType.BACK_DROP)
                     name.setText(tvShow.title)
                     voteAverage.setText(tvShow.voteAverage)
                     date.setText(tvShow.releaseDate)
                     overview.setText(tvShow.overview)
-                    tvShow.genres.forEach { e -> genres = genres.plus(e.name).plus(" | ")}
-                    genre.text = genres
+                    genre.text = tvShow.genres.joinToString(separator = " | ") { it.name }
                     hideProgressDialog()
                 }
             }))

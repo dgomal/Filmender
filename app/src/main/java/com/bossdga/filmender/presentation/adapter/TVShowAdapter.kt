@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
-import com.bossdga.filmender.model.TVShow
+import com.bossdga.filmender.model.content.ImageType
+import com.bossdga.filmender.model.content.TVShow
 import com.bossdga.filmender.util.ImageUtils
 import java.util.*
 
@@ -26,8 +26,7 @@ class TVShowAdapter(private var context: Context, private val listener: OnItemCl
         private val image: ImageView = v.findViewById(R.id.Image)
 
         fun bind(tvShow: TVShow, listener: OnItemClickListener) {
-            val imagePath: String? = if (tvShow.posterPath != null) tvShow.posterPath else tvShow.backdropPath
-            ImageUtils.setImage(image, imagePath);
+            ImageUtils.setImage(context, image, tvShow.posterPath, ImageType.POSTER)
 
             itemView.setOnClickListener { v: View? -> listener.onItemClick(tvShow) }
         }

@@ -1,5 +1,6 @@
 package com.bossdga.filmender.presentation.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.bossdga.filmender.R
-import com.bossdga.filmender.model.Movie
+import com.bossdga.filmender.model.content.ImageType
+import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.presentation.viewmodel.MovieDetailViewModel
 import com.bossdga.filmender.util.ImageUtils.setImage
 import io.reactivex.Observable
@@ -41,7 +43,7 @@ class MovieDetailFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false)
 
-        image = rootView.findViewById(R.id.image)
+        image = requireActivity().findViewById(R.id.image)
         name = rootView.findViewById(R.id.name)
         voteAverage = rootView.findViewById(R.id.voteAverage)
         date = rootView.findViewById(R.id.date)
@@ -50,7 +52,8 @@ class MovieDetailFragment : BaseFragment() {
 
         movieDetailViewModel = ViewModelProvider(requireActivity()).get(MovieDetailViewModel::class.java)
         id = extras?.getIntExtra("id", 0)
-        subscribeMovie(movieDetailViewModel.loadMovie(id))
+        subscribeMovie(movieDetailViewModel.loadMovie(id,
+            "videos,images"))
 
         return rootView
     }
@@ -83,7 +86,7 @@ class MovieDetailFragment : BaseFragment() {
                 }
 
                 override fun onNext(movie: Movie) {
-                    setImage(image, movie.posterPath)
+                    setImage(activity as Context, image, movie.backdropPath, ImageType.BACK_DROP)
                     name.setText(movie.title)
                     voteAverage.setText(movie.voteAverage)
                     date.setText(movie.releaseDate)

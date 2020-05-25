@@ -1,4 +1,4 @@
-package com.bossdga.filmender.model
+package com.bossdga.filmender.model.content
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -17,7 +17,7 @@ data class TVShow(@PrimaryKey @ColumnInfo(name = "id") @SerializedName("id") ove
                   @ColumnInfo(name = "first_air_date") @SerializedName("first_air_date") var releaseDate: String,
                   @ColumnInfo(name = "vote_average") @SerializedName("vote_average") var voteAverage: String,
                   @SerializedName("genres") var genres: List<Genre>,
-                  var images: List<Image>,
-                  var videos: List<Video>): BaseContent {
+                  var images: Image,
+                  var videos: Video): BaseContent {
 
 }
