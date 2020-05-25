@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
 import com.bossdga.filmender.model.content.TVShow
 import com.bossdga.filmender.presentation.viewmodel.TVShowDetailViewModel
+import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,11 +29,13 @@ class TVShowDetailFragment : BaseFragment() {
     private var id: Int? = 0
 
     private lateinit var image: ImageView
-    private lateinit var name: TextView
     private lateinit var voteAverage: TextView
     private lateinit var date: TextView
     private lateinit var overview: TextView
     private lateinit var genre: TextView
+    private lateinit var cast: TextView
+    private lateinit var numberOfSeasons: TextView
+    private lateinit var onLoadingListener: OnLoadingListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,16 +48,17 @@ class TVShowDetailFragment : BaseFragment() {
         val rootView = inflater.inflate(R.layout.fragment_tv_show_detail, container, false)
 
         image = requireActivity().findViewById(R.id.image)
-        name = rootView.findViewById(R.id.name)
         voteAverage = rootView.findViewById(R.id.voteAverage)
         date = rootView.findViewById(R.id.date)
         overview = rootView.findViewById(R.id.overview)
         genre = rootView.findViewById(R.id.genre)
+        cast = rootView.findViewById(R.id.cast)
+        numberOfSeasons = rootView.findViewById(R.id.numberOfSeasons)
 
         tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
         id = extras?.getIntExtra("id", 0)
         subscribeTVShow(tvShowDetailViewModel.loadTVShow(id,
-            "videos,images"))
+            "videos,images,credits"))
 
         return rootView
     }
@@ -68,6 +73,12 @@ class TVShowDetailFragment : BaseFragment() {
         super.onDestroy()
 
         disposable.dispose()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        this.onLoadingListener = (context as OnLoadingListener)
     }
 
     /**
@@ -87,11 +98,13 @@ class TVShowDetailFragment : BaseFragment() {
 
                 override fun onNext(tvShow: TVShow) {
                     setImage(activity as Context, image, tvShow.backdropPath, ImageType.BACK_DROP)
-                    name.setText(tvShow.title)
-                    voteAverage.setText(tvShow.voteAverage)
-                    date.setText(tvShow.releaseDate)
-                    overview.setText(tvShow.overview)
+                    onLoadingListener.onFinishedLoading(tvShow.title)
+                    voteAverage.text = tvShow.voteAverage
+                    numberOfSeasons.text = tvShow.numberOfSeasons.toString().plus(" Seasons")
+                    date.text = tvShow.releaseDate.substringBefore("-")
+                    overview.text = tvShow.overview
                     genre.text = tvShow.genres.joinToString(separator = " | ") { it.name }
+                    cast.text = tvShow.credits.cast.joinToString(separator = ", ") { it.name }
                     hideProgressDialog()
                 }
             }))

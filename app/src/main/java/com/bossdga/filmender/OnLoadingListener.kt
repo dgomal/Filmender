@@ -1,5 +1,5 @@
 package com.bossdga.filmender
 
 interface OnLoadingListener {
-    fun onFinishedLoading()
+    fun onFinishedLoading(text: String = "")
 }

@@ -38,7 +38,7 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
      * @param title
      * @param enableHomeAsUp
      */
-    private fun setUpActionBar(title: String, enableHomeAsUp: Boolean) {
+    protected fun setUpActionBar(title: String, enableHomeAsUp: Boolean) {
         setToolbar()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(enableHomeAsUp)

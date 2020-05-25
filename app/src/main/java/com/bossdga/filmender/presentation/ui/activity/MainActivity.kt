@@ -119,7 +119,7 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
         }
     }
 
-    override fun onFinishedLoading() {
+    override fun onFinishedLoading(text: String) {
         mSwipeRefreshLayout.isRefreshing = false
     }
 

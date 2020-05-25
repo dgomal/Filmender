@@ -16,7 +16,9 @@ data class TVShow(@PrimaryKey @ColumnInfo(name = "id") @SerializedName("id") ove
                   @ColumnInfo(name = "overview") @SerializedName("overview") var overview: String,
                   @ColumnInfo(name = "first_air_date") @SerializedName("first_air_date") var releaseDate: String,
                   @ColumnInfo(name = "vote_average") @SerializedName("vote_average") var voteAverage: String,
+                  @SerializedName("number_of_seasons") var numberOfSeasons: Int,
                   @SerializedName("genres") var genres: List<Genre>,
+                  @SerializedName("credits") var credits: Credit,
                   var images: Image,
                   var videos: Video): BaseContent {
 

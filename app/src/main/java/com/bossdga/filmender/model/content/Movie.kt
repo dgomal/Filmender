@@ -16,7 +16,9 @@ data class Movie(@PrimaryKey @ColumnInfo(name = "id") @SerializedName("id") over
                  @ColumnInfo(name = "overview") @SerializedName("overview") var overview: String,
                  @ColumnInfo(name = "release_date") @SerializedName("release_date") var releaseDate: String,
                  @ColumnInfo(name = "vote_average") @SerializedName("vote_average") var voteAverage: String,
+                 @SerializedName("runtime") var runtime: Int,
                  @SerializedName("genres") var genres: List<Genre>,
+                 @SerializedName("credits") var credits: Credit,
                  var images: Image,
                  var videos: Video): BaseContent {
 

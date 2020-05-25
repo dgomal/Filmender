@@ -14,7 +14,9 @@ import com.bossdga.filmender.model.converter.*
  * Class that represents a Room database
  */
 @Database(entities = [Movie::class, TVShow::class, ApiConfig::class], version = 1)
-@TypeConverters(GenreListConverter::class, VideoListConverter::class, ImageListConverter::class, ImageConfigConverter::class, ImageConverter::class, VideoConverter::class)
+@TypeConverters(GenreListConverter::class, VideoListConverter::class, ImageListConverter::class,
+                ImageConfigConverter::class, ImageConverter::class, VideoConverter::class,
+                CastListConverter::class, CreditConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
     abstract fun tvShowDao(): TVShowDao

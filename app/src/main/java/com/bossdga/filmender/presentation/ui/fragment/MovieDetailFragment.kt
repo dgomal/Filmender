@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
 import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.presentation.viewmodel.MovieDetailViewModel
+import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,11 +29,13 @@ class MovieDetailFragment : BaseFragment() {
     private var id: Int? = 0
 
     private lateinit var image: ImageView
-    private lateinit var name: TextView
     private lateinit var voteAverage: TextView
     private lateinit var date: TextView
     private lateinit var overview: TextView
     private lateinit var genre: TextView
+    private lateinit var cast: TextView
+    private lateinit var runtime: TextView
+    private lateinit var onLoadingListener: OnLoadingListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,16 +48,17 @@ class MovieDetailFragment : BaseFragment() {
         val rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false)
 
         image = requireActivity().findViewById(R.id.image)
-        name = rootView.findViewById(R.id.name)
         voteAverage = rootView.findViewById(R.id.voteAverage)
         date = rootView.findViewById(R.id.date)
         overview = rootView.findViewById(R.id.overview)
         genre = rootView.findViewById(R.id.genre)
+        cast = rootView.findViewById(R.id.cast)
+        runtime = rootView.findViewById(R.id.runtime)
 
         movieDetailViewModel = ViewModelProvider(requireActivity()).get(MovieDetailViewModel::class.java)
         id = extras?.getIntExtra("id", 0)
         subscribeMovie(movieDetailViewModel.loadMovie(id,
-            "videos,images"))
+            "videos,images,credits"))
 
         return rootView
     }
@@ -68,6 +73,12 @@ class MovieDetailFragment : BaseFragment() {
         super.onDestroy()
 
         disposable.dispose()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        this.onLoadingListener = (context as OnLoadingListener)
     }
 
     /**
@@ -87,11 +98,13 @@ class MovieDetailFragment : BaseFragment() {
 
                 override fun onNext(movie: Movie) {
                     setImage(activity as Context, image, movie.backdropPath, ImageType.BACK_DROP)
-                    name.setText(movie.title)
-                    voteAverage.setText(movie.voteAverage)
-                    date.setText(movie.releaseDate)
-                    overview.setText(movie.overview)
+                    onLoadingListener.onFinishedLoading(movie.title)
+                    voteAverage.text = movie.voteAverage
+                    runtime.text = DateUtils.fromMinutesToHHmm(movie.runtime)
+                    date.text = movie.releaseDate.substringBefore("-")
+                    overview.text = movie.overview
                     genre.text = movie.genres.joinToString(separator = " | ") { it.name }
+                    cast.text = movie.credits.cast.joinToString(separator = ", ") { it.name }
                     hideProgressDialog()
                 }
             }))
