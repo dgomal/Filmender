@@ -17,6 +17,9 @@ object NumberUtils {
      * Returns a random number from the provided range
      */
     fun getRandomNumberInRange(low: Int, high: Int): Int {
+        if(high < low) {
+            return 1
+        }
         return (low..high).shuffled().first()
     }
 }

@@ -228,9 +228,10 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
                 }
 
                 override fun onNext(movieResponse: MovieResponse) {
-                    val content: BaseContent = movieResponse.results.get(NumberUtils.getRandomNumberInRange(0, movieResponse.results.size.minus(1)))
-                    randomizeAndStart(content.id)
-
+                    if(movieResponse.results.isNotEmpty()) {
+                        val content: BaseContent = movieResponse.results.get(NumberUtils.getRandomNumberInRange(0, movieResponse.results.size.minus(1)))
+                        randomizeAndStart(content.id)
+                    }
                 }
             }))
     }
@@ -251,8 +252,10 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
                 }
 
                 override fun onNext(tvShowResponse: TVShowResponse) {
-                    val content: BaseContent = tvShowResponse.results.get(NumberUtils.getRandomNumberInRange(0, tvShowResponse.results.size.minus(1)))
-                    randomizeAndStart(content.id)
+                    if(tvShowResponse.results.isNotEmpty()) {
+                        val content: BaseContent = tvShowResponse.results.get(NumberUtils.getRandomNumberInRange(0, tvShowResponse.results.size.minus(1)))
+                        randomizeAndStart(content.id)
+                    }
                 }
             }))
     }

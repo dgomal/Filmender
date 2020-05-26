@@ -90,10 +90,13 @@ class MovieFragment : BaseFragment() {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableObserver<MovieResponse>() {
-                    override fun onComplete() {}
+                    override fun onComplete() {
+
+                    }
 
                     override fun onError(e: Throwable) {
                         e.printStackTrace()
+                        onLoadingListener.onFinishedLoading()
                     }
 
                     override fun onNext(movieResponse: MovieResponse) {

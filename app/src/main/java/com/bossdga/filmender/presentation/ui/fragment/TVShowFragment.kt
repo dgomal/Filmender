@@ -90,6 +90,7 @@ class TVShowFragment : BaseFragment() {
 
                     override fun onError(e: Throwable) {
                         e.printStackTrace()
+                        onLoadingListener.onFinishedLoading()
                     }
 
                     override fun onNext(tvShowResponse: TVShowResponse) {
