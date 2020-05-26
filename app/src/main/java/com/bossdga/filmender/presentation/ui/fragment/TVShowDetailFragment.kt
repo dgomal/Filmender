@@ -13,8 +13,8 @@ import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
 import com.bossdga.filmender.model.content.TVShow
 import com.bossdga.filmender.presentation.viewmodel.TVShowDetailViewModel
-import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
+import com.bossdga.filmender.util.NumberUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -57,8 +57,7 @@ class TVShowDetailFragment : BaseFragment() {
 
         tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
         id = extras?.getIntExtra("id", 0)
-        subscribeTVShow(tvShowDetailViewModel.loadTVShow(id,
-            "videos,images,credits"))
+        subscribeTVShow(tvShowDetailViewModel.loadTVShow(id, "videos,images,credits"))
 
         return rootView
     }
@@ -97,16 +96,20 @@ class TVShowDetailFragment : BaseFragment() {
                 }
 
                 override fun onNext(tvShow: TVShow) {
-                    setImage(activity as Context, image, tvShow.backdropPath, ImageType.BACK_DROP)
-                    onLoadingListener.onFinishedLoading(tvShow.title)
-                    voteAverage.text = tvShow.voteAverage
-                    numberOfSeasons.text = tvShow.numberOfSeasons.toString().plus(" Seasons")
-                    date.text = tvShow.releaseDate.substringBefore("-")
-                    overview.text = tvShow.overview
-                    genre.text = tvShow.genres.joinToString(separator = " | ") { it.name }
-                    cast.text = tvShow.credits.cast.joinToString(separator = ", ") { it.name }
-                    hideProgressDialog()
+                    renderView(tvShow)
                 }
             }))
+    }
+
+    private fun renderView(tvShow: TVShow) {
+        setImage(activity as Context, image, tvShow.backdropPath, ImageType.BACK_DROP)
+        onLoadingListener.onFinishedLoading(tvShow.title)
+        voteAverage.text = tvShow.voteAverage
+        numberOfSeasons.text = tvShow.numberOfSeasons.toString().plus(" Seasons")
+        date.text = tvShow.releaseDate?.substringBefore("-")
+        overview.text = tvShow.overview
+        genre.text = tvShow.genres.joinToString(separator = " | ") { it.name }
+        cast.text = tvShow.credits.cast.joinToString(separator = ", ") { it.name }
+        hideProgressDialog()
     }
 }

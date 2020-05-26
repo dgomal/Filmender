@@ -15,6 +15,7 @@ import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.presentation.viewmodel.MovieDetailViewModel
 import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
+import com.bossdga.filmender.util.NumberUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -57,8 +58,7 @@ class MovieDetailFragment : BaseFragment() {
 
         movieDetailViewModel = ViewModelProvider(requireActivity()).get(MovieDetailViewModel::class.java)
         id = extras?.getIntExtra("id", 0)
-        subscribeMovie(movieDetailViewModel.loadMovie(id,
-            "videos,images,credits"))
+        subscribeMovie(movieDetailViewModel.loadMovie(id, "videos,images,credits"))
 
         return rootView
     }
@@ -97,16 +97,20 @@ class MovieDetailFragment : BaseFragment() {
                 }
 
                 override fun onNext(movie: Movie) {
-                    setImage(activity as Context, image, movie.backdropPath, ImageType.BACK_DROP)
-                    onLoadingListener.onFinishedLoading(movie.title)
-                    voteAverage.text = movie.voteAverage
-                    runtime.text = DateUtils.fromMinutesToHHmm(movie.runtime)
-                    date.text = movie.releaseDate.substringBefore("-")
-                    overview.text = movie.overview
-                    genre.text = movie.genres.joinToString(separator = " | ") { it.name }
-                    cast.text = movie.credits.cast.joinToString(separator = ", ") { it.name }
-                    hideProgressDialog()
+                    renderView(movie)
                 }
             }))
+    }
+
+    private fun renderView(movie: Movie) {
+        setImage(activity as Context, image, movie.backdropPath, ImageType.BACK_DROP)
+        onLoadingListener.onFinishedLoading(movie.title)
+        voteAverage.text = movie.voteAverage
+        runtime.text = DateUtils.fromMinutesToHHmm(movie.runtime)
+        date.text = movie.releaseDate?.substringBefore("-")
+        overview.text = movie.overview
+        genre.text = movie.genres.joinToString(separator = " | ") { it.name }
+        cast.text = movie.credits.cast.joinToString(separator = ", ") { it.name }
+        hideProgressDialog()
     }
 }

@@ -36,6 +36,8 @@ class TVShowFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -53,12 +55,6 @@ class TVShowFragment : BaseFragment() {
             }
         })
         mRecyclerView.setAdapter(adapter)
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-
-        subscribeTVShows(mainViewModel.loadTVShows(PreferenceUtils.getYearFrom(activity as Context),
-            PreferenceUtils.getYearTo(activity as Context),
-            PreferenceUtils.getRating(activity as Context),
-            PreferenceUtils.getGenres(activity as Context)))
 
         return rootView
     }

@@ -13,7 +13,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
-import com.bossdga.filmender.model.ApiConfig
 import com.bossdga.filmender.model.content.BaseContent
 import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.model.content.MovieResponse
@@ -40,6 +39,8 @@ class MovieFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -58,14 +59,6 @@ class MovieFragment : BaseFragment() {
             }
         })
         mRecyclerView.setAdapter(adapter)
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-
-        subscribeMovies(mainViewModel.loadMovies(PreferenceUtils.getYearFrom(activity as Context),
-            PreferenceUtils.getYearTo(activity as Context),
-            PreferenceUtils.getRating(activity as Context),
-            PreferenceUtils.getGenres(activity as Context)))
-
-        subscribeApiConfig(mainViewModel.loadApiConfig())
 
         return rootView
     }
@@ -109,27 +102,6 @@ class MovieFragment : BaseFragment() {
                         onLoadingListener.onFinishedLoading()
                     }
                 }))
-    }
-
-    /**
-     * Method that adds a Disposable to the CompositeDisposable
-     * @param moviesObservable
-     */
-    private fun subscribeApiConfig(apiConfigObservable: Observable<ApiConfig>) {
-        disposable.add(apiConfigObservable
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : DisposableObserver<ApiConfig>() {
-                override fun onComplete() {}
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                }
-
-                override fun onNext(apiConfig: ApiConfig) {
-                    PreferenceUtils.setImageUrl(activity as Context, apiConfig.images.secureBaseUrl)
-                }
-            }))
     }
 
     fun refreshContent() {
