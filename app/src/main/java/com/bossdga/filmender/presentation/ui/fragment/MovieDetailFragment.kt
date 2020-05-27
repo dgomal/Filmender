@@ -41,7 +41,6 @@ class MovieDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        showProgressDialog()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -94,6 +93,7 @@ class MovieDetailFragment : BaseFragment() {
 
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
+                    onLoadingListener.onFinishedLoading()
                 }
 
                 override fun onNext(movie: Movie) {
@@ -107,10 +107,9 @@ class MovieDetailFragment : BaseFragment() {
         onLoadingListener.onFinishedLoading(movie.title)
         voteAverage.text = movie.voteAverage
         runtime.text = DateUtils.fromMinutesToHHmm(movie.runtime)
-        date.text = movie.releaseDate?.substringBefore("-")
+        date.text = movie.releaseDate.substringBefore("-")
         overview.text = movie.overview
         genre.text = movie.genres.joinToString(separator = " | ") { it.name }
         cast.text = movie.credits.cast.joinToString(separator = ", ") { it.name }
-        hideProgressDialog()
     }
 }

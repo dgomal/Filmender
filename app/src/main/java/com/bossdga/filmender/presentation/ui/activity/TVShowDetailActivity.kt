@@ -17,6 +17,7 @@ class TVShowDetailActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tv_show_detail)
 
+        showProgressDialog()
     }
 
     override fun createViewModel(): TVShowDetailViewModel {
@@ -25,5 +26,6 @@ class TVShowDetailActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
 
     override fun onFinishedLoading(text: String) {
         setUpActionBar(text, true)
+        hideProgressDialog()
     }
 }

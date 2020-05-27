@@ -55,7 +55,7 @@ class MovieFragment : BaseFragment() {
             override fun onItemClick(content: BaseContent) {
                 val intent = Intent(activity, MovieDetailActivity::class.java)
                 intent.putExtra("id", content.id)
-                activity?.startActivity(intent)
+                requireActivity().startActivity(intent)
             }
         })
         mRecyclerView.setAdapter(adapter)

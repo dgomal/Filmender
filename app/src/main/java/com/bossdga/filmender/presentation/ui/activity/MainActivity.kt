@@ -78,6 +78,7 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
                     PreferenceUtils.getRating(this),
                     PreferenceUtils.getGenres(this)))
             }
+
         }
 
         loadFragments()

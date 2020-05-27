@@ -40,7 +40,6 @@ class TVShowDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        showProgressDialog()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -93,6 +92,7 @@ class TVShowDetailFragment : BaseFragment() {
 
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
+                    onLoadingListener.onFinishedLoading()
                 }
 
                 override fun onNext(tvShow: TVShow) {
@@ -106,10 +106,9 @@ class TVShowDetailFragment : BaseFragment() {
         onLoadingListener.onFinishedLoading(tvShow.title)
         voteAverage.text = tvShow.voteAverage
         numberOfSeasons.text = tvShow.numberOfSeasons.toString().plus(" Seasons")
-        date.text = tvShow.releaseDate?.substringBefore("-")
+        date.text = tvShow.releaseDate.substringBefore("-")
         overview.text = tvShow.overview
         genre.text = tvShow.genres.joinToString(separator = " | ") { it.name }
         cast.text = tvShow.credits.cast.joinToString(separator = ", ") { it.name }
-        hideProgressDialog()
     }
 }
