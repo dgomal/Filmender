@@ -10,12 +10,15 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
+import com.bossdga.filmender.model.content.BaseContent
 import com.bossdga.filmender.model.content.ImageType
 import com.bossdga.filmender.model.content.Movie
+import com.bossdga.filmender.model.content.MovieResponse
 import com.bossdga.filmender.presentation.viewmodel.MovieDetailViewModel
 import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
 import com.bossdga.filmender.util.NumberUtils
+import com.bossdga.filmender.util.PreferenceUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -57,7 +60,15 @@ class MovieDetailFragment : BaseFragment() {
 
         movieDetailViewModel = ViewModelProvider(requireActivity()).get(MovieDetailViewModel::class.java)
         id = extras?.getIntExtra("id", 0)
-        subscribeMovie(movieDetailViewModel.loadMovie(id, "videos,images,credits"))
+        if(id == 0) {
+            subscribeMovies(movieDetailViewModel.loadMovies(
+                PreferenceUtils.getYearFrom(activity as Context),
+                PreferenceUtils.getYearTo(activity as Context),
+                PreferenceUtils.getRating(activity as Context),
+                PreferenceUtils.getGenres(activity as Context)))
+        } else {
+            subscribeMovie(movieDetailViewModel.loadMovie(id, "videos,images,credits"))
+        }
 
         return rootView
     }
@@ -98,18 +109,42 @@ class MovieDetailFragment : BaseFragment() {
 
                 override fun onNext(movie: Movie) {
                     renderView(movie)
+                    onLoadingListener.onFinishedLoading(movie.title)
                 }
             }))
     }
 
     private fun renderView(movie: Movie) {
         setImage(activity as Context, image, movie.backdropPath, ImageType.BACK_DROP)
-        onLoadingListener.onFinishedLoading(movie.title)
         voteAverage.text = movie.voteAverage
         runtime.text = DateUtils.fromMinutesToHHmm(movie.runtime)
         date.text = movie.releaseDate.substringBefore("-")
         overview.text = movie.overview
         genre.text = movie.genres.joinToString(separator = " | ") { it.name }
         cast.text = movie.credits.cast.joinToString(separator = ", ") { it.name }
+    }
+
+    /**
+     * Method that adds a Disposable to the CompositeDisposable
+     * @param moviesObservable
+     */
+    private fun subscribeMovies(moviesObservable: Observable<MovieResponse>) {
+        disposable.add(moviesObservable
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableObserver<MovieResponse>() {
+                override fun onComplete() {}
+
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+
+                override fun onNext(movieResponse: MovieResponse) {
+                    if(movieResponse.results.isNotEmpty()) {
+                        val content: BaseContent = movieResponse.results.get(NumberUtils.getRandomNumberInRange(0, movieResponse.results.size.minus(1)))
+                        subscribeMovie(movieDetailViewModel.loadMovie(content.id, "videos,images,credits"))
+                    }
+                }
+            }))
     }
 }

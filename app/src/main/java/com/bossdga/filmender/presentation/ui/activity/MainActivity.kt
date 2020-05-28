@@ -1,6 +1,5 @@
 package com.bossdga.filmender.presentation.ui.activity
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -17,7 +16,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.ApiConfig
-import com.bossdga.filmender.model.content.*
 import com.bossdga.filmender.presentation.ui.fragment.MovieFragment
 import com.bossdga.filmender.presentation.ui.fragment.TVShowFragment
 import com.bossdga.filmender.presentation.viewmodel.BaseViewModel
@@ -43,7 +41,6 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
     private lateinit var fragmentTVShow: TVShowFragment
     private var disposable = CompositeDisposable()
     private lateinit var mainViewModel: MainViewModel
-    private var random: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,23 +62,39 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
         subscribeApiConfig(mainViewModel.loadApiConfig())
 
         fab.setOnClickListener { view ->
-            random = NumberUtils.getRandomNumberInRange(1, 2)
-
-            if(random == 1) {
-                subscribeMovies(mainViewModel.loadMovies(PreferenceUtils.getYearFrom(this),
-                    PreferenceUtils.getYearTo(this),
-                    PreferenceUtils.getRating(this),
-                    PreferenceUtils.getGenres(this)))
-            } else {
-                subscribeTVShows(mainViewModel.loadTVShows(PreferenceUtils.getYearFrom(this),
-                    PreferenceUtils.getYearTo(this),
-                    PreferenceUtils.getRating(this),
-                    PreferenceUtils.getGenres(this)))
-            }
-
+            randomizeAndStart()
         }
 
         loadFragments()
+    }
+
+    private fun randomizeAndStart() {
+        val type: String? = PreferenceUtils.getType(this)
+        val random: Int = NumberUtils.getRandomNumberInRange(1, 2)
+
+        when (type) {
+            "0" -> {
+                val intent: Intent
+
+                if(random == 1) {
+                    intent = Intent(this@MainActivity, MovieDetailActivity::class.java)
+                } else {
+                    intent = Intent(this@MainActivity, TVShowDetailActivity::class.java)
+                }
+                intent.putExtra("id", 0)
+                startActivity(intent)
+            }
+            "1" -> {
+                val intent = Intent(this@MainActivity, MovieDetailActivity::class.java)
+                intent.putExtra("id", 0)
+                startActivity(intent)
+            }
+            "2" -> {
+                val intent = Intent(this@MainActivity, TVShowDetailActivity::class.java)
+                intent.putExtra("id", 0)
+                startActivity(intent)
+            }
+        }
     }
 
     override fun onDestroy() {
@@ -161,34 +174,6 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
         mSwipeRefreshLayout.isRefreshing = false
     }
 
-    private fun randomizeAndStart(id: Int) {
-        val type: String? = PreferenceUtils.getType(this)
-
-        when (type) {
-            "0" -> {
-                val intent: Intent
-
-                if(random == 1) {
-                    intent = Intent(this@MainActivity, MovieDetailActivity::class.java)
-                } else {
-                    intent = Intent(this@MainActivity, TVShowDetailActivity::class.java)
-                }
-                intent.putExtra("id", id)
-                startActivity(intent)
-            }
-            "1" -> {
-                val intent = Intent(this@MainActivity, MovieDetailActivity::class.java)
-                intent.putExtra("id", id)
-                startActivity(intent)
-            }
-            else -> {
-                val intent = Intent(this@MainActivity, TVShowDetailActivity::class.java)
-                intent.putExtra("id", id)
-                startActivity(intent)
-            }
-        }
-    }
-
     private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
         beginTransaction().func().commit()
     }
@@ -211,54 +196,6 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
 
     private fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
         supportFragmentManager.inTransaction{ replace(frameId, fragment) }
-    }
-
-    /**
-     * Method that adds a Disposable to the CompositeDisposable
-     * @param moviesObservable
-     */
-    private fun subscribeMovies(moviesObservable: Observable<MovieResponse>) {
-        disposable.add(moviesObservable
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : DisposableObserver<MovieResponse>() {
-                override fun onComplete() {}
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                }
-
-                override fun onNext(movieResponse: MovieResponse) {
-                    if(movieResponse.results.isNotEmpty()) {
-                        val content: BaseContent = movieResponse.results.get(NumberUtils.getRandomNumberInRange(0, movieResponse.results.size.minus(1)))
-                        randomizeAndStart(content.id)
-                    }
-                }
-            }))
-    }
-
-    /**
-     * Method that adds a Disposable to the CompositeDisposable
-     * @param tvShowsObservable
-     */
-    private fun subscribeTVShows(tvShowsObservable: Observable<TVShowResponse>) {
-        disposable.add(tvShowsObservable
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : DisposableObserver<TVShowResponse>() {
-                override fun onComplete() {}
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                }
-
-                override fun onNext(tvShowResponse: TVShowResponse) {
-                    if(tvShowResponse.results.isNotEmpty()) {
-                        val content: BaseContent = tvShowResponse.results.get(NumberUtils.getRandomNumberInRange(0, tvShowResponse.results.size.minus(1)))
-                        randomizeAndStart(content.id)
-                    }
-                }
-            }))
     }
 
     /**
