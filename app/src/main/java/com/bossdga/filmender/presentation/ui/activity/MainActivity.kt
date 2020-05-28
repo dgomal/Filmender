@@ -61,7 +61,7 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
 
         subscribeApiConfig(mainViewModel.loadApiConfig())
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener {
             randomizeAndStart()
         }
 
@@ -69,17 +69,15 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
     }
 
     private fun randomizeAndStart() {
-        val type: String? = PreferenceUtils.getType(this)
         val random: Int = NumberUtils.getRandomNumberInRange(1, 2)
 
-        when (type) {
+        when (PreferenceUtils.getType(this)) {
             "0" -> {
-                val intent: Intent
 
-                if(random == 1) {
-                    intent = Intent(this@MainActivity, MovieDetailActivity::class.java)
+                val intent: Intent = if(random == 1) {
+                    Intent(this@MainActivity, MovieDetailActivity::class.java)
                 } else {
-                    intent = Intent(this@MainActivity, TVShowDetailActivity::class.java)
+                    Intent(this@MainActivity, TVShowDetailActivity::class.java)
                 }
                 intent.putExtra("id", 0)
                 startActivity(intent)
@@ -136,9 +134,7 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
         fragmentMovie = supportFragmentManager.findFragmentById(R.id.FragmentMovie) as MovieFragment
         fragmentTVShow = supportFragmentManager.findFragmentById(R.id.FragmentTVShow) as TVShowFragment
 
-        val type: String? = PreferenceUtils.getType(this)
-
-        when (type) {
+        when (PreferenceUtils.getType(this)) {
             "0" -> {
                 attachFragment(fragmentMovie)
                 attachFragment(fragmentTVShow)
