@@ -27,7 +27,7 @@ import io.reactivex.schedulers.Schedulers
 
 
 /**
- * Fragment that will show a movie
+ * Fragment that will show a list of movies
  */
 class MovieFragment : BaseFragment() {
     private lateinit var adapter: MovieAdapter

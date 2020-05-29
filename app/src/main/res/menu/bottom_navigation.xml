@@ -3,9 +3,9 @@
     <item android:id="@+id/action_discover"
         android:enabled="true"
         android:title="Discover"
-        android:icon="@mipmap/baseline_location_searching_black"/>
+        android:icon="@drawable/explore_selector"/>
     <item android:id="@+id/action_watchlist"
         android:enabled="true"
         android:title="Watchlist"
-        android:icon="@mipmap/baseline_star_black"/>
+        android:icon="@drawable/watchlist_selector"/>
 </menu>

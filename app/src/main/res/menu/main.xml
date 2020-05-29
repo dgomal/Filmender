@@ -4,6 +4,6 @@
     <item android:id="@+id/action_settings"
         android:enabled="true"
         android:title="Settings"
-        android:icon="@mipmap/baseline_filter_list_white"
+        android:icon="@mipmap/filter_white"
         app:showAsAction="ifRoom" />
 </menu>

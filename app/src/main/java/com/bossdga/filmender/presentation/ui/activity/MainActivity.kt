@@ -46,7 +46,7 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setUpActionBar(R.string.title_activity_main, false)
+        setUpActionBar(R.string.app_name, false)
 
         val fab: View = findViewById(R.id.fab)
         mSwipeRefreshLayout = findViewById(R.id.SwipeRefreshLayout)

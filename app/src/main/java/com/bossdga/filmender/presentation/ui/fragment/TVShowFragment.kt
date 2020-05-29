@@ -25,7 +25,7 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
 /**
- * Fragment that will show a Health Prompt
+ * Fragment that will show a list of tv shows
  */
 class TVShowFragment : BaseFragment() {
     private lateinit var adapter: TVShowAdapter

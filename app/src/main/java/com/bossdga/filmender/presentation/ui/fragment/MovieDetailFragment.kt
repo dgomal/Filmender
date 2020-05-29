@@ -26,7 +26,7 @@ import io.reactivex.schedulers.Schedulers
 
 
 /**
- * A simple Fragment that will show Event details
+ * A simple Fragment that will show a movie
  */
 class MovieDetailFragment : BaseFragment() {
     private lateinit var movieDetailViewModel: MovieDetailViewModel

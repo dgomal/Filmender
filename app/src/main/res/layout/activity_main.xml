@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/template_grey_dark"
+    android:background="@color/black"
     tools:context=".presentation.ui.activity.MainActivity">
 
     <include
@@ -42,16 +42,14 @@
                     android:name="com.bossdga.filmender.presentation.ui.fragment.MovieFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_movie"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin_16"/>
+                    tools:layout="@layout/fragment_movie" />
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/FragmentTVShow"
                     android:name="com.bossdga.filmender.presentation.ui.fragment.TVShowFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_tv_show"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin_16"/>
+                    tools:layout="@layout/fragment_tv_show" />
 
             </LinearLayout>
 
@@ -74,10 +72,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:src="@mipmap/baseline_filter_list_white"
+            android:src="@mipmap/autorenew_white"
             android:contentDescription="I'm Feeling Lucky"
             android:layout_margin="@dimen/activity_vertical_margin_16"
-            app:backgroundTint="@color/black"
+            app:backgroundTint="@color/template_red"
             app:tint="@color/white"/>
 
     </LinearLayout>
@@ -95,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/bottom_navigation"
-            android:background="@color/black"
+            android:background="@color/template_red"
             style="bottomNavigationStyle"/>
 
     </LinearLayout>

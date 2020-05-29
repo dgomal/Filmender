@@ -25,7 +25,7 @@ import io.reactivex.schedulers.Schedulers
 
 
 /**
- * A simple Fragment that will show Event details
+ * A simple Fragment that will show a tv show
  */
 class TVShowDetailFragment : BaseFragment() {
     private lateinit var tvShowDetailViewModel: TVShowDetailViewModel
