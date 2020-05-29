@@ -3,9 +3,9 @@
     <item android:id="@+id/action_discover"
         android:enabled="true"
         android:title="Discover"
-        android:icon="@drawable/explore_selector"/>
+        android:icon="@drawable/explore_selector_red"/>
     <item android:id="@+id/action_watchlist"
         android:enabled="true"
         android:title="Watchlist"
-        android:icon="@drawable/watchlist_selector"/>
+        android:icon="@drawable/watchlist_selector_red"/>
 </menu>

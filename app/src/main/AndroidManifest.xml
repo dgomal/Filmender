@@ -16,8 +16,7 @@
         <activity
             android:name=".presentation.ui.activity.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,22 +28,19 @@
             android:name=".presentation.ui.activity.MovieDetailActivity"
             android:parentActivityName=".presentation.ui.activity.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:launchMode="singleTop"/>
 
         <activity
             android:name=".presentation.ui.activity.TVShowDetailActivity"
             android:parentActivityName=".presentation.ui.activity.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:launchMode="singleTop"/>
 
         <activity
             android:name=".presentation.ui.activity.FilterSettingsActivity"
             android:parentActivityName=".presentation.ui.activity.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:launchMode="singleTop"/>
 
     </application>
 
