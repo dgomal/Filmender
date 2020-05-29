@@ -16,7 +16,6 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
-        <item name="android:background">@color/white</item>
         <item name="android:textColorPrimary">@color/template_red</item>
         <item name="colorControlNormal">@color/template_red</item>
         <item name="android:textSize">32sp</item>
