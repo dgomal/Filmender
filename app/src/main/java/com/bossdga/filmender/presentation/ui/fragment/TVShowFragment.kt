@@ -32,7 +32,6 @@ class TVShowFragment : BaseFragment() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var onLoadingListener: OnLoadingListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,12 +70,6 @@ class TVShowFragment : BaseFragment() {
         disposable.dispose()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        this.onLoadingListener = (context as OnLoadingListener)
-    }
-
     /**
      * Method that adds a Disposable to the CompositeDisposable
      * @param tvShowsObservable
@@ -90,13 +83,12 @@ class TVShowFragment : BaseFragment() {
 
                     override fun onError(e: Throwable) {
                         e.printStackTrace()
-                        onLoadingListener.onFinishedLoading()
                     }
 
                     override fun onNext(tvShowResponse: TVShowResponse) {
                         val showList: List<TVShow> = tvShowResponse.results.take(PreferenceUtils.getResults(activity as Context)!!)
                         adapter.setItems(showList)
-                        onLoadingListener.onFinishedLoading()
+                        mainViewModel.loaded.postValue(true)
                     }
                 }))
     }

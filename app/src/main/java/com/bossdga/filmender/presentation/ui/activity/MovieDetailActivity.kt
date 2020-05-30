@@ -16,7 +16,6 @@ class MovieDetailActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
 
-        showProgressDialog()
     }
 
     override fun createViewModel(): MovieDetailViewModel {
@@ -25,6 +24,5 @@ class MovieDetailActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
 
     override fun onFinishedLoading(text: String) {
         setUpActionBar(text, true)
-        hideProgressDialog()
     }
 }

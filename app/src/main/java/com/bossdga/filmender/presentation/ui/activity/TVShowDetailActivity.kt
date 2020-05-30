@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.presentation.viewmodel.BaseViewModel
-import com.bossdga.filmender.presentation.viewmodel.MovieDetailViewModel
 import com.bossdga.filmender.presentation.viewmodel.TVShowDetailViewModel
 
 
@@ -17,7 +16,6 @@ class TVShowDetailActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tv_show_detail)
 
-        showProgressDialog()
     }
 
     override fun createViewModel(): TVShowDetailViewModel {
@@ -26,6 +24,5 @@ class TVShowDetailActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
 
     override fun onFinishedLoading(text: String) {
         setUpActionBar(text, true)
-        hideProgressDialog()
     }
 }

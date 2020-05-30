@@ -44,6 +44,7 @@ class MovieDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        showProgressDialog()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -104,12 +105,12 @@ class MovieDetailFragment : BaseFragment() {
 
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
-                    onLoadingListener.onFinishedLoading()
                 }
 
                 override fun onNext(movie: Movie) {
                     renderView(movie)
                     onLoadingListener.onFinishedLoading(movie.title)
+                    hideProgressDialog()
                 }
             }))
     }

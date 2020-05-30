@@ -43,6 +43,7 @@ class TVShowDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        showProgressDialog()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -103,12 +104,12 @@ class TVShowDetailFragment : BaseFragment() {
 
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
-                    onLoadingListener.onFinishedLoading()
                 }
 
                 override fun onNext(tvShow: TVShow) {
                     renderView(tvShow)
                     onLoadingListener.onFinishedLoading(tvShow.title)
+                    hideProgressDialog()
                 }
             }))
     }
