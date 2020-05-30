@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.OnItemClickListener
-import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.BaseContent
 import com.bossdga.filmender.model.content.Movie
@@ -94,7 +93,7 @@ class MovieFragment : BaseFragment() {
                     override fun onNext(movieResponse: MovieResponse) {
                         val movieList: List<Movie> = movieResponse.results.take(PreferenceUtils.getResults(activity as Context)!!)
                         adapter.setItems(movieList)
-                        mainViewModel.loaded.postValue(true)
+                        mainViewModel.loaded.postValue("true")
                     }
                 }))
     }

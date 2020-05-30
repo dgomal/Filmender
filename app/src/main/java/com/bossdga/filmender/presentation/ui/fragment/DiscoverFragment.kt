@@ -147,7 +147,7 @@ class DiscoverFragment : BaseFragment() {
     private fun observeLoaded(mainViewModel: MainViewModel) {
         mainViewModel.loaded.observe(requireActivity(), Observer {
             it?.let {
-                mSwipeRefreshLayout.isRefreshing = false
+                mSwipeRefreshLayout.isRefreshing = !it.toBoolean()
             }
         })
     }

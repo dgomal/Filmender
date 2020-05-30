@@ -11,7 +11,6 @@ import io.reactivex.Observable
  * ViewModel used with the MainActivity
  */
 class MainViewModel(movieRepository: MovieRepository, tvShowRepository: TVShowRepository, private val apiConfigRepository: ApiConfigRepository) : BaseViewModel(movieRepository, tvShowRepository) {
-    val loaded = MutableLiveData<Boolean>()
     /**
      * Method that returns an Observable of a Configuration
      * @return

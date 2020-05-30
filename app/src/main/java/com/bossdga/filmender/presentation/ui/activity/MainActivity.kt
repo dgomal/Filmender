@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.presentation.ui.fragment.DiscoverFragment
 import com.bossdga.filmender.presentation.ui.fragment.WatchListFragment

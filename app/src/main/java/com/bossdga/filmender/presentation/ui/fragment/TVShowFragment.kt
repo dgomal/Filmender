@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnItemClickListener
-import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.BaseContent
 import com.bossdga.filmender.model.content.TVShow
@@ -88,7 +87,7 @@ class TVShowFragment : BaseFragment() {
                     override fun onNext(tvShowResponse: TVShowResponse) {
                         val showList: List<TVShow> = tvShowResponse.results.take(PreferenceUtils.getResults(activity as Context)!!)
                         adapter.setItems(showList)
-                        mainViewModel.loaded.postValue(true)
+                        mainViewModel.loaded.postValue("true")
                     }
                 }))
     }

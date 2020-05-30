@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.BaseContent
 import com.bossdga.filmender.model.content.ImageType
@@ -39,7 +38,6 @@ class MovieDetailFragment : BaseFragment() {
     private lateinit var genre: TextView
     private lateinit var cast: TextView
     private lateinit var runtime: TextView
-    private lateinit var onLoadingListener: OnLoadingListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,12 +84,6 @@ class MovieDetailFragment : BaseFragment() {
         disposable.dispose()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        this.onLoadingListener = (context as OnLoadingListener)
-    }
-
     /**
      * Method that adds a Disposable to the CompositeDisposable
      * @param moviesObservable
@@ -109,7 +101,7 @@ class MovieDetailFragment : BaseFragment() {
 
                 override fun onNext(movie: Movie) {
                     renderView(movie)
-                    onLoadingListener.onFinishedLoading(movie.title)
+                    movieDetailViewModel.loaded.postValue(movie.title)
                     hideProgressDialog()
                 }
             }))
