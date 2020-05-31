@@ -1,5 +1,6 @@
 package com.bossdga.filmender.presentation.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import com.bossdga.filmender.model.ApiConfig
 import com.bossdga.filmender.source.ApiConfigRepository
 import com.bossdga.filmender.source.MovieRepository
@@ -10,7 +11,6 @@ import io.reactivex.Observable
  * ViewModel used with the MainActivity
  */
 class MainViewModel(movieRepository: MovieRepository, tvShowRepository: TVShowRepository, private val apiConfigRepository: ApiConfigRepository) : BaseViewModel(movieRepository, tvShowRepository) {
-
     /**
      * Method that returns an Observable of a Configuration
      * @return

@@ -8,39 +8,25 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
-import com.bossdga.filmender.model.ApiConfig
-import com.bossdga.filmender.presentation.ui.fragment.MovieFragment
-import com.bossdga.filmender.presentation.ui.fragment.TVShowFragment
+import com.bossdga.filmender.presentation.ui.fragment.DiscoverFragment
+import com.bossdga.filmender.presentation.ui.fragment.WatchListFragment
 import com.bossdga.filmender.presentation.viewmodel.BaseViewModel
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
-import io.reactivex.schedulers.Schedulers
 
 
 /**
  * Main Activity that holds several fragments
  */
-class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
-    private lateinit var moviesFragment: FragmentContainerView
-    private lateinit var showsFragment: FragmentContainerView
-    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
-    private lateinit var fragmentMovie: MovieFragment
-    private lateinit var fragmentTVShow: TVShowFragment
-    private var disposable = CompositeDisposable()
-    private lateinit var mainViewModel: MainViewModel
+class MainActivity : BaseActivity<BaseViewModel>() {
+    private lateinit var fragmentDiscover: DiscoverFragment
+    private lateinit var fragmentWatchList: WatchListFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,24 +34,18 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
 
         setUpActionBar(R.string.app_name, false)
 
-        val fab: View = findViewById(R.id.fab)
-        mSwipeRefreshLayout = findViewById(R.id.SwipeRefreshLayout)
-        mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
-        moviesFragment = findViewById(R.id.FragmentMovie)
-        showsFragment = findViewById(R.id.FragmentTVShow)
-
         val bottomNavigation: BottomNavigationView = findViewById(R.id.BottomNavigation)
         bottomNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-        subscribeApiConfig(mainViewModel.loadApiConfig())
-
+        val fab: View = findViewById(R.id.fab)
         fab.setOnClickListener {
             randomizeAndStart()
         }
 
-        loadFragments()
+        fragmentDiscover = DiscoverFragment()
+        fragmentWatchList = WatchListFragment()
+
+        replaceFragment(fragmentDiscover, R.id.FragmentContainer)
     }
 
     private fun randomizeAndStart() {
@@ -73,7 +53,6 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
 
         when (PreferenceUtils.getType(this)) {
             "0" -> {
-
                 val intent: Intent = if(random == 1) {
                     Intent(this@MainActivity, MovieDetailActivity::class.java)
                 } else {
@@ -93,20 +72,6 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
                 startActivity(intent)
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        disposable.clear()
-        disposable.dispose()
-    }
-
-    /**
-     * Listener for swipe to refresh functionality
-     */
-    private val onRefreshListener = SwipeRefreshLayout.OnRefreshListener {
-        loadFragments()
     }
 
     override fun createViewModel(): MainViewModel {
@@ -130,44 +95,18 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
         }
     }
 
-    private fun loadFragments() {
-        fragmentMovie = supportFragmentManager.findFragmentById(R.id.FragmentMovie) as MovieFragment
-        fragmentTVShow = supportFragmentManager.findFragmentById(R.id.FragmentTVShow) as TVShowFragment
-
-        when (PreferenceUtils.getType(this)) {
-            "0" -> {
-                attachFragment(fragmentMovie)
-                attachFragment(fragmentTVShow)
-                fragmentMovie.refreshContent()
-                fragmentTVShow.refreshContent()
-            }
-            "1" -> {
-                attachFragment(fragmentMovie)
-                detachFragment(fragmentTVShow)
-                fragmentMovie.refreshContent()
-            }
-            else -> {
-                attachFragment(fragmentTVShow)
-                detachFragment(fragmentMovie)
-                fragmentTVShow.refreshContent()
-            }
-        }
-    }
-
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.action_discover -> {
+                replaceFragment(fragmentDiscover, R.id.FragmentContainer)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.action_watchlist -> {
+                replaceFragment(fragmentWatchList, R.id.FragmentContainer)
                 return@OnNavigationItemSelectedListener true
             }
             else -> false
         }
-    }
-
-    override fun onFinishedLoading(text: String) {
-        mSwipeRefreshLayout.isRefreshing = false
     }
 
     private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
@@ -194,24 +133,4 @@ class MainActivity : BaseActivity<BaseViewModel>(), OnLoadingListener {
         supportFragmentManager.inTransaction{ replace(frameId, fragment) }
     }
 
-    /**
-     * Method that adds a Disposable to the CompositeDisposable
-     * @param moviesObservable
-     */
-    private fun subscribeApiConfig(apiConfigObservable: Observable<ApiConfig>) {
-        disposable.add(apiConfigObservable
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : DisposableObserver<ApiConfig>() {
-                override fun onComplete() {}
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                }
-
-                override fun onNext(apiConfig: ApiConfig) {
-                    PreferenceUtils.setImageUrl(this@MainActivity, apiConfig.images.secureBaseUrl)
-                }
-            }))
-    }
 }

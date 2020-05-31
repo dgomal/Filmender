@@ -3,6 +3,8 @@ package com.bossdga.filmender.util
 import android.content.Context
 import android.widget.ImageView
 import coil.api.load
+import coil.transform.CircleCropTransformation
+import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
 
 /**
@@ -16,7 +18,7 @@ object ImageUtils {
      * @param url
      */
     fun setImage(context: Context, image: ImageView, url: String?, imageType: ImageType) {
-        val size: String?
+        val size: String
         when (imageType) {
             ImageType.POSTER -> {
                 size = "original"
@@ -25,6 +27,10 @@ object ImageUtils {
                 size = "w1280"
             }
         }
-        image.load(PreferenceUtils.getImageUrl(context) + size + url)
+        image.load(PreferenceUtils.getImageUrl(context) + size + url) {
+            crossfade(true)
+            //placeholder(R.drawable.image_placeholder)
+            //transformations(CircleCropTransformation())
+        }
     }
 }

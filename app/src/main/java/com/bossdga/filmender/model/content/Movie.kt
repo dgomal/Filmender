@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName
  */
 @Entity(tableName = "movie")
 data class Movie(@PrimaryKey @ColumnInfo(name = "id") @SerializedName("id") override var id: Int,
-                 @ColumnInfo(name = "poster_path") @SerializedName("poster_path") var posterPath: String,
+                 @ColumnInfo(name = "poster_path") @SerializedName("poster_path") var posterPath: String?,
                  @ColumnInfo(name = "backdrop_path") @SerializedName("backdrop_path") var backdropPath: String,
                  @ColumnInfo(name = "title") @SerializedName("title") var title: String,
                  @ColumnInfo(name = "overview") @SerializedName("overview") var overview: String,

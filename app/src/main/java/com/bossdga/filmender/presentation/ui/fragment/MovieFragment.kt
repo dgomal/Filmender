@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.OnItemClickListener
-import com.bossdga.filmender.OnLoadingListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.BaseContent
 import com.bossdga.filmender.model.content.Movie
@@ -35,7 +34,6 @@ class MovieFragment : BaseFragment() {
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mainViewModel: MainViewModel
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
-    private lateinit var onLoadingListener: OnLoadingListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,12 +73,6 @@ class MovieFragment : BaseFragment() {
         disposable.dispose()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        this.onLoadingListener = (context as OnLoadingListener)
-    }
-
     /**
      * Method that adds a Disposable to the CompositeDisposable
      * @param moviesObservable
@@ -96,13 +88,12 @@ class MovieFragment : BaseFragment() {
 
                     override fun onError(e: Throwable) {
                         e.printStackTrace()
-                        onLoadingListener.onFinishedLoading()
                     }
 
                     override fun onNext(movieResponse: MovieResponse) {
                         val movieList: List<Movie> = movieResponse.results.take(PreferenceUtils.getResults(activity as Context)!!)
                         adapter.setItems(movieList)
-                        onLoadingListener.onFinishedLoading()
+                        mainViewModel.loaded.postValue("true")
                     }
                 }))
     }

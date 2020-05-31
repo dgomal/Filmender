@@ -17,8 +17,8 @@ interface TVShowAPI {
      */
     @GET("/3/discover/tv")
     fun getTVShows(@Query("page") page: Int,
-                   @Query("air_date.gte") airDateGte: String?,
-                   @Query("air_date.lte") airDateLte: String?,
+                   @Query("first_air_date.gte") airDateGte: String?,
+                   @Query("first_air_date.lte") airDateLte: String?,
                    @Query("vote_average.gte") voteAverageGte: String?,
                    @Query("with_genres") withGenres: String?
     ): Observable<TVShowResponse>
