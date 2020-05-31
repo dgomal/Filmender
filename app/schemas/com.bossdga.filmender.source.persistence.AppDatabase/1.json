@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "399fca807595cf315262d33099b95b48",
+    "identityHash": "22142b3783ee7377a1c09bf8a5813bb2",
     "entities": [
       {
         "tableName": "movie",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `poster_path` TEXT NOT NULL, `backdrop_path` TEXT NOT NULL, `title` TEXT NOT NULL, `overview` TEXT NOT NULL, `release_date` TEXT NOT NULL, `vote_average` TEXT NOT NULL, `runtime` INTEGER NOT NULL, `genres` TEXT NOT NULL, `credits` TEXT NOT NULL, `images` TEXT NOT NULL, `videos` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `poster_path` TEXT, `backdrop_path` TEXT NOT NULL, `title` TEXT NOT NULL, `overview` TEXT NOT NULL, `release_date` TEXT NOT NULL, `vote_average` TEXT NOT NULL, `runtime` INTEGER NOT NULL, `genres` TEXT NOT NULL, `credits` TEXT NOT NULL, `images` TEXT NOT NULL, `videos` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -18,7 +18,7 @@
             "fieldPath": "posterPath",
             "columnName": "poster_path",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "backdropPath",
@@ -92,7 +92,7 @@
       },
       {
         "tableName": "tv_show",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `poster_path` TEXT NOT NULL, `backdrop_path` TEXT NOT NULL, `name` TEXT NOT NULL, `overview` TEXT NOT NULL, `first_air_date` TEXT NOT NULL, `vote_average` TEXT NOT NULL, `numberOfSeasons` INTEGER NOT NULL, `genres` TEXT NOT NULL, `credits` TEXT NOT NULL, `images` TEXT NOT NULL, `videos` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `poster_path` TEXT, `backdrop_path` TEXT NOT NULL, `name` TEXT NOT NULL, `overview` TEXT NOT NULL, `first_air_date` TEXT NOT NULL, `vote_average` TEXT NOT NULL, `numberOfSeasons` INTEGER NOT NULL, `genres` TEXT NOT NULL, `credits` TEXT NOT NULL, `images` TEXT NOT NULL, `videos` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -104,7 +104,7 @@
             "fieldPath": "posterPath",
             "columnName": "poster_path",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "backdropPath",
@@ -206,7 +206,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '399fca807595cf315262d33099b95b48')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '22142b3783ee7377a1c09bf8a5813bb2')"
     ]
   }
 }

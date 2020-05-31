@@ -25,8 +25,13 @@ class MovieAdapter(private var context: Context, private val listener: OnItemCli
      */
     inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         private val image: ImageView = v.findViewById(R.id.Image)
+        private val title: TextView = v.findViewById(R.id.Title)
 
         fun bind(movie: Movie, listener: OnItemClickListener) {
+            if(movie.posterPath == null) {
+                title.text = movie.title
+                title.visibility = View.VISIBLE
+            }
             ImageUtils.setImage(context, image, movie.posterPath, ImageType.POSTER)
 
             itemView.setOnClickListener { v: View? -> listener.onItemClick(movie) }
