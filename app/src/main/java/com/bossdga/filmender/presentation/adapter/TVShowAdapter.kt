@@ -31,6 +31,8 @@ class TVShowAdapter(private var context: Context, private val listener: OnItemCl
             if(tvShow.posterPath == null) {
                 title.text = tvShow.title
                 title.visibility = View.VISIBLE
+            } else {
+                title.visibility = View.GONE
             }
             ImageUtils.setImage(context, image, tvShow.posterPath, ImageType.POSTER)
 

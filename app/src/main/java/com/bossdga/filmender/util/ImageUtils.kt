@@ -18,7 +18,7 @@ object ImageUtils {
      * @param url
      */
     fun setImage(context: Context, image: ImageView, url: String?, imageType: ImageType) {
-        val size: String?
+        val size: String
         when (imageType) {
             ImageType.POSTER -> {
                 size = "original"

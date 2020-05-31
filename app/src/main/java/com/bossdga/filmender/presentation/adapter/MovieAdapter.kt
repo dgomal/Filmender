@@ -31,6 +31,8 @@ class MovieAdapter(private var context: Context, private val listener: OnItemCli
             if(movie.posterPath == null) {
                 title.text = movie.title
                 title.visibility = View.VISIBLE
+            } else {
+                title.visibility = View.GONE
             }
             ImageUtils.setImage(context, image, movie.posterPath, ImageType.POSTER)
 
