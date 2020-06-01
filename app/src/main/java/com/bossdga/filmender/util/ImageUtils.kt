@@ -26,6 +26,9 @@ object ImageUtils {
             ImageType.BACK_DROP -> {
                 size = "w1280"
             }
+            ImageType.PROFILE -> {
+                size = "original"
+            }
         }
         image.load(PreferenceUtils.getImageUrl(context) + size + url) {
             crossfade(true)

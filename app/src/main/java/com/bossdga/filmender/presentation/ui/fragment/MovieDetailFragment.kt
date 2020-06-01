@@ -1,6 +1,7 @@
 package com.bossdga.filmender.presentation.ui.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.BaseContent
 import com.bossdga.filmender.model.content.ImageType
 import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.model.content.MovieResponse
+import com.bossdga.filmender.presentation.adapter.MovieAdapter
+import com.bossdga.filmender.presentation.adapter.PeopleAdapter
+import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MovieDetailViewModel
 import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
@@ -28,6 +35,9 @@ import io.reactivex.schedulers.Schedulers
  * A simple Fragment that will show a movie
  */
 class MovieDetailFragment : BaseFragment() {
+    private lateinit var adapter: PeopleAdapter
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var movieDetailViewModel: MovieDetailViewModel
     private var id: Int? = 0
 
@@ -36,7 +46,6 @@ class MovieDetailFragment : BaseFragment() {
     private lateinit var date: TextView
     private lateinit var overview: TextView
     private lateinit var genre: TextView
-    private lateinit var cast: TextView
     private lateinit var runtime: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +63,6 @@ class MovieDetailFragment : BaseFragment() {
         date = rootView.findViewById(R.id.date)
         overview = rootView.findViewById(R.id.overview)
         genre = rootView.findViewById(R.id.genre)
-        cast = rootView.findViewById(R.id.cast)
         runtime = rootView.findViewById(R.id.runtime)
 
         movieDetailViewModel = ViewModelProvider(requireActivity()).get(MovieDetailViewModel::class.java)
@@ -68,6 +76,16 @@ class MovieDetailFragment : BaseFragment() {
         } else {
             subscribeMovie(movieDetailViewModel.loadMovie(id, "videos,images,credits"))
         }
+
+        mRecyclerView = rootView.findViewById(R.id.recyclerView)
+        gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.HORIZONTAL, false)
+        mRecyclerView.setLayoutManager(gridLayoutManager)
+        adapter = PeopleAdapter(activity as Context, object : OnItemClickListener {
+            override fun onItemClick(content: BaseContent) {
+
+            }
+        })
+        mRecyclerView.setAdapter(adapter)
 
         return rootView
     }
@@ -113,8 +131,8 @@ class MovieDetailFragment : BaseFragment() {
         runtime.text = DateUtils.fromMinutesToHHmm(movie.runtime)
         date.text = movie.releaseDate.substringBefore("-")
         overview.text = movie.overview
-        genre.text = movie.genres.joinToString(separator = " | ") { it.name }
-        cast.text = movie.credits.cast.joinToString(separator = ", ") { it.name }
+        genre.text = movie.genres.joinToString(separator = " \u2022 ") { it.name }
+        adapter.setItems(movie.credits.cast)
     }
 
     /**

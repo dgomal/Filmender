@@ -14,6 +14,19 @@
         android:layout_height="265dp"
         layout="@layout/collapsing_app_bar" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/bookmark_red"
+        android:contentDescription="Add to watchlist"
+        app:layout_anchor="@id/CollapsingAppBar"
+        app:layout_anchorGravity="bottom|end"
+        app:backgroundTint="@color/white"
+        app:tint="@color/template_red"
+        android:layout_marginRight="@dimen/activity_horizontal_margin_16"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin_16" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentMovieDetail"
         android:name="com.bossdga.filmender.presentation.ui.fragment.MovieDetailFragment"

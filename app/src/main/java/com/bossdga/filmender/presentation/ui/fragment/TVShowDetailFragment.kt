@@ -1,6 +1,7 @@
 package com.bossdga.filmender.presentation.ui.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,16 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.BaseContent
 import com.bossdga.filmender.model.content.ImageType
 import com.bossdga.filmender.model.content.TVShow
 import com.bossdga.filmender.model.content.TVShowResponse
+import com.bossdga.filmender.presentation.adapter.PeopleAdapter
+import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.TVShowDetailViewModel
 import com.bossdga.filmender.util.ImageUtils.setImage
 import com.bossdga.filmender.util.NumberUtils
@@ -27,6 +33,9 @@ import io.reactivex.schedulers.Schedulers
  * A simple Fragment that will show a tv show
  */
 class TVShowDetailFragment : BaseFragment() {
+    private lateinit var adapter: PeopleAdapter
+    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var tvShowDetailViewModel: TVShowDetailViewModel
     private var id: Int? = 0
 
@@ -35,7 +44,6 @@ class TVShowDetailFragment : BaseFragment() {
     private lateinit var date: TextView
     private lateinit var overview: TextView
     private lateinit var genre: TextView
-    private lateinit var cast: TextView
     private lateinit var numberOfSeasons: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +61,6 @@ class TVShowDetailFragment : BaseFragment() {
         date = rootView.findViewById(R.id.date)
         overview = rootView.findViewById(R.id.overview)
         genre = rootView.findViewById(R.id.genre)
-        cast = rootView.findViewById(R.id.cast)
         numberOfSeasons = rootView.findViewById(R.id.numberOfSeasons)
 
         tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
@@ -67,6 +74,16 @@ class TVShowDetailFragment : BaseFragment() {
         } else {
             subscribeTVShow(tvShowDetailViewModel.loadTVShow(id, "videos,images,credits"))
         }
+
+        mRecyclerView = rootView.findViewById(R.id.recyclerView)
+        gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.HORIZONTAL, false)
+        mRecyclerView.setLayoutManager(gridLayoutManager)
+        adapter = PeopleAdapter(activity as Context, object : OnItemClickListener {
+            override fun onItemClick(content: BaseContent) {
+
+            }
+        })
+        mRecyclerView.setAdapter(adapter)
 
         return rootView
     }
@@ -112,8 +129,8 @@ class TVShowDetailFragment : BaseFragment() {
         numberOfSeasons.text = tvShow.numberOfSeasons.toString().plus(" Seasons")
         date.text = tvShow.releaseDate.substringBefore("-")
         overview.text = tvShow.overview
-        genre.text = tvShow.genres.joinToString(separator = " | ") { it.name }
-        cast.text = tvShow.credits.cast.joinToString(separator = ", ") { it.name }
+        genre.text = tvShow.genres.joinToString(separator = " \u2022 ") { it.name }
+        adapter.setItems(tvShow.credits.cast)
     }
 
     /**
