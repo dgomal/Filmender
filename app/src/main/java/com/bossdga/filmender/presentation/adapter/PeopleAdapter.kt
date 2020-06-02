@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bossdga.filmender.OnImageClickListener
 import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
-import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.model.content.People
 import com.bossdga.filmender.util.ImageUtils
 import java.util.*
@@ -18,7 +18,7 @@ import java.util.*
 /**
  * Provide views to RecyclerView with data from apps.
  */
-class PeopleAdapter(private var context: Context, private val listener: OnItemClickListener) : RecyclerView.Adapter<PeopleAdapter.ViewHolder>() {
+class PeopleAdapter(private var context: Context, private val listener: OnImageClickListener) : RecyclerView.Adapter<PeopleAdapter.ViewHolder>() {
     private var peopleList: List<People> = ArrayList()
 
     /**
@@ -28,11 +28,11 @@ class PeopleAdapter(private var context: Context, private val listener: OnItemCl
         private val image: ImageView = v.findViewById(R.id.Image)
         private val name: TextView = v.findViewById(R.id.Name)
 
-        fun bind(people: People, listener: OnItemClickListener) {
+        fun bind(people: People, listener: OnImageClickListener) {
             name.text = people.name
             ImageUtils.setImage(context, image, people.profilePath, ImageType.PROFILE)
 
-            itemView.setOnClickListener { v: View? -> listener.onItemClick(people) }
+            itemView.setOnClickListener { v: View? -> listener.onImageClick(people) }
         }
     }
 

@@ -10,16 +10,18 @@ import com.google.gson.annotations.SerializedName
  */
 @Entity(tableName = "movie")
 data class Movie(@PrimaryKey @ColumnInfo(name = "id") @SerializedName("id") override var id: Int,
+                 @ColumnInfo(name = "imdb_id") @SerializedName("imdb_id") var imdbId: String?,
                  @ColumnInfo(name = "poster_path") @SerializedName("poster_path") var posterPath: String?,
-                 @ColumnInfo(name = "backdrop_path") @SerializedName("backdrop_path") var backdropPath: String,
+                 @ColumnInfo(name = "backdrop_path") @SerializedName("backdrop_path") var backdropPath: String?,
                  @ColumnInfo(name = "title") @SerializedName("title") var title: String,
-                 @ColumnInfo(name = "overview") @SerializedName("overview") var overview: String,
+                 @ColumnInfo(name = "overview") @SerializedName("overview") var overview: String?,
                  @ColumnInfo(name = "release_date") @SerializedName("release_date") var releaseDate: String,
                  @ColumnInfo(name = "vote_average") @SerializedName("vote_average") var voteAverage: String,
-                 @SerializedName("runtime") var runtime: Int,
+                 @ColumnInfo(name = "runtime") @SerializedName("runtime") var runtime: Int?,
+                 @ColumnInfo(name = "popularity") @SerializedName("popularity") var popularity: Double,
                  @SerializedName("genres") var genres: List<Genre>,
                  @SerializedName("credits") var credits: Credit,
-                 var images: Image,
-                 var videos: Video): BaseContent {
+                 @SerializedName("images") var images: Image,
+                 @SerializedName("videos") var videos: VideoResult): BaseContent {
 
 }

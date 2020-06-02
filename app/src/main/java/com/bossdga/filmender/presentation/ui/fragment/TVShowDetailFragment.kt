@@ -1,7 +1,10 @@
 package com.bossdga.filmender.presentation.ui.fragment
 
+import android.app.AlertDialog
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +14,10 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bossdga.filmender.OnItemClickListener
+import com.bossdga.filmender.OnImageClickListener
 import com.bossdga.filmender.R
-import com.bossdga.filmender.model.content.BaseContent
-import com.bossdga.filmender.model.content.ImageType
-import com.bossdga.filmender.model.content.TVShow
-import com.bossdga.filmender.model.content.TVShowResponse
+import com.bossdga.filmender.model.content.*
 import com.bossdga.filmender.presentation.adapter.PeopleAdapter
-import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.TVShowDetailViewModel
 import com.bossdga.filmender.util.ImageUtils.setImage
 import com.bossdga.filmender.util.NumberUtils
@@ -45,6 +44,9 @@ class TVShowDetailFragment : BaseFragment() {
     private lateinit var overview: TextView
     private lateinit var genre: TextView
     private lateinit var numberOfSeasons: TextView
+    private lateinit var trailer: ImageView
+
+    private lateinit var tvShow: TVShow
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +64,12 @@ class TVShowDetailFragment : BaseFragment() {
         overview = rootView.findViewById(R.id.overview)
         genre = rootView.findViewById(R.id.genre)
         numberOfSeasons = rootView.findViewById(R.id.numberOfSeasons)
+        trailer = rootView.findViewById(R.id.TrailerImage)
+        trailer.setOnClickListener {
+            if(!tvShow.videos.results.isEmpty()) {
+                watchYoutubeVideo(tvShow.videos.results.get(0).key)
+            }
+        }
 
         tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
         id = extras?.getIntExtra("id", 0)
@@ -78,9 +86,13 @@ class TVShowDetailFragment : BaseFragment() {
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
         gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.HORIZONTAL, false)
         mRecyclerView.setLayoutManager(gridLayoutManager)
-        adapter = PeopleAdapter(activity as Context, object : OnItemClickListener {
-            override fun onItemClick(content: BaseContent) {
-
+        adapter = PeopleAdapter(activity as Context, object : OnImageClickListener {
+            override fun onImageClick(people: People) {
+                val view = LayoutInflater.from(activity as Context).inflate(R.layout.image_layout, container, false)
+                val imageView: ImageView = view.findViewById(R.id.ProfileImage)
+                setImage(activity as Context, imageView, people.profilePath, ImageType.BACK_DROP)
+                val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(activity as Context)
+                alertDialogBuilder.setView(view).show()
             }
         })
         mRecyclerView.setAdapter(adapter)
@@ -131,6 +143,17 @@ class TVShowDetailFragment : BaseFragment() {
         overview.text = tvShow.overview
         genre.text = tvShow.genres.joinToString(separator = " \u2022 ") { it.name }
         adapter.setItems(tvShow.credits.cast)
+        this.tvShow = tvShow
+    }
+
+    private fun watchYoutubeVideo(id: String) {
+        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"))
+        val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$id"))
+        try {
+            startActivity(appIntent)
+        } catch (ex: ActivityNotFoundException) {
+            startActivity(webIntent)
+        }
     }
 
     /**

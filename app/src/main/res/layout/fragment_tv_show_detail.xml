@@ -70,7 +70,7 @@
                     android:id="@+id/DateImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/year_black"
+                    android:src="@mipmap/calendar_black"
                     android:contentDescription="Date"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin_24"
                     android:layout_marginStart="@dimen/activity_horizontal_margin_24"/>
@@ -119,6 +119,26 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin_24"
                 android:layout_marginStart="@dimen/activity_horizontal_margin_24"
                 android:layout_marginTop="@dimen/activity_horizontal_margin_24"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/template_grey_light"
+                android:orientation="horizontal"
+                android:padding="@dimen/activity_horizontal_margin_12"
+                android:layout_marginTop="@dimen/activity_horizontal_margin_24"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/TrailerImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/bookmark_red"
+                    android:contentDescription="Trailer"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin_24"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin_24"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
