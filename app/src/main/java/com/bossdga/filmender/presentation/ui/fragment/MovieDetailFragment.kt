@@ -90,11 +90,13 @@ class MovieDetailFragment : BaseFragment() {
         mRecyclerView.setLayoutManager(gridLayoutManager)
         adapter = PeopleAdapter(activity as Context, object : OnImageClickListener {
             override fun onImageClick(people: People) {
-                val view = LayoutInflater.from(activity as Context).inflate(R.layout.image_layout, container, false)
-                val imageView: ImageView = view.findViewById(R.id.ProfileImage)
-                setImage(activity as Context, imageView, people.profilePath, ImageType.BACK_DROP)
-                val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(activity as Context)
-                alertDialogBuilder.setView(view).show()
+                if (people.profilePath != null) {
+                    val view = LayoutInflater.from(activity as Context).inflate(R.layout.image_layout, container, false)
+                    val imageView: ImageView = view.findViewById(R.id.ProfileImage)
+                    setImage(activity as Context, imageView, people.profilePath, ImageType.BACK_DROP)
+                    val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(activity as Context)
+                    alertDialogBuilder.setView(view).show()
+                }
             }
         })
         mRecyclerView.setAdapter(adapter)
