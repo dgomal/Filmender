@@ -19,10 +19,10 @@ data class TVShow(@PrimaryKey @ColumnInfo(name = "id") @SerializedName("id") ove
                   @ColumnInfo(name = "vote_average") @SerializedName("vote_average") var voteAverage: String,
                   @ColumnInfo(name = "number_of_seasons") @SerializedName("number_of_seasons") var numberOfSeasons: Int,
                   @ColumnInfo(name = "popularity") @SerializedName("popularity") var popularity: Double,
-                  @SerializedName("genres") var genres: List<Genre>,
-                  @SerializedName("credits") var credits: Credit,
-                  @SerializedName("images") var images: Image,
-                  @SerializedName("videos") var videos: VideoResult,
-                  @SerializedName("networks") var networks: List<Network>): BaseContent {
+                  @ColumnInfo(name = "genres") @SerializedName("genres") var genres: List<Genre>,
+                  @ColumnInfo(name = "credits") @SerializedName("credits") var credits: Credit,
+                  @ColumnInfo(name = "images") @SerializedName("images") var images: Image,
+                  @ColumnInfo(name = "videos") @SerializedName("videos") var videos: VideoResult,
+                  @ColumnInfo(name = "networks") @SerializedName("networks") var networks: List<Network>): BaseContent {
 
 }

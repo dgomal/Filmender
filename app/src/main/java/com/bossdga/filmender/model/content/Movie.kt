@@ -19,9 +19,9 @@ data class Movie(@PrimaryKey @ColumnInfo(name = "id") @SerializedName("id") over
                  @ColumnInfo(name = "vote_average") @SerializedName("vote_average") var voteAverage: String,
                  @ColumnInfo(name = "runtime") @SerializedName("runtime") var runtime: Int?,
                  @ColumnInfo(name = "popularity") @SerializedName("popularity") var popularity: Double,
-                 @SerializedName("genres") var genres: List<Genre>,
-                 @SerializedName("credits") var credits: Credit,
-                 @SerializedName("images") var images: Image,
-                 @SerializedName("videos") var videos: VideoResult): BaseContent {
+                 @ColumnInfo(name = "genres") @SerializedName("genres") var genres: List<Genre>,
+                 @ColumnInfo(name = "credits") @SerializedName("credits") var credits: Credit,
+                 @ColumnInfo(name = "images") @SerializedName("images") var images: Image,
+                 @ColumnInfo(name = "videos") @SerializedName("videos") var videos: VideoResult): BaseContent {
 
 }

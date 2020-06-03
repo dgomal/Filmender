@@ -9,10 +9,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnImageClickListener
 import com.bossdga.filmender.R
@@ -34,7 +35,7 @@ import io.reactivex.schedulers.Schedulers
 class TVShowDetailFragment : BaseFragment() {
     private lateinit var adapter: PeopleAdapter
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var gridLayoutManager: GridLayoutManager
+    private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var tvShowDetailViewModel: TVShowDetailViewModel
     private var id: Int? = 0
 
@@ -44,7 +45,8 @@ class TVShowDetailFragment : BaseFragment() {
     private lateinit var overview: TextView
     private lateinit var genre: TextView
     private lateinit var numberOfSeasons: TextView
-    private lateinit var trailer: ImageView
+    private lateinit var trailer: Button
+    private lateinit var addToWatchlist: View
 
     private lateinit var tvShow: TVShow
 
@@ -64,12 +66,14 @@ class TVShowDetailFragment : BaseFragment() {
         overview = rootView.findViewById(R.id.overview)
         genre = rootView.findViewById(R.id.genre)
         numberOfSeasons = rootView.findViewById(R.id.numberOfSeasons)
-        trailer = rootView.findViewById(R.id.TrailerImage)
+        trailer = rootView.findViewById(R.id.TrailerButton)
         trailer.setOnClickListener {
             if(!tvShow.videos.results.isEmpty()) {
                 watchYoutubeVideo(tvShow.videos.results.get(0).key)
             }
         }
+        addToWatchlist = requireActivity().findViewById(R.id.AddToWatchlist)
+        addToWatchlist.setOnClickListener { tvShowDetailViewModel.saveTVShow(this.tvShow) }
 
         tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
         id = extras?.getIntExtra("id", 0)
@@ -84,8 +88,8 @@ class TVShowDetailFragment : BaseFragment() {
         }
 
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
-        gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.HORIZONTAL, false)
-        mRecyclerView.setLayoutManager(gridLayoutManager)
+        linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(linearLayoutManager)
         adapter = PeopleAdapter(activity as Context, object : OnImageClickListener {
             override fun onImageClick(people: People) {
                 if (people.profilePath != null) {

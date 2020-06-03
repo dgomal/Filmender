@@ -6,14 +6,14 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnImageClickListener
 import com.bossdga.filmender.R
@@ -36,7 +36,7 @@ import io.reactivex.schedulers.Schedulers
 class MovieDetailFragment : BaseFragment() {
     private lateinit var adapter: PeopleAdapter
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var gridLayoutManager: GridLayoutManager
+    private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var movieDetailViewModel: MovieDetailViewModel
     private var id: Int? = 0
 
@@ -46,7 +46,8 @@ class MovieDetailFragment : BaseFragment() {
     private lateinit var overview: TextView
     private lateinit var genre: TextView
     private lateinit var runtime: TextView
-    private lateinit var trailer: ImageView
+    private lateinit var trailer: Button
+    private lateinit var addToWatchlist: View
 
     private lateinit var movie: Movie
 
@@ -60,20 +61,23 @@ class MovieDetailFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false)
 
+        movieDetailViewModel = ViewModelProvider(requireActivity()).get(MovieDetailViewModel::class.java)
+
         image = requireActivity().findViewById(R.id.image)
         voteAverage = rootView.findViewById(R.id.voteAverage)
         date = rootView.findViewById(R.id.date)
         overview = rootView.findViewById(R.id.overview)
         genre = rootView.findViewById(R.id.genre)
         runtime = rootView.findViewById(R.id.runtime)
-        trailer = rootView.findViewById(R.id.TrailerImage)
+        trailer = rootView.findViewById(R.id.TrailerButton)
         trailer.setOnClickListener {
             if(!movie.videos.results.isEmpty()) {
                 watchYoutubeVideo(movie.videos.results.get(0).key)
             }
         }
+        addToWatchlist = requireActivity().findViewById(R.id.AddToWatchlist)
+        addToWatchlist.setOnClickListener { movieDetailViewModel.saveMovie(this.movie) }
 
-        movieDetailViewModel = ViewModelProvider(requireActivity()).get(MovieDetailViewModel::class.java)
         id = extras?.getIntExtra("id", 0)
         if(id == 0) {
             subscribeMovies(movieDetailViewModel.loadMovies(
@@ -86,8 +90,8 @@ class MovieDetailFragment : BaseFragment() {
         }
 
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
-        gridLayoutManager = GridLayoutManager(activity, 1, GridLayoutManager.HORIZONTAL, false)
-        mRecyclerView.setLayoutManager(gridLayoutManager)
+        linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        mRecyclerView.setLayoutManager(linearLayoutManager)
         adapter = PeopleAdapter(activity as Context, object : OnImageClickListener {
             override fun onImageClick(people: People) {
                 if (people.profilePath != null) {

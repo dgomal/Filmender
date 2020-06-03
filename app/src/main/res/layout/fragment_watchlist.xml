@@ -2,20 +2,42 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.ui.fragment.DiscoverFragment"
+    tools:context=".presentation.ui.fragment.WatchListFragment"
     tools:showIn="@layout/activity_main">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/NestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="parent">
+        android:clipToPadding="true"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        android:padding="@dimen/activity_horizontal_margin_8"
+        app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/FragmentMovie"
+                android:name="com.bossdga.filmender.presentation.ui.fragment.MovieFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_movie" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/FragmentTVShow"
+                android:name="com.bossdga.filmender.presentation.ui.fragment.TVShowFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout="@layout/fragment_tv_show" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

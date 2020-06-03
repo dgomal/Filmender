@@ -1,20 +1,23 @@
 package com.bossdga.filmender.presentation.ui.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.ApiConfig
+import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
+import com.bossdga.filmender.presentation.ui.activity.TVShowDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
+import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,7 +33,8 @@ class DiscoverFragment : BaseFragment() {
     private lateinit var fragmentMovie: MovieFragment
     private lateinit var fragmentTVShow: TVShowFragment
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var reloadButton: View
+    private lateinit var shuffleButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +46,10 @@ class DiscoverFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_discover, container, false)
 
-        mSwipeRefreshLayout = rootView.findViewById(R.id.SwipeRefreshLayout)
-        mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
+        reloadButton = rootView.findViewById(R.id.ReloadButton)
+        reloadButton.setOnClickListener { loadFragments() }
+        shuffleButton = rootView.findViewById(R.id.ShuffleButton)
+        shuffleButton.setOnClickListener { randomizeAndStart() }
         moviesFragment = rootView.findViewById(R.id.FragmentMovie)
         showsFragment = rootView.findViewById(R.id.FragmentTVShow)
 
@@ -51,16 +57,7 @@ class DiscoverFragment : BaseFragment() {
 
         loadFragments()
 
-        observeLoaded(mainViewModel)
-
         return rootView
-    }
-
-    /**
-     * Listener for swipe to refresh functionality
-     */
-    private val onRefreshListener = SwipeRefreshLayout.OnRefreshListener {
-        loadFragments()
     }
 
     override fun onDestroyView() {
@@ -95,6 +92,32 @@ class DiscoverFragment : BaseFragment() {
                 attachFragment(fragmentTVShow)
                 detachFragment(fragmentMovie)
                 fragmentTVShow.refreshContent()
+            }
+        }
+    }
+
+    private fun randomizeAndStart() {
+        val random: Int = NumberUtils.getRandomNumberInRange(1, 2)
+
+        when (PreferenceUtils.getType(requireActivity())) {
+            "0" -> {
+                val intent: Intent = if(random == 1) {
+                    Intent(requireActivity(), MovieDetailActivity::class.java)
+                } else {
+                    Intent(requireActivity(), TVShowDetailActivity::class.java)
+                }
+                intent.putExtra("id", 0)
+                startActivity(intent)
+            }
+            "1" -> {
+                val intent = Intent(requireActivity(), MovieDetailActivity::class.java)
+                intent.putExtra("id", 0)
+                startActivity(intent)
+            }
+            "2" -> {
+                val intent = Intent(requireActivity(), TVShowDetailActivity::class.java)
+                intent.putExtra("id", 0)
+                startActivity(intent)
             }
         }
     }
@@ -142,14 +165,6 @@ class DiscoverFragment : BaseFragment() {
                     PreferenceUtils.setImageUrl(activity as Context, apiConfig.images.secureBaseUrl)
                 }
             }))
-    }
-
-    private fun observeLoaded(mainViewModel: MainViewModel) {
-        mainViewModel.loaded.observe(requireActivity(), Observer {
-            it?.let {
-                mSwipeRefreshLayout.isRefreshing = !it.toBoolean()
-            }
-        })
     }
 
 }

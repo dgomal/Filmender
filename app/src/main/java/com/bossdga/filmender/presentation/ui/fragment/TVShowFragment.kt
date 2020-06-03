@@ -98,4 +98,31 @@ class TVShowFragment : BaseFragment() {
             PreferenceUtils.getRating(activity as Context),
             PreferenceUtils.getGenres(activity as Context)))
     }
+
+    fun refreshFromDB() {
+        subscribeTVShowsFromDB(mainViewModel.loadTVShows())
+    }
+
+    /**
+     * Method that adds a Disposable to the CompositeDisposable
+     * @param moviesObservable
+     */
+    private fun subscribeTVShowsFromDB(tvShowsObservable: Observable<List<TVShow>>) {
+        disposable.add(tvShowsObservable
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableObserver<List<TVShow>>() {
+                override fun onComplete() {
+
+                }
+
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+
+                override fun onNext(tvShows: List<TVShow>) {
+                    adapter.setItems(tvShows)
+                }
+            }))
+    }
 }

@@ -24,29 +24,6 @@
         app:layout_constraintBottom_toTopOf="@id/BottomNavigationLayout"/>
 
     <LinearLayout
-        android:id="@+id/FabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/BottomNavigationLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:gravity="end">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:src="@mipmap/autorenew_red"
-            android:contentDescription="I'm Feeling Lucky"
-            android:layout_margin="@dimen/activity_vertical_margin_16"
-            app:backgroundTint="@color/white"
-            app:tint="@color/template_red"/>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/BottomNavigationLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

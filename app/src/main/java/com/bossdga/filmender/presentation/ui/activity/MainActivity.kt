@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -16,10 +15,7 @@ import com.bossdga.filmender.presentation.ui.fragment.DiscoverFragment
 import com.bossdga.filmender.presentation.ui.fragment.WatchListFragment
 import com.bossdga.filmender.presentation.viewmodel.BaseViewModel
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
-import com.bossdga.filmender.util.NumberUtils
-import com.bossdga.filmender.util.PreferenceUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
 
 /**
  * Main Activity that holds several fragments
@@ -37,41 +33,10 @@ class MainActivity : BaseActivity<BaseViewModel>() {
         val bottomNavigation: BottomNavigationView = findViewById(R.id.BottomNavigation)
         bottomNavigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        val fab: View = findViewById(R.id.fab)
-        fab.setOnClickListener {
-            randomizeAndStart()
-        }
-
         fragmentDiscover = DiscoverFragment()
         fragmentWatchList = WatchListFragment()
 
         replaceFragment(fragmentDiscover, R.id.FragmentContainer)
-    }
-
-    private fun randomizeAndStart() {
-        val random: Int = NumberUtils.getRandomNumberInRange(1, 2)
-
-        when (PreferenceUtils.getType(this)) {
-            "0" -> {
-                val intent: Intent = if(random == 1) {
-                    Intent(this@MainActivity, MovieDetailActivity::class.java)
-                } else {
-                    Intent(this@MainActivity, TVShowDetailActivity::class.java)
-                }
-                intent.putExtra("id", 0)
-                startActivity(intent)
-            }
-            "1" -> {
-                val intent = Intent(this@MainActivity, MovieDetailActivity::class.java)
-                intent.putExtra("id", 0)
-                startActivity(intent)
-            }
-            "2" -> {
-                val intent = Intent(this@MainActivity, TVShowDetailActivity::class.java)
-                intent.putExtra("id", 0)
-                startActivity(intent)
-            }
-        }
     }
 
     override fun createViewModel(): MainViewModel {

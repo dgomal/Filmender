@@ -12,7 +12,7 @@ import io.reactivex.Observable
 /**
  * Base ViewModel that holds common functionality
  */
-abstract class BaseViewModel(private val movieRepository: MovieRepository, private val tvShowRepository: TVShowRepository) : ViewModel() {
+abstract class BaseViewModel(protected val movieRepository: MovieRepository, protected val tvShowRepository: TVShowRepository) : ViewModel() {
     val loaded = MutableLiveData<String>()
     /**
      * Method that returns an Observable of a Collection of movies

@@ -8,12 +8,16 @@ import io.reactivex.Observable
 /**
  * ViewModel that is used with the EventDetailActivity
  */
-class TVShowDetailViewModel(movieRepository: MovieRepository, private val tvShowRepository: TVShowRepository) : BaseViewModel(movieRepository, tvShowRepository)  {
+class TVShowDetailViewModel(movieRepository: MovieRepository, tvShowRepository: TVShowRepository) : BaseViewModel(movieRepository, tvShowRepository)  {
     /**
      * Method that returns an Observable of a movie
      * @return
      */
     fun loadTVShow(id: Int?, appendToResponse: String?): Observable<TVShow> {
         return tvShowRepository.getTVShowDetails(id, appendToResponse)
+    }
+
+    fun saveTVShow(tvShow: TVShow) {
+        tvShowRepository.saveTVShow(tvShow)
     }
 }

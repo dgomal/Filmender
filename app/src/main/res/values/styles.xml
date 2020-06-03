@@ -23,6 +23,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- Bottom navigation -->
     <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
     </style>
@@ -32,6 +33,20 @@
         <item name="colorOnPrimary">@color/template_red</item>
     </style>
 
+    <!-- Buttons -->
+    <style name="ButtonTheme" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="backgroundTint">@color/template_red</item>
+        <item name="materialThemeOverlay">@style/ButtonStyleTextColor</item>
+    </style>
+
+    <style name="ButtonStyleTextColor">
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+    </style>
+
+    <!-- Toolbar -->
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:textColorPrimary">@color/template_red</item>
         <item name="colorControlNormal">@color/template_red</item>

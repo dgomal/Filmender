@@ -15,7 +15,7 @@
         layout="@layout/collapsing_app_bar" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/AddToWatchlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/bookmark_red"

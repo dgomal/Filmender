@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.BaseContent
@@ -33,7 +32,6 @@ class MovieFragment : BaseFragment() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +43,6 @@ class MovieFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_movie, container, false)
 
-        mSwipeRefreshLayout = requireActivity().findViewById(R.id.SwipeRefreshLayout)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
         gridLayoutManager = GridLayoutManager(activity, 3)
         mRecyclerView.setLayoutManager(gridLayoutManager)
@@ -93,7 +90,6 @@ class MovieFragment : BaseFragment() {
                     override fun onNext(movieResponse: MovieResponse) {
                         val movieList: List<Movie> = movieResponse.results.take(PreferenceUtils.getResults(activity as Context)!!)
                         adapter.setItems(movieList)
-                        mainViewModel.loaded.postValue("true")
                     }
                 }))
     }
@@ -103,5 +99,32 @@ class MovieFragment : BaseFragment() {
             PreferenceUtils.getYearTo(activity as Context),
             PreferenceUtils.getRating(activity as Context),
             PreferenceUtils.getGenres(activity as Context)))
+    }
+
+    fun refreshFromDB() {
+        subscribeMoviesFromDB(mainViewModel.loadMovies())
+    }
+
+    /**
+     * Method that adds a Disposable to the CompositeDisposable
+     * @param moviesObservable
+     */
+    private fun subscribeMoviesFromDB(moviesObservable: Observable<List<Movie>>) {
+        disposable.add(moviesObservable
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableObserver<List<Movie>>() {
+                override fun onComplete() {
+
+                }
+
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+
+                override fun onNext(movies: List<Movie>) {
+                    adapter.setItems(movies)
+                }
+            }))
     }
 }
