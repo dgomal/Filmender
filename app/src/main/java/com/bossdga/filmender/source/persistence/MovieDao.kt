@@ -16,7 +16,7 @@ interface MovieDao {
     fun getMovies(): Observable<List<Movie>>
 
     @Query("SELECT * FROM movie WHERE id = :movieId")
-    fun getMovieDetails(movieId: Int): Observable<Movie>
+    fun getMovieDetails(movieId: Int?): Observable<Movie>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveMovie(movie: Movie?)

@@ -16,7 +16,7 @@ interface TVShowDao {
     fun getTvShows(): Observable<List<TVShow>>
 
     @Query("SELECT * FROM tv_show WHERE id = :tvShowId")
-    fun getTVShowDetails(tvShowId: Int): Observable<TVShow>
+    fun getTVShowDetails(tvShowId: Int?): Observable<TVShow>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveTVShow(tvShow: TVShow?)

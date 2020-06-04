@@ -30,7 +30,7 @@ object ImageUtils {
                 size = "original"
             }
         }
-        image.load(PreferenceUtils.getImageUrl(context) + size + url) {
+        image.load(PreferenceUtils.getImageUrl() + size + url) {
             crossfade(true)
             //placeholder(R.drawable.image_placeholder)
             //transformations(CircleCropTransformation())

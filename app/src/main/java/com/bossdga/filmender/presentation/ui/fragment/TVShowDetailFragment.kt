@@ -23,6 +23,7 @@ import com.bossdga.filmender.presentation.viewmodel.TVShowDetailViewModel
 import com.bossdga.filmender.util.ImageUtils.setImage
 import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -38,6 +39,7 @@ class TVShowDetailFragment : BaseFragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var tvShowDetailViewModel: TVShowDetailViewModel
     private var id: Int? = 0
+    private var source: String? = ""
 
     private lateinit var image: ImageView
     private lateinit var voteAverage: TextView
@@ -46,7 +48,7 @@ class TVShowDetailFragment : BaseFragment() {
     private lateinit var genre: TextView
     private lateinit var numberOfSeasons: TextView
     private lateinit var trailer: Button
-    private lateinit var addToWatchlist: View
+    private lateinit var addToWatchlist: FloatingActionButton
 
     private lateinit var tvShow: TVShow
 
@@ -77,14 +79,15 @@ class TVShowDetailFragment : BaseFragment() {
 
         tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
         id = extras?.getIntExtra("id", 0)
+        source = extras?.getStringExtra("source")
         if(id == 0) {
             subscribeTVShows(tvShowDetailViewModel.loadTVShows(
-                PreferenceUtils.getYearFrom(activity as Context),
-                PreferenceUtils.getYearTo(activity as Context),
-                PreferenceUtils.getRating(activity as Context),
-                PreferenceUtils.getGenres(activity as Context)))
+                PreferenceUtils.getYearFrom(),
+                PreferenceUtils.getYearTo(),
+                PreferenceUtils.getRating(),
+                PreferenceUtils.getGenres()))
         } else {
-            subscribeTVShow(tvShowDetailViewModel.loadTVShow(id, "videos,images,credits"))
+            subscribeTVShow(tvShowDetailViewModel.loadTVShow(id))
         }
 
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
@@ -180,7 +183,7 @@ class TVShowDetailFragment : BaseFragment() {
                 override fun onNext(tvShowResponse: TVShowResponse) {
                     if(tvShowResponse.results.isNotEmpty()) {
                         val content: BaseContent = tvShowResponse.results.get(NumberUtils.getRandomNumberInRange(0, tvShowResponse.results.size.minus(1)))
-                        subscribeTVShow(tvShowDetailViewModel.loadTVShow(content.id, "videos,images,credits"))
+                        subscribeTVShow(tvShowDetailViewModel.loadTVShow(content.id))
                     }
                 }
             }))

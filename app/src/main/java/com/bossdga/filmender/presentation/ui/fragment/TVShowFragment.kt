@@ -85,7 +85,7 @@ class TVShowFragment : BaseFragment() {
                     }
 
                     override fun onNext(tvShowResponse: TVShowResponse) {
-                        val showList: List<TVShow> = tvShowResponse.results.take(PreferenceUtils.getResults(activity as Context)!!)
+                        val showList: List<TVShow> = tvShowResponse.results.take(PreferenceUtils.getResults()!!)
                         adapter.setItems(showList)
                         mainViewModel.loaded.postValue("true")
                     }
@@ -93,10 +93,10 @@ class TVShowFragment : BaseFragment() {
     }
 
     fun refreshContent() {
-        subscribeTVShows(mainViewModel.loadTVShows(PreferenceUtils.getYearFrom(activity as Context),
-            PreferenceUtils.getYearTo(activity as Context),
-            PreferenceUtils.getRating(activity as Context),
-            PreferenceUtils.getGenres(activity as Context)))
+        subscribeTVShows(mainViewModel.loadTVShows(PreferenceUtils.getYearFrom(),
+            PreferenceUtils.getYearTo(),
+            PreferenceUtils.getRating(),
+            PreferenceUtils.getGenres()))
     }
 
     fun refreshFromDB() {

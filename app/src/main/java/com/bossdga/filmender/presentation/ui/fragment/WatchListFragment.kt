@@ -9,9 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProvider
 import com.bossdga.filmender.R
-import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.bossdga.filmender.util.PreferenceUtils
 
 
@@ -45,7 +43,7 @@ class WatchListFragment : BaseFragment() {
         fragmentMovie = childFragmentManager.findFragmentById(R.id.FragmentMovie) as MovieFragment
         fragmentTVShow = childFragmentManager.findFragmentById(R.id.FragmentTVShow) as TVShowFragment
 
-        when (PreferenceUtils.getType(activity as Context)) {
+        when (PreferenceUtils.getType()) {
             "0" -> {
                 attachFragment(fragmentMovie)
                 attachFragment(fragmentTVShow)
@@ -63,30 +61,6 @@ class WatchListFragment : BaseFragment() {
                 fragmentTVShow.refreshFromDB()
             }
         }
-    }
-
-    private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
-        beginTransaction().func().commit()
-    }
-
-    private fun addFragment(fragment: Fragment, frameId: Int){
-        childFragmentManager.inTransaction { add(frameId, fragment) }
-    }
-
-    private fun attachFragment(fragment: Fragment){
-        childFragmentManager.inTransaction { attach(fragment) }
-    }
-
-    private fun removeFragment(fragment: Fragment) {
-        childFragmentManager.inTransaction{ remove(fragment) }
-    }
-
-    private fun detachFragment(fragment: Fragment) {
-        childFragmentManager.inTransaction{ detach(fragment) }
-    }
-
-    private fun replaceFragment(fragment: Fragment, frameId: Int) {
-        childFragmentManager.inTransaction{ replace(frameId, fragment) }
     }
 
 }

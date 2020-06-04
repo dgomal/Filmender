@@ -13,8 +13,8 @@ class TVShowDetailViewModel(movieRepository: MovieRepository, tvShowRepository: 
      * Method that returns an Observable of a movie
      * @return
      */
-    fun loadTVShow(id: Int?, appendToResponse: String?): Observable<TVShow> {
-        return tvShowRepository.getTVShowDetails(id, appendToResponse)
+    fun loadTVShow(id: Int?): Observable<TVShow> {
+        return tvShowRepository.getTVShowDetails(id)
     }
 
     fun saveTVShow(tvShow: TVShow) {

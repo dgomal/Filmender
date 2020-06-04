@@ -74,28 +74,4 @@ class MainActivity : BaseActivity<BaseViewModel>() {
         }
     }
 
-    private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
-        beginTransaction().func().commit()
-    }
-
-    private fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int){
-        supportFragmentManager.inTransaction { add(frameId, fragment) }
-    }
-
-    private fun AppCompatActivity.attachFragment(fragment: Fragment){
-        supportFragmentManager.inTransaction { attach(fragment) }
-    }
-
-    private fun AppCompatActivity.removeFragment(fragment: Fragment) {
-        supportFragmentManager.inTransaction{ remove(fragment) }
-    }
-
-    private fun AppCompatActivity.detachFragment(fragment: Fragment) {
-        supportFragmentManager.inTransaction{ detach(fragment) }
-    }
-
-    private fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
-        supportFragmentManager.inTransaction{ replace(frameId, fragment) }
-    }
-
 }

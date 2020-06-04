@@ -13,8 +13,8 @@ class MovieDetailViewModel(movieRepository: MovieRepository, tvShowRepository: T
      * Method that returns an Observable of a movie
      * @return
      */
-    fun loadMovie(id: Int?, appendToResponse: String?): Observable<Movie> {
-        return movieRepository.getMovieDetails(id, appendToResponse)
+    fun loadMovie(id: Int?): Observable<Movie> {
+        return movieRepository.getMovieDetails(id)
     }
 
     fun saveMovie(movie: Movie) {

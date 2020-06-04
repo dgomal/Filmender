@@ -7,7 +7,13 @@ import com.bossdga.filmender.source.network.RetrofitService
  * This class is a number Utility class
  */
 object PreferenceUtils {
-    fun getGenres(context: Context): String {
+    private lateinit var context: Context
+
+    fun initWith(context: Context){
+        this.context = context
+    }
+
+    fun getGenres(): String {
         var result = ""
         val entries: Set<String>? = AppSettings(context, "SETTINGS_PREFERENCES").genres
         entries?.forEach { e -> result = result.plus(e).plus("|")}
@@ -15,31 +21,31 @@ object PreferenceUtils {
         return result
     }
 
-    fun getRating(context: Context): String? {
+    fun getRating(): String? {
         return AppSettings(context, "SETTINGS_PREFERENCES").rating
     }
 
-    fun getYearFrom(context: Context): String? {
+    fun getYearFrom(): String? {
         return AppSettings(context, "SETTINGS_PREFERENCES").yearFrom + "-01-01"
     }
 
-    fun getYearTo(context: Context): String? {
+    fun getYearTo(): String? {
         return AppSettings(context, "SETTINGS_PREFERENCES").yearTo + "-01-01"
     }
 
-    fun getType(context: Context): String? {
+    fun getType(): String? {
         return AppSettings(context, "SETTINGS_PREFERENCES").type
     }
 
-    fun getResults(context: Context): Int? {
+    fun getResults(): Int? {
         return AppSettings(context, "SETTINGS_PREFERENCES").results
     }
 
-    fun getImageUrl(context: Context): String? {
+    fun getImageUrl(): String? {
         return AppSettings(context, "SETTINGS_PREFERENCES").image_url
     }
 
-    fun setImageUrl(context: Context, imageUrl: String) {
+    fun setImageUrl(imageUrl: String) {
         AppSettings(context, "SETTINGS_PREFERENCES").image_url = imageUrl
     }
 }

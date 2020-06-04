@@ -18,8 +18,8 @@ class MovieRepository(private val dao: MovieDao, private val api: MovieAPI) {
         //return dao.getMovies();
     }
 
-    fun getMovieDetails(movieId: Int?, appendToResponse: String?): Observable<Movie> {
-        return api.getMovieDetails(movieId, appendToResponse)
+    fun getMovieDetails(movieId: Int?): Observable<Movie> {
+        return api.getMovieDetails(movieId, "videos,images,credits")
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getMovieDetails(movieId);
     }

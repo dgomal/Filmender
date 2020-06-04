@@ -3,6 +3,9 @@ package com.bossdga.filmender.presentation.ui.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.bossdga.filmender.R
 import com.bossdga.filmender.presentation.viewmodel.BaseViewModel
 import com.bossdga.filmender.presentation.viewmodel.ViewModelFactory
@@ -50,5 +53,29 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
     private fun setToolbar() {
         val mToolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(mToolbar)
+    }
+
+    private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
+        beginTransaction().func().commit()
+    }
+
+    protected fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int){
+        supportFragmentManager.inTransaction { add(frameId, fragment) }
+    }
+
+    protected fun AppCompatActivity.attachFragment(fragment: Fragment){
+        supportFragmentManager.inTransaction { attach(fragment) }
+    }
+
+    protected fun AppCompatActivity.removeFragment(fragment: Fragment) {
+        supportFragmentManager.inTransaction{ remove(fragment) }
+    }
+
+    protected fun AppCompatActivity.detachFragment(fragment: Fragment) {
+        supportFragmentManager.inTransaction{ detach(fragment) }
+    }
+
+    protected fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
+        supportFragmentManager.inTransaction{ replace(frameId, fragment) }
     }
 }

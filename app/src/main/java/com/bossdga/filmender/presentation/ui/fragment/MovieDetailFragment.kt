@@ -24,6 +24,7 @@ import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
 import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -39,6 +40,7 @@ class MovieDetailFragment : BaseFragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var movieDetailViewModel: MovieDetailViewModel
     private var id: Int? = 0
+    private var source: String? = ""
 
     private lateinit var image: ImageView
     private lateinit var voteAverage: TextView
@@ -47,7 +49,7 @@ class MovieDetailFragment : BaseFragment() {
     private lateinit var genre: TextView
     private lateinit var runtime: TextView
     private lateinit var trailer: Button
-    private lateinit var addToWatchlist: View
+    private lateinit var addToWatchlist: FloatingActionButton
 
     private lateinit var movie: Movie
 
@@ -79,14 +81,15 @@ class MovieDetailFragment : BaseFragment() {
         addToWatchlist.setOnClickListener { movieDetailViewModel.saveMovie(this.movie) }
 
         id = extras?.getIntExtra("id", 0)
+        source = extras?.getStringExtra("source")
         if(id == 0) {
             subscribeMovies(movieDetailViewModel.loadMovies(
-                PreferenceUtils.getYearFrom(activity as Context),
-                PreferenceUtils.getYearTo(activity as Context),
-                PreferenceUtils.getRating(activity as Context),
-                PreferenceUtils.getGenres(activity as Context)))
+                PreferenceUtils.getYearFrom(),
+                PreferenceUtils.getYearTo(),
+                PreferenceUtils.getRating(),
+                PreferenceUtils.getGenres()))
         } else {
-            subscribeMovie(movieDetailViewModel.loadMovie(id, "videos,images,credits"))
+            subscribeMovie(movieDetailViewModel.loadMovie(id))
         }
 
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
@@ -182,7 +185,7 @@ class MovieDetailFragment : BaseFragment() {
                 override fun onNext(movieResponse: MovieResponse) {
                     if(movieResponse.results.isNotEmpty()) {
                         val content: BaseContent = movieResponse.results.get(NumberUtils.getRandomNumberInRange(0, movieResponse.results.size.minus(1)))
-                        subscribeMovie(movieDetailViewModel.loadMovie(content.id, "videos,images,credits"))
+                        subscribeMovie(movieDetailViewModel.loadMovie(content.id))
                     }
                 }
             }))

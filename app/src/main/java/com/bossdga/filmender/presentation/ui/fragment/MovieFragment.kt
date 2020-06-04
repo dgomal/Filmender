@@ -88,17 +88,18 @@ class MovieFragment : BaseFragment() {
                     }
 
                     override fun onNext(movieResponse: MovieResponse) {
-                        val movieList: List<Movie> = movieResponse.results.take(PreferenceUtils.getResults(activity as Context)!!)
+                        val movieList: List<Movie> = movieResponse.results.take(PreferenceUtils.getResults()!!)
                         adapter.setItems(movieList)
+                        mainViewModel.loaded.postValue("true")
                     }
                 }))
     }
 
     fun refreshContent() {
-        subscribeMovies(mainViewModel.loadMovies(PreferenceUtils.getYearFrom(activity as Context),
-            PreferenceUtils.getYearTo(activity as Context),
-            PreferenceUtils.getRating(activity as Context),
-            PreferenceUtils.getGenres(activity as Context)))
+        subscribeMovies(mainViewModel.loadMovies(PreferenceUtils.getYearFrom(),
+            PreferenceUtils.getYearTo(),
+            PreferenceUtils.getRating(),
+            PreferenceUtils.getGenres()))
     }
 
     fun refreshFromDB() {

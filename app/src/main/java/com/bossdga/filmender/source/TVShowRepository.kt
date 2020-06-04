@@ -17,8 +17,8 @@ class TVShowRepository(private val dao: TVShowDao, private val api: TVShowAPI) {
         //return dao.getTVShows();
     }
 
-    fun getTVShowDetails(tvShowId: Int?, appendToResponse: String?): Observable<TVShow> {
-        return api.getTVShowDetails(tvShowId, appendToResponse)
+    fun getTVShowDetails(tvShowId: Int?): Observable<TVShow> {
+        return api.getTVShowDetails(tvShowId, "videos,images,credits")
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getTVShowDetails(tvShowId);
     }
