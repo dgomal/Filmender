@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,7 @@ class MovieFragment : BaseFragment() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var moviesHeader: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +45,7 @@ class MovieFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_movie, container, false)
 
+        moviesHeader = rootView.findViewById(R.id.MoviesHeader)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
         gridLayoutManager = GridLayoutManager(activity, 3)
         mRecyclerView.setLayoutManager(gridLayoutManager)
@@ -91,6 +94,7 @@ class MovieFragment : BaseFragment() {
                         val movieList: List<Movie> = movieResponse.results.take(PreferenceUtils.getResults()!!)
                         adapter.setItems(movieList)
                         mainViewModel.loaded.postValue("true")
+                        moviesHeader.visibility = View.VISIBLE
                     }
                 }))
     }
@@ -125,6 +129,7 @@ class MovieFragment : BaseFragment() {
 
                 override fun onNext(movies: List<Movie>) {
                     adapter.setItems(movies)
+                    moviesHeader.visibility = View.VISIBLE
                 }
             }))
     }

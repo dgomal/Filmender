@@ -17,7 +17,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/activity_horizontal_margin_8"
         android:layout_marginLeft="@dimen/activity_horizontal_margin_4"
-        android:layout_marginStart="@dimen/activity_horizontal_margin_4" />
+        android:layout_marginStart="@dimen/activity_horizontal_margin_4"
+        android:visibility="invisible"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

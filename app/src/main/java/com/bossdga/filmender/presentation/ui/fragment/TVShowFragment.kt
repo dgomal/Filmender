@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,7 @@ class TVShowFragment : BaseFragment() {
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var showsHeader: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,7 @@ class TVShowFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_tv_show, container, false)
 
+        showsHeader = rootView.findViewById(R.id.ShowsHeader)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
         gridLayoutManager = GridLayoutManager(activity, 3)
         mRecyclerView.setLayoutManager(gridLayoutManager)
@@ -88,6 +91,7 @@ class TVShowFragment : BaseFragment() {
                         val showList: List<TVShow> = tvShowResponse.results.take(PreferenceUtils.getResults()!!)
                         adapter.setItems(showList)
                         mainViewModel.loaded.postValue("true")
+                        showsHeader.visibility = View.VISIBLE
                     }
                 }))
     }
@@ -122,6 +126,7 @@ class TVShowFragment : BaseFragment() {
 
                 override fun onNext(tvShows: List<TVShow>) {
                     adapter.setItems(tvShows)
+                    showsHeader.visibility = View.VISIBLE
                 }
             }))
     }
