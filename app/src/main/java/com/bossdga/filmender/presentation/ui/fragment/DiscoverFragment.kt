@@ -1,16 +1,11 @@
 package com.bossdga.filmender.presentation.ui.fragment
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -30,8 +25,6 @@ import io.reactivex.schedulers.Schedulers
  * A simple Fragment that will show a list of movies and tv shows
  */
 class DiscoverFragment : BaseFragment() {
-    private lateinit var moviesFragment: FragmentContainerView
-    private lateinit var showsFragment: FragmentContainerView
     private lateinit var fragmentMovie: MovieFragment
     private lateinit var fragmentTVShow: TVShowFragment
     private lateinit var mainViewModel: MainViewModel
@@ -52,8 +45,6 @@ class DiscoverFragment : BaseFragment() {
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
         shuffleButton = rootView.findViewById(R.id.ShuffleButton)
         shuffleButton.setOnClickListener { randomizeAndStart() }
-        moviesFragment = rootView.findViewById(R.id.FragmentMovie)
-        showsFragment = rootView.findViewById(R.id.FragmentTVShow)
 
         subscribeApiConfig(mainViewModel.loadApiConfig())
 
@@ -158,6 +149,7 @@ class DiscoverFragment : BaseFragment() {
         mainViewModel.loaded.observe(requireActivity(), Observer {
             it?.let {
                 mSwipeRefreshLayout.isRefreshing = !it.toBoolean()
+                shuffleButton.visibility = View.VISIBLE
             }
         })
     }
