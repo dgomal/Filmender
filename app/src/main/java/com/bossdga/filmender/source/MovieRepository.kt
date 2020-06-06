@@ -1,6 +1,7 @@
 package com.bossdga.filmender.source
 
 import android.os.AsyncTask
+import android.view.View
 import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.model.content.MovieResponse
 import com.bossdga.filmender.source.network.api.MovieAPI
@@ -9,6 +10,11 @@ import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.SingleObserver
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
 
 
 /**
@@ -17,7 +23,8 @@ import io.reactivex.Single
 class MovieRepository(private val dao: MovieDao, private val api: MovieAPI) {
     fun getMovies(fromDB: Boolean): Observable<MovieResponse> {
         if(fromDB) {
-            //return dao.getMovies()
+            // Get observable from dao.getMovies(), get the list and create an observable with MovieResponse
+            // return Observable.just(MovieResponse(movieList.size, 1, movieList))
         }
         return api.getMovies(1, PreferenceUtils.getYearFrom(),
             PreferenceUtils.getYearTo(),

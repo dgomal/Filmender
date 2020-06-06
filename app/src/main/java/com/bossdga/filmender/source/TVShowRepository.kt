@@ -16,7 +16,8 @@ import io.reactivex.Single
 class TVShowRepository(private val dao: TVShowDao, private val api: TVShowAPI) {
     fun getTVShows(fromDB: Boolean): Observable<TVShowResponse> {
         if(fromDB) {
-            //return dao.getTvShows()
+            // Get observable from dao.getTVShows(), get the list and create an observable with TVShowResponse
+            // return Observable.just(TVShowResponse(showList.size, 1, showList))
         }
         return api.getTVShows(1, PreferenceUtils.getYearFrom(),
             PreferenceUtils.getYearTo(),
