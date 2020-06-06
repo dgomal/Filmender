@@ -23,7 +23,6 @@ import com.bossdga.filmender.presentation.viewmodel.MovieDetailViewModel
 import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
 import com.bossdga.filmender.util.NumberUtils
-import com.bossdga.filmender.util.PreferenceUtils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -83,11 +82,7 @@ class MovieDetailFragment : BaseFragment() {
         id = extras?.getIntExtra("id", 0)
         source = extras?.getStringExtra("source")
         if(id == 0) {
-            subscribeMovies(movieDetailViewModel.loadMovies(
-                PreferenceUtils.getYearFrom(),
-                PreferenceUtils.getYearTo(),
-                PreferenceUtils.getRating(),
-                PreferenceUtils.getGenres()))
+            subscribeMovies(movieDetailViewModel.loadMovies(false))
         } else {
             subscribeMovie(movieDetailViewModel.loadMovie(id))
         }

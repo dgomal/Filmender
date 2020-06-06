@@ -5,6 +5,8 @@ import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.model.content.MovieResponse
 import com.bossdga.filmender.source.network.api.MovieAPI
 import com.bossdga.filmender.source.persistence.MovieDao
+import com.bossdga.filmender.util.NumberUtils
+import com.bossdga.filmender.util.PreferenceUtils
 import io.reactivex.Observable
 
 
@@ -12,8 +14,18 @@ import io.reactivex.Observable
  * Repository to execute database and network operations
  */
 class MovieRepository(private val dao: MovieDao, private val api: MovieAPI) {
-    fun getMovies(page: Int, releaseDateGte: String?, releaseDateLte: String?, voteAverageGte: String?, withGenres: String?): Observable<MovieResponse> {
-        return api.getMovies(page, releaseDateGte, releaseDateLte, voteAverageGte, withGenres)
+    fun getMovies(fromDB: Boolean): Observable<MovieResponse> {
+        if(fromDB) {
+            return dao.getMovies()
+        }
+        return api.getMovies(1, PreferenceUtils.getYearFrom(),
+            PreferenceUtils.getYearTo(),
+            PreferenceUtils.getRating(),
+            PreferenceUtils.getGenres())
+            .flatMap{ movieResponse: MovieResponse -> api.getMovies(NumberUtils.getRandomNumberInRange(1, movieResponse.totalPages), PreferenceUtils.getYearFrom(),
+                PreferenceUtils.getYearTo(),
+                PreferenceUtils.getRating(),
+                PreferenceUtils.getGenres()) }
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getMovies();
     }
@@ -22,10 +34,6 @@ class MovieRepository(private val dao: MovieDao, private val api: MovieAPI) {
         return api.getMovieDetails(movieId, "videos,images,credits")
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getMovieDetails(movieId);
-    }
-
-    fun getMovies(): Observable<List<Movie>> {
-        return dao.getMovies()
     }
 
     fun saveMovie(movie: Movie) {

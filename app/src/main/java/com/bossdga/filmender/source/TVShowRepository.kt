@@ -5,14 +5,26 @@ import com.bossdga.filmender.model.content.TVShow
 import com.bossdga.filmender.model.content.TVShowResponse
 import com.bossdga.filmender.source.network.api.TVShowAPI
 import com.bossdga.filmender.source.persistence.TVShowDao
+import com.bossdga.filmender.util.NumberUtils
+import com.bossdga.filmender.util.PreferenceUtils
 import io.reactivex.Observable
 
 /**
  * Repository to execute database and network operations
  */
 class TVShowRepository(private val dao: TVShowDao, private val api: TVShowAPI) {
-    fun getTVShows(page: Int, airDateGte: String?, airDateLte: String?, voteAverageGte: String?, withGenres: String?): Observable<TVShowResponse> {
-        return api.getTVShows(page, airDateGte, airDateLte, voteAverageGte, withGenres)
+    fun getTVShows(fromDB: Boolean): Observable<TVShowResponse> {
+        if(fromDB) {
+            return dao.getTvShows()
+        }
+        return api.getTVShows(1, PreferenceUtils.getYearFrom(),
+            PreferenceUtils.getYearTo(),
+            PreferenceUtils.getRating(),
+            PreferenceUtils.getGenres())
+            .flatMap{ tvShowResponse: TVShowResponse -> api.getTVShows(NumberUtils.getRandomNumberInRange(1, tvShowResponse.totalPages), PreferenceUtils.getYearFrom(),
+                PreferenceUtils.getYearTo(),
+                PreferenceUtils.getRating(),
+                PreferenceUtils.getGenres()) }
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getTVShows();
     }
@@ -21,10 +33,6 @@ class TVShowRepository(private val dao: TVShowDao, private val api: TVShowAPI) {
         return api.getTVShowDetails(tvShowId, "videos,images,credits")
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getTVShowDetails(tvShowId);
-    }
-
-    fun getTVShows(): Observable<List<TVShow>> {
-        return dao.getTvShows()
     }
 
     fun saveTVShow(tvShow: TVShow) {

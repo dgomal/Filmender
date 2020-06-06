@@ -81,11 +81,7 @@ class TVShowDetailFragment : BaseFragment() {
         id = extras?.getIntExtra("id", 0)
         source = extras?.getStringExtra("source")
         if(id == 0) {
-            subscribeTVShows(tvShowDetailViewModel.loadTVShows(
-                PreferenceUtils.getYearFrom(),
-                PreferenceUtils.getYearTo(),
-                PreferenceUtils.getRating(),
-                PreferenceUtils.getGenres()))
+            subscribeTVShows(tvShowDetailViewModel.loadTVShows(false))
         } else {
             subscribeTVShow(tvShowDetailViewModel.loadTVShow(id))
         }

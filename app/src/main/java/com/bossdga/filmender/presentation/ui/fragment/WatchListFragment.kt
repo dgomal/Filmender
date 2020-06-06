@@ -37,18 +37,18 @@ class WatchListFragment : BaseFragment() {
             "0" -> {
                 attachFragment(fragmentMovie)
                 attachFragment(fragmentTVShow)
-                fragmentMovie.refreshFromDB()
-                fragmentTVShow.refreshFromDB()
+                fragmentMovie.refreshContent(true)
+                fragmentTVShow.refreshContent(true)
             }
             "1" -> {
                 attachFragment(fragmentMovie)
                 detachFragment(fragmentTVShow)
-                fragmentMovie.refreshFromDB()
+                fragmentMovie.refreshContent(true)
             }
             else -> {
                 attachFragment(fragmentTVShow)
                 detachFragment(fragmentMovie)
-                fragmentTVShow.refreshFromDB()
+                fragmentTVShow.refreshContent(true)
             }
         }
     }

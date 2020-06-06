@@ -96,38 +96,7 @@ class TVShowFragment : BaseFragment() {
                 }))
     }
 
-    fun refreshContent() {
-        subscribeTVShows(mainViewModel.loadTVShows(PreferenceUtils.getYearFrom(),
-            PreferenceUtils.getYearTo(),
-            PreferenceUtils.getRating(),
-            PreferenceUtils.getGenres()))
-    }
-
-    fun refreshFromDB() {
-        subscribeTVShowsFromDB(mainViewModel.loadTVShows())
-    }
-
-    /**
-     * Method that adds a Disposable to the CompositeDisposable
-     * @param moviesObservable
-     */
-    private fun subscribeTVShowsFromDB(tvShowsObservable: Observable<List<TVShow>>) {
-        disposable.add(tvShowsObservable
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : DisposableObserver<List<TVShow>>() {
-                override fun onComplete() {
-
-                }
-
-                override fun onError(e: Throwable) {
-                    e.printStackTrace()
-                }
-
-                override fun onNext(tvShows: List<TVShow>) {
-                    adapter.setItems(tvShows)
-                    showsHeader.visibility = View.VISIBLE
-                }
-            }))
+    fun refreshContent(fromDB: Boolean) {
+        subscribeTVShows(mainViewModel.loadTVShows(fromDB))
     }
 }
