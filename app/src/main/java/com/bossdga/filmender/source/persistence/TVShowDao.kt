@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.bossdga.filmender.model.content.TVShow
 import io.reactivex.Observable
+import io.reactivex.Single
 
 /**
  * Dao to interact with the database
@@ -16,7 +17,7 @@ interface TVShowDao {
     fun getTvShows(): Observable<List<TVShow>>
 
     @Query("SELECT * FROM tv_show WHERE id = :tvShowId")
-    fun getTVShowDetails(tvShowId: Int?): Observable<TVShow>
+    fun getTVShowDetails(tvShowId: Int?): Single<TVShow>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveTVShow(tvShow: TVShow?)

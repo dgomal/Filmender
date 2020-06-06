@@ -3,6 +3,7 @@ package com.bossdga.filmender.source.network.api
 import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.model.content.MovieResponse
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -30,5 +31,5 @@ interface MovieAPI {
      */
     @GET("/3/movie/{movie_id}")
     fun getMovieDetails(@Path("movie_id") movieId: Int?,
-                        @Query("append_to_response") appendToResponse: String?): Observable<Movie>
+                        @Query("append_to_response") appendToResponse: String?): Single<Movie>
 }

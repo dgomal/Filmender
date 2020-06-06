@@ -25,8 +25,11 @@ import com.bossdga.filmender.util.ImageUtils.setImage
 import com.bossdga.filmender.util.NumberUtils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Observable
+import io.reactivex.Single
+import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
+import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
 
@@ -84,7 +87,7 @@ class MovieDetailFragment : BaseFragment() {
         if(id == 0) {
             subscribeMovies(movieDetailViewModel.loadMovies(false))
         } else {
-            subscribeMovie(movieDetailViewModel.loadMovie(id))
+            subscribeMovie(movieDetailViewModel.loadMovie(id, true))
         }
 
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
@@ -122,18 +125,17 @@ class MovieDetailFragment : BaseFragment() {
      * Method that adds a Disposable to the CompositeDisposable
      * @param moviesObservable
      */
-    private fun subscribeMovie(movieObservable: Observable<Movie>) {
+    private fun subscribeMovie(movieObservable: Single<Movie>) {
         disposable.add(movieObservable
-            .subscribeOn(Schedulers.newThread())
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : DisposableObserver<Movie>() {
-                override fun onComplete() {}
-
+            .subscribeWith(object : DisposableSingleObserver<Movie>() {
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
+                    subscribeMovie(movieDetailViewModel.loadMovie(id, false))
                 }
 
-                override fun onNext(movie: Movie) {
+                override fun onSuccess(movie: Movie) {
                     renderView(movie)
                     movieDetailViewModel.loaded.postValue(movie.title)
                     hideProgressDialog()
@@ -180,7 +182,7 @@ class MovieDetailFragment : BaseFragment() {
                 override fun onNext(movieResponse: MovieResponse) {
                     if(movieResponse.results.isNotEmpty()) {
                         val content: BaseContent = movieResponse.results.get(NumberUtils.getRandomNumberInRange(0, movieResponse.results.size.minus(1)))
-                        subscribeMovie(movieDetailViewModel.loadMovie(content.id))
+                        subscribeMovie(movieDetailViewModel.loadMovie(content.id, false))
                     }
                 }
             }))

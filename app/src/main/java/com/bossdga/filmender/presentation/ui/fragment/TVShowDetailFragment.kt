@@ -25,8 +25,10 @@ import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
+import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 
 
@@ -83,7 +85,7 @@ class TVShowDetailFragment : BaseFragment() {
         if(id == 0) {
             subscribeTVShows(tvShowDetailViewModel.loadTVShows(false))
         } else {
-            subscribeTVShow(tvShowDetailViewModel.loadTVShow(id))
+            subscribeTVShow(tvShowDetailViewModel.loadTVShow(id, true))
         }
 
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
@@ -121,18 +123,17 @@ class TVShowDetailFragment : BaseFragment() {
      * Method that adds a Disposable to the CompositeDisposable
      * @param moviesObservable
      */
-    private fun subscribeTVShow(tvShowObservable: Observable<TVShow>) {
+    private fun subscribeTVShow(tvShowObservable: Single<TVShow>) {
         disposable.add(tvShowObservable
-            .subscribeOn(Schedulers.newThread())
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : DisposableObserver<TVShow>() {
-                override fun onComplete() {}
-
+            .subscribeWith(object : DisposableSingleObserver<TVShow>() {
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
+                    subscribeTVShow(tvShowDetailViewModel.loadTVShow(id, false))
                 }
 
-                override fun onNext(tvShow: TVShow) {
+                override fun onSuccess(tvShow: TVShow) {
                     renderView(tvShow)
                     tvShowDetailViewModel.loaded.postValue(tvShow.title)
                     hideProgressDialog()
@@ -179,7 +180,7 @@ class TVShowDetailFragment : BaseFragment() {
                 override fun onNext(tvShowResponse: TVShowResponse) {
                     if(tvShowResponse.results.isNotEmpty()) {
                         val content: BaseContent = tvShowResponse.results.get(NumberUtils.getRandomNumberInRange(0, tvShowResponse.results.size.minus(1)))
-                        subscribeTVShow(tvShowDetailViewModel.loadTVShow(content.id))
+                        subscribeTVShow(tvShowDetailViewModel.loadTVShow(content.id, false))
                     }
                 }
             }))

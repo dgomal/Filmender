@@ -8,6 +8,7 @@ import com.bossdga.filmender.source.persistence.MovieDao
 import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
 import io.reactivex.Observable
+import io.reactivex.Single
 
 
 /**
@@ -16,7 +17,7 @@ import io.reactivex.Observable
 class MovieRepository(private val dao: MovieDao, private val api: MovieAPI) {
     fun getMovies(fromDB: Boolean): Observable<MovieResponse> {
         if(fromDB) {
-            return dao.getMovies()
+            //return dao.getMovies()
         }
         return api.getMovies(1, PreferenceUtils.getYearFrom(),
             PreferenceUtils.getYearTo(),
@@ -30,7 +31,10 @@ class MovieRepository(private val dao: MovieDao, private val api: MovieAPI) {
         //return dao.getMovies();
     }
 
-    fun getMovieDetails(movieId: Int?): Observable<Movie> {
+    fun getMovieDetails(movieId: Int?, fromDB: Boolean): Single<Movie> {
+        if(fromDB) {
+            return dao.getMovieDetails(movieId)
+        }
         return api.getMovieDetails(movieId, "videos,images,credits")
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getMovieDetails(movieId);

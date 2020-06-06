@@ -8,6 +8,7 @@ import com.bossdga.filmender.source.persistence.TVShowDao
 import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
 import io.reactivex.Observable
+import io.reactivex.Single
 
 /**
  * Repository to execute database and network operations
@@ -15,7 +16,7 @@ import io.reactivex.Observable
 class TVShowRepository(private val dao: TVShowDao, private val api: TVShowAPI) {
     fun getTVShows(fromDB: Boolean): Observable<TVShowResponse> {
         if(fromDB) {
-            return dao.getTvShows()
+            //return dao.getTvShows()
         }
         return api.getTVShows(1, PreferenceUtils.getYearFrom(),
             PreferenceUtils.getYearTo(),
@@ -29,7 +30,10 @@ class TVShowRepository(private val dao: TVShowDao, private val api: TVShowAPI) {
         //return dao.getTVShows();
     }
 
-    fun getTVShowDetails(tvShowId: Int?): Observable<TVShow> {
+    fun getTVShowDetails(tvShowId: Int?, fromDB: Boolean): Single<TVShow> {
+        if(fromDB) {
+            return dao.getTVShowDetails(tvShowId)
+        }
         return api.getTVShowDetails(tvShowId, "videos,images,credits")
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getTVShowDetails(tvShowId);

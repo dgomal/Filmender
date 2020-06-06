@@ -3,6 +3,7 @@ package com.bossdga.filmender.source.network.api
 import com.bossdga.filmender.model.content.TVShow
 import com.bossdga.filmender.model.content.TVShowResponse
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -30,5 +31,5 @@ interface TVShowAPI {
      */
     @GET("/3/tv/{tv_id}")
     fun getTVShowDetails(@Path("tv_id") tvShowId: Int?,
-                         @Query("append_to_response") appendToResponse: String?): Observable<TVShow>
+                         @Query("append_to_response") appendToResponse: String?): Single<TVShow>
 }
