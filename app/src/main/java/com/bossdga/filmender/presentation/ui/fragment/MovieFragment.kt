@@ -99,7 +99,36 @@ class MovieFragment : BaseFragment() {
                 }))
     }
 
+    /**
+     * Method that adds a Disposable to the CompositeDisposable
+     * @param moviesObservable
+     */
+    private fun subscribeMoviesFromDB(moviesObservable: Observable<List<Movie>>) {
+        disposable.add(moviesObservable
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableObserver<List<Movie>>() {
+                override fun onComplete() {
+
+                }
+
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+
+                override fun onNext(movies: List<Movie>) {
+                    adapter.setItems(movies)
+                    mainViewModel.loaded.postValue("true")
+                    moviesHeader.visibility = View.VISIBLE
+                }
+            }))
+    }
+
     fun refreshContent(fromDB: Boolean) {
-        subscribeMovies(mainViewModel.loadMovies(fromDB))
+        if(fromDB) {
+            subscribeMoviesFromDB(mainViewModel.loadMoviesFromDB())
+        } else {
+            subscribeMovies(mainViewModel.loadMovies())
+        }
     }
 }

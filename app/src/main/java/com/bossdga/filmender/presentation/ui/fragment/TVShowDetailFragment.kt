@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -77,13 +79,23 @@ class TVShowDetailFragment : BaseFragment() {
             }
         }
         addToWatchlist = requireActivity().findViewById(R.id.AddToWatchlist)
-        addToWatchlist.setOnClickListener { tvShowDetailViewModel.saveTVShow(this.tvShow) }
+        switchViewState(true, addToWatchlist)
+        addToWatchlist.setOnClickListener {
+            if(addToWatchlist.tag.equals("selected")) {
+                switchViewState(false, addToWatchlist)
+                tvShowDetailViewModel.deleteTVShow(this.tvShow)
+            } else {
+                switchViewState(true, addToWatchlist)
+                tvShowDetailViewModel.saveTVShow(this.tvShow)
+            }
+        }
 
         tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
         id = extras?.getIntExtra("id", 0)
         source = extras?.getStringExtra("source")
         if(id == 0) {
-            subscribeTVShows(tvShowDetailViewModel.loadTVShows(false))
+            switchViewState(false, addToWatchlist)
+            subscribeTVShows(tvShowDetailViewModel.loadTVShows())
         } else {
             subscribeTVShow(tvShowDetailViewModel.loadTVShow(id, true))
         }
@@ -131,6 +143,7 @@ class TVShowDetailFragment : BaseFragment() {
                 override fun onError(e: Throwable) {
                     e.printStackTrace()
                     subscribeTVShow(tvShowDetailViewModel.loadTVShow(id, false))
+                    switchViewState(false, addToWatchlist)
                 }
 
                 override fun onSuccess(tvShow: TVShow) {
@@ -149,6 +162,9 @@ class TVShowDetailFragment : BaseFragment() {
         overview.text = tvShow.overview
         genre.text = tvShow.genres.joinToString(separator = " \u2022 ") { it.name }
         adapter.setItems(tvShow.credits.cast)
+        if(!tvShow.videos.results.isEmpty()) {
+            trailer.visibility = View.VISIBLE
+        }
         this.tvShow = tvShow
     }
 
@@ -184,5 +200,20 @@ class TVShowDetailFragment : BaseFragment() {
                     }
                 }
             }))
+    }
+
+    fun switchViewState(select: Boolean, view: View) {
+        view as FloatingActionButton
+        if(select) {
+            view.tag = "selected"
+            view.setImageResource(R.mipmap.bookmark_white)
+            view.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.template_red))
+            view.supportImageTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.white))
+        } else {
+            view.tag = "not_selected"
+            view.setImageResource(R.mipmap.bookmark_red)
+            view.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.white))
+            view.supportImageTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.template_red))
+        }
     }
 }

@@ -17,15 +17,15 @@ abstract class BaseViewModel(protected val movieRepository: MovieRepository, pro
      * Method that returns an Observable of a Collection of movies
      * @return
      */
-    fun loadMovies(fromDB: Boolean): Observable<MovieResponse> {
-        return movieRepository.getMovies(fromDB)
+    fun loadMovies(): Observable<MovieResponse> {
+        return movieRepository.getMovies()
     }
 
     /**
      * Method that returns an Observable of a Collection of tv shows
      * @return
      */
-    fun loadTVShows(fromDB: Boolean): Observable<TVShowResponse> {
-        return tvShowRepository.getTVShows(fromDB)
+    fun loadTVShows(): Observable<TVShowResponse> {
+        return tvShowRepository.getTVShows()
     }
 }

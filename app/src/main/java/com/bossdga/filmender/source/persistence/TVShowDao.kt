@@ -1,9 +1,6 @@
 package com.bossdga.filmender.source.persistence
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.bossdga.filmender.model.content.TVShow
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -21,4 +18,7 @@ interface TVShowDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveTVShow(tvShow: TVShow?)
+
+    @Delete
+    fun deleteTVShow(tvShow: TVShow?)
 }

@@ -21,4 +21,8 @@ class TVShowDetailViewModel(movieRepository: MovieRepository, tvShowRepository: 
     fun saveTVShow(tvShow: TVShow) {
         tvShowRepository.saveTVShow(tvShow)
     }
+
+    fun deleteTVShow(tvShow: TVShow) {
+        tvShowRepository.deleteTVShow(tvShow)
+    }
 }

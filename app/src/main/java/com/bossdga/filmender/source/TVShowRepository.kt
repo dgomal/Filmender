@@ -14,11 +14,7 @@ import io.reactivex.Single
  * Repository to execute database and network operations
  */
 class TVShowRepository(private val dao: TVShowDao, private val api: TVShowAPI) {
-    fun getTVShows(fromDB: Boolean): Observable<TVShowResponse> {
-        if(fromDB) {
-            // Get observable from dao.getTVShows(), get the list and create an observable with TVShowResponse
-            // return Observable.just(TVShowResponse(showList.size, 1, showList))
-        }
+    fun getTVShows(): Observable<TVShowResponse> {
         return api.getTVShows(1, PreferenceUtils.getYearFrom(),
             PreferenceUtils.getYearTo(),
             PreferenceUtils.getRating(),
@@ -29,6 +25,10 @@ class TVShowRepository(private val dao: TVShowDao, private val api: TVShowAPI) {
                 PreferenceUtils.getGenres()) }
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getTVShows();
+    }
+
+    fun getTVShowsFromDB(): Observable<List<TVShow>> {
+        return dao.getTvShows()
     }
 
     fun getTVShowDetails(tvShowId: Int?, fromDB: Boolean): Single<TVShow> {
@@ -50,6 +50,20 @@ class TVShowRepository(private val dao: TVShowDao, private val api: TVShowAPI) {
     class InsertMovieTask internal constructor(private val dao: TVShowDao): AsyncTask<TVShow?, Void?, Void?>() {
         override fun doInBackground(vararg params: TVShow?): Void? {
             dao.saveTVShow(params[0])
+            return null
+        }
+    }
+
+    fun deleteTVShow(tvShow: TVShow) {
+        DeleteTVShowTask(dao).execute(tvShow)
+    }
+
+    /**
+     * AsyncTask that will insert one row to the database
+     */
+    class DeleteTVShowTask internal constructor(private val dao: TVShowDao): AsyncTask<TVShow?, Void?, Void?>() {
+        override fun doInBackground(vararg params: TVShow?): Void? {
+            dao.deleteTVShow(params[0])
             return null
         }
     }

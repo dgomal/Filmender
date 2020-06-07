@@ -96,7 +96,34 @@ class TVShowFragment : BaseFragment() {
                 }))
     }
 
+    /**
+     * Method that adds a Disposable to the CompositeDisposable
+     * @param tvShowsObservable
+     */
+    private fun subscribeTVShowsFromDB(tvShowsObservable: Observable<List<TVShow>>) {
+        disposable.add(tvShowsObservable
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableObserver<List<TVShow>>() {
+                override fun onComplete() {}
+
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+
+                override fun onNext(shows: List<TVShow>) {
+                    adapter.setItems(shows)
+                    mainViewModel.loaded.postValue("true")
+                    showsHeader.visibility = View.VISIBLE
+                }
+            }))
+    }
+
     fun refreshContent(fromDB: Boolean) {
-        subscribeTVShows(mainViewModel.loadTVShows(fromDB))
+        if(fromDB) {
+            subscribeTVShowsFromDB(mainViewModel.loadTVShowsFromDB())
+        } else {
+            subscribeTVShows(mainViewModel.loadTVShows())
+        }
     }
 }

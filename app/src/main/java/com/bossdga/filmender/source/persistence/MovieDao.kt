@@ -1,12 +1,10 @@
 package com.bossdga.filmender.source.persistence
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.bossdga.filmender.model.content.Movie
 import io.reactivex.Observable
 import io.reactivex.Single
+
 
 /**
  * Dao to interact with the database
@@ -21,4 +19,7 @@ interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveMovie(movie: Movie?)
+
+    @Delete
+    fun deleteMovie(movie: Movie?)
 }
