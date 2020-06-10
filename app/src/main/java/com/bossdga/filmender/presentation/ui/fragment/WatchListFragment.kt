@@ -1,9 +1,7 @@
 package com.bossdga.filmender.presentation.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.bossdga.filmender.R
 import com.bossdga.filmender.util.PreferenceUtils
 
@@ -18,6 +16,7 @@ class WatchListFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -27,6 +26,11 @@ class WatchListFragment : BaseFragment() {
         loadFragments()
 
         return rootView
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
     }
 
     private fun loadFragments() {
