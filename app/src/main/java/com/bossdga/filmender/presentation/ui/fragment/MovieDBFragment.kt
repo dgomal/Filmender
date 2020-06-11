@@ -90,7 +90,9 @@ class MovieDBFragment : BaseFragment() {
 
                 override fun onNext(movies: List<Movie>) {
                     adapter.setItems(movies)
-                    moviesHeader.visibility = View.VISIBLE
+                    if(movies.isNotEmpty()) {
+                        moviesHeader.visibility = View.VISIBLE
+                    }
                 }
             }))
     }

@@ -87,7 +87,9 @@ class TVShowDBFragment : BaseFragment() {
 
                 override fun onNext(shows: List<TVShow>) {
                     adapter.setItems(shows)
-                    showsHeader.visibility = View.VISIBLE
+                    if(shows.isNotEmpty()) {
+                        showsHeader.visibility = View.VISIBLE
+                    }
                 }
             }))
     }
