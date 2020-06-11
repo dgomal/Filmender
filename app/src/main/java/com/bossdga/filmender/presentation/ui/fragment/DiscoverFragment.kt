@@ -82,18 +82,18 @@ class DiscoverFragment : BaseFragment() {
             "0" -> {
                 attachFragment(fragmentMovie)
                 attachFragment(fragmentTVShow)
-                fragmentMovie.refreshContent(false)
-                fragmentTVShow.refreshContent(false)
+                fragmentMovie.refreshContent()
+                fragmentTVShow.refreshContent()
             }
             "1" -> {
                 attachFragment(fragmentMovie)
                 detachFragment(fragmentTVShow)
-                fragmentMovie.refreshContent(false)
+                fragmentMovie.refreshContent()
             }
             else -> {
                 attachFragment(fragmentTVShow)
                 detachFragment(fragmentMovie)
-                fragmentTVShow.refreshContent(false)
+                fragmentTVShow.refreshContent()
             }
         }
     }

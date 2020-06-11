@@ -10,8 +10,8 @@ import com.bossdga.filmender.util.PreferenceUtils
  * A simple Fragment that will show a Watch List
  */
 class WatchListFragment : BaseFragment() {
-    private lateinit var fragmentMovie: MovieFragment
-    private lateinit var fragmentTVShow: TVShowFragment
+    private lateinit var fragmentMovie: MovieDBFragment
+    private lateinit var fragmentTVShow: TVShowDBFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,27 +34,13 @@ class WatchListFragment : BaseFragment() {
     }
 
     private fun loadFragments() {
-        fragmentMovie = childFragmentManager.findFragmentById(R.id.FragmentMovie) as MovieFragment
-        fragmentTVShow = childFragmentManager.findFragmentById(R.id.FragmentTVShow) as TVShowFragment
+        fragmentMovie = childFragmentManager.findFragmentById(R.id.FragmentDBMovie) as MovieDBFragment
+        fragmentTVShow = childFragmentManager.findFragmentById(R.id.FragmentDBTVShow) as TVShowDBFragment
 
-        when (PreferenceUtils.getType()) {
-            "0" -> {
-                attachFragment(fragmentMovie)
-                attachFragment(fragmentTVShow)
-                fragmentMovie.refreshContent(true)
-                fragmentTVShow.refreshContent(true)
-            }
-            "1" -> {
-                attachFragment(fragmentMovie)
-                detachFragment(fragmentTVShow)
-                fragmentMovie.refreshContent(true)
-            }
-            else -> {
-                attachFragment(fragmentTVShow)
-                detachFragment(fragmentMovie)
-                fragmentTVShow.refreshContent(true)
-            }
-        }
+        attachFragment(fragmentMovie)
+        attachFragment(fragmentTVShow)
+        fragmentMovie.refreshContent()
+        fragmentTVShow.refreshContent()
     }
 
 }

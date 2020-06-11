@@ -23,18 +23,18 @@
             android:orientation="vertical">
 
             <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/FragmentMovie"
-                android:name="com.bossdga.filmender.presentation.ui.fragment.MovieFragment"
+                android:id="@+id/FragmentDBMovie"
+                android:name="com.bossdga.filmender.presentation.ui.fragment.MovieDBFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_movie" />
+                tools:layout="@layout/fragment_db_movie" />
 
             <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/FragmentTVShow"
-                android:name="com.bossdga.filmender.presentation.ui.fragment.TVShowFragment"
+                android:id="@+id/FragmentDBTVShow"
+                android:name="com.bossdga.filmender.presentation.ui.fragment.TVShowDBFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:layout="@layout/fragment_tv_show" />
+                tools:layout="@layout/fragment_db_tv_show" />
 
         </LinearLayout>
 
