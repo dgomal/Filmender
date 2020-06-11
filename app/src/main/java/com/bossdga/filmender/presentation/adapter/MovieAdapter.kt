@@ -11,7 +11,7 @@ import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
 import com.bossdga.filmender.model.content.Movie
-import com.bossdga.filmender.util.ImageUtils
+import com.bossdga.filmender.util.ImageUtils.setImage
 import java.util.*
 
 /**
@@ -34,9 +34,9 @@ class MovieAdapter(private var context: Context, private val listener: OnItemCli
             } else {
                 title.visibility = View.GONE
             }
-            ImageUtils.setImage(context, image, movie.posterPath, ImageType.POSTER)
+            setImage(image, movie.posterPath, ImageType.POSTER)
 
-            itemView.setOnClickListener { v: View? -> listener.onItemClick(movie) }
+            itemView.setOnClickListener { listener.onItemClick(movie) }
         }
     }
 

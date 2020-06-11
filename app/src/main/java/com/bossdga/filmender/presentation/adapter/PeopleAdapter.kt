@@ -8,11 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnImageClickListener
-import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
 import com.bossdga.filmender.model.content.People
-import com.bossdga.filmender.util.ImageUtils
+import com.bossdga.filmender.util.ImageUtils.setImage
 import java.util.*
 
 /**
@@ -30,9 +29,9 @@ class PeopleAdapter(private var context: Context, private val listener: OnImageC
 
         fun bind(people: People, listener: OnImageClickListener) {
             name.text = people.name
-            ImageUtils.setImage(context, image, people.profilePath, ImageType.PROFILE)
+            setImage(image, people.profilePath, ImageType.PROFILE)
 
-            itemView.setOnClickListener { v: View? -> listener.onImageClick(people) }
+            itemView.setOnClickListener { listener.onImageClick(people) }
         }
     }
 

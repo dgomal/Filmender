@@ -10,7 +10,7 @@
     <TextView android:id="@+id/MoviesHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Movies"
+        android:text="@string/movies_header"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"

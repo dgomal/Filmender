@@ -108,7 +108,7 @@ class TVShowDetailFragment : BaseFragment() {
                 if (people.profilePath != null) {
                     val view = LayoutInflater.from(activity as Context).inflate(R.layout.image_layout, container, false)
                     val imageView: ImageView = view.findViewById(R.id.ProfileImage)
-                    setImage(activity as Context, imageView, people.profilePath, ImageType.BACK_DROP)
+                    setImage(imageView, people.profilePath, ImageType.PROFILE_LARGE)
                     val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(activity as Context)
                     alertDialogBuilder.setView(view).show()
                 }
@@ -155,7 +155,7 @@ class TVShowDetailFragment : BaseFragment() {
     }
 
     private fun renderView(tvShow: TVShow) {
-        setImage(activity as Context, image, tvShow.backdropPath, ImageType.BACK_DROP)
+        setImage(image, tvShow.backdropPath, ImageType.BACK_DROP)
         voteAverage.text = tvShow.voteAverage
         numberOfSeasons.text = tvShow.numberOfSeasons.toString().plus(" Seasons")
         date.text = tvShow.releaseDate.substringBefore("-")

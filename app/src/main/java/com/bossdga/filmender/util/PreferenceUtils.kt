@@ -25,11 +25,11 @@ object PreferenceUtils {
         return AppSettings(context, "SETTINGS_PREFERENCES").rating
     }
 
-    fun getYearFrom(): String? {
+    fun getYearFrom(): String {
         return AppSettings(context, "SETTINGS_PREFERENCES").yearFrom + "-01-01"
     }
 
-    fun getYearTo(): String? {
+    fun getYearTo(): String {
         return AppSettings(context, "SETTINGS_PREFERENCES").yearTo + "-01-01"
     }
 
@@ -47,5 +47,9 @@ object PreferenceUtils {
 
     fun setImageUrl(imageUrl: String) {
         AppSettings(context, "SETTINGS_PREFERENCES").image_url = imageUrl
+    }
+
+    fun getAdult(): Boolean? {
+        return AppSettings(context, "SETTINGS_PREFERENCES").adult
     }
 }

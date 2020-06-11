@@ -3,8 +3,6 @@ package com.bossdga.filmender.util
 import android.content.Context
 import android.widget.ImageView
 import coil.api.load
-import coil.transform.CircleCropTransformation
-import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
 
 /**
@@ -17,17 +15,20 @@ object ImageUtils {
      * @param image
      * @param url
      */
-    fun setImage(context: Context, image: ImageView, url: String?, imageType: ImageType) {
+    fun setImage(image: ImageView, url: String?, imageType: ImageType) {
         val size: String
         when (imageType) {
             ImageType.POSTER -> {
-                size = "original"
+                size = "w154"
             }
             ImageType.BACK_DROP -> {
-                size = "w1280"
+                size = "w780"
             }
             ImageType.PROFILE -> {
-                size = "original"
+                size = "w185"
+            }
+            ImageType.PROFILE_LARGE -> {
+                size = "h632"
             }
         }
         image.load(PreferenceUtils.getImageUrl() + size + url) {

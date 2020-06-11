@@ -110,7 +110,7 @@ class MovieDetailFragment : BaseFragment() {
                 if (people.profilePath != null) {
                     val view = LayoutInflater.from(activity as Context).inflate(R.layout.image_layout, container, false)
                     val imageView: ImageView = view.findViewById(R.id.ProfileImage)
-                    setImage(activity as Context, imageView, people.profilePath, ImageType.BACK_DROP)
+                    setImage(imageView, people.profilePath, ImageType.PROFILE_LARGE)
                     val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(activity as Context)
                     alertDialogBuilder.setView(view).show()
                 }
@@ -157,7 +157,7 @@ class MovieDetailFragment : BaseFragment() {
     }
 
     private fun renderView(movie: Movie) {
-        setImage(activity as Context, image, movie.backdropPath, ImageType.BACK_DROP)
+        setImage(image, movie.backdropPath, ImageType.BACK_DROP)
         voteAverage.text = movie.voteAverage
         runtime.text = DateUtils.fromMinutesToHHmm(movie.runtime)
         date.text = movie.releaseDate.substringBefore("-")

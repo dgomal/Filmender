@@ -23,7 +23,7 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:layout_gravity="center"
-            android:contentDescription="People image" />
+            android:contentDescription="@string/people_image" />
 
         <TextView
             android:id="@+id/Name"

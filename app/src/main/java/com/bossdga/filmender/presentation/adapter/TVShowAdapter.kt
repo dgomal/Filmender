@@ -11,7 +11,7 @@ import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
 import com.bossdga.filmender.model.content.TVShow
-import com.bossdga.filmender.util.ImageUtils
+import com.bossdga.filmender.util.ImageUtils.setImage
 import java.util.*
 
 /**
@@ -34,9 +34,9 @@ class TVShowAdapter(private var context: Context, private val listener: OnItemCl
             } else {
                 title.visibility = View.GONE
             }
-            ImageUtils.setImage(context, image, tvShow.posterPath, ImageType.POSTER)
+            setImage(image, tvShow.posterPath, ImageType.POSTER)
 
-            itemView.setOnClickListener { v: View? -> listener.onItemClick(tvShow) }
+            itemView.setOnClickListener { listener.onItemClick(tvShow) }
         }
     }
 

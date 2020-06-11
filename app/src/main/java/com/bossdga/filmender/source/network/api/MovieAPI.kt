@@ -21,7 +21,8 @@ interface MovieAPI {
                   @Query("primary_release_date.gte") releaseDateGte: String?,
                   @Query("primary_release_date.lte") releaseDateLte: String?,
                   @Query("vote_average.gte") voteAverageGte: String?,
-                  @Query("with_genres") withGenres: String?
+                  @Query("with_genres") withGenres: String?,
+                  @Query("include_adult") includeAdult: Boolean?
     ): Observable<MovieResponse>
 
     /**

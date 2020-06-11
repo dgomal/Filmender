@@ -10,7 +10,7 @@
     <TextView android:id="@+id/ShowsHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TV Shows"
+        android:text="@string/tv_shows_header"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"

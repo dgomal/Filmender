@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/rating_black"
-                    android:contentDescription="Rating"
+                    android:contentDescription="@string/rating"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin_12"
                     android:layout_marginStart="@dimen/activity_horizontal_margin_12"/>
 
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/season_black"
-                    android:contentDescription="Seasons"
+                    android:contentDescription="@string/seasons"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin_24"
                     android:layout_marginStart="@dimen/activity_horizontal_margin_24"/>
 
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/calendar_black"
-                    android:contentDescription="Date"
+                    android:contentDescription="@string/date"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin_24"
                     android:layout_marginStart="@dimen/activity_horizontal_margin_24"/>
 
@@ -132,7 +132,7 @@
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="Watch Trailer"
+                    android:text="@string/watch_trailer"
                     app:cornerRadius="30dp"
                     style="@style/ButtonTheme"
                     android:paddingTop="@dimen/activity_vertical_margin_16"

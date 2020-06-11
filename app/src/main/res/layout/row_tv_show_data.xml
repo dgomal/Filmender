@@ -23,7 +23,7 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:layout_gravity="center"
-            android:contentDescription="TV Show poster" />
+            android:contentDescription="@string/tv_show_poster" />
 
         <TextView
             android:id="@+id/Title"
