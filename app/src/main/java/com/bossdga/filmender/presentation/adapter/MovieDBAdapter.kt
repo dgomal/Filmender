@@ -11,6 +11,7 @@ import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
 import com.bossdga.filmender.model.content.Movie
+import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
 import java.util.*
 
@@ -34,7 +35,7 @@ class MovieDBAdapter(private var context: Context, private val listener: OnItemC
             title.text = movie.title
             setImage(image, movie.posterPath, ImageType.POSTER)
             voteAverage.text = movie.voteAverage
-            runtime.text = movie.runtime.toString()
+            runtime.text = DateUtils.fromMinutesToHHmm(movie.runtime)
             date.text = movie.releaseDate
 
             itemView.setOnClickListener { listener.onItemClick(movie) }
