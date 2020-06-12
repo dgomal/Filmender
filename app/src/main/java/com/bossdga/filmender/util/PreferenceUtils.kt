@@ -30,7 +30,7 @@ object PreferenceUtils {
     }
 
     fun getYearTo(): String {
-        return AppSettings(context, "SETTINGS_PREFERENCES").yearTo + "-01-01"
+        return AppSettings(context, "SETTINGS_PREFERENCES").yearTo + "-12-31"
     }
 
     fun getType(): String? {
