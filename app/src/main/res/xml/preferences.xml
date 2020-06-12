@@ -58,11 +58,4 @@
             android:title="Genre"
             android:dialogTitle="Genres"/>
     </PreferenceCategory>
-
-    <PreferenceCategory android:title="Include adult films">
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="adult"
-            android:title="Adult"/>
-    </PreferenceCategory>
 </PreferenceScreen>

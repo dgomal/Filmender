@@ -19,13 +19,11 @@ class MovieRepository(private val dao: MovieDao, private val api: MovieAPI) {
         return api.getMovies(1, PreferenceUtils.getYearFrom(),
             PreferenceUtils.getYearTo(),
             PreferenceUtils.getRating(),
-            PreferenceUtils.getGenres(),
-            PreferenceUtils.getAdult())
+            PreferenceUtils.getGenres())
             .flatMap{ movieResponse: MovieResponse -> api.getMovies(NumberUtils.getRandomNumberInRange(1, movieResponse.totalPages), PreferenceUtils.getYearFrom(),
                 PreferenceUtils.getYearTo(),
                 PreferenceUtils.getRating(),
-                PreferenceUtils.getGenres(),
-                PreferenceUtils.getAdult()) }
+                PreferenceUtils.getGenres()) }
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getMovies()
     }

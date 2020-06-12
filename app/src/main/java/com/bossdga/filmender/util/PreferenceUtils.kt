@@ -48,8 +48,4 @@ object PreferenceUtils {
     fun setImageUrl(imageUrl: String) {
         AppSettings(context, "SETTINGS_PREFERENCES").image_url = imageUrl
     }
-
-    fun getAdult(): Boolean? {
-        return AppSettings(context, "SETTINGS_PREFERENCES").adult
-    }
 }

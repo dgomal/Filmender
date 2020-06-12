@@ -91,7 +91,9 @@ class MovieFragment : BaseFragment() {
                     }
 
                     override fun onNext(movieResponse: MovieResponse) {
-                        val movieList: List<Movie> = movieResponse.results.take(PreferenceUtils.getResults()!!)
+                        println(">>>>>>>>>>>>>>>>>>>> antes: " + movieResponse.results.size)
+                        val movieList: List<Movie> = movieResponse.results.shuffled().take(PreferenceUtils.getResults()!!)
+                        println(">>>>>>>>>>>>>>>>>>>> despues: " + movieList.size)
                         adapter.setItems(movieList)
                         mainViewModel.loaded.postValue("true")
                         moviesHeader.visibility = View.VISIBLE
