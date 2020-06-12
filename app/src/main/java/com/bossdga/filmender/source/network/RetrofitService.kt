@@ -4,6 +4,7 @@ import android.content.Context
 import com.bossdga.filmender.source.network.api.ConfigurationAPI
 import com.bossdga.filmender.source.network.api.MovieAPI
 import com.bossdga.filmender.source.network.api.TVShowAPI
+import com.bossdga.filmender.util.LanguageUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -35,19 +36,19 @@ object RetrofitService {
     }
 
     private fun createClient(): OkHttpClient {
-         return OkHttpClient.Builder().addInterceptor(object : Interceptor {
-            @Throws(IOException::class)
-            override fun intercept(chain: Interceptor.Chain): Response {
-                val original = chain.request()
-                val originalHttpUrl = original.url()
+         return OkHttpClient.Builder().addInterceptor { chain ->
+             val original = chain.request()
+             val originalHttpUrl = original.url()
 
-                val url = originalHttpUrl.newBuilder()
-                    .addQueryParameter("api_key", API_KEY).build()
-                val request = original.newBuilder().url(url).build()
-                println(">>>>>>>>>>>>>>> Request URL: " + request.url())
-                return chain.proceed(request)
-            }
-        }).build()
+             val url = originalHttpUrl.newBuilder()
+                 .addQueryParameter("api_key", API_KEY)
+                 .addQueryParameter("language", LanguageUtils.getSystemLanguage())
+                 .addQueryParameter("include_image_language", LanguageUtils.getSystemLanguage() + ",null")
+                 .addQueryParameter("region", LanguageUtils.getSystemCountry()).build()
+             val request = original.newBuilder().url(url).build()
+             println(">>>>>>>>>>>>>>> Request URL: " + request.url())
+             chain.proceed(request)
+         }.build()
     }
 
     val movieApi: MovieAPI by lazy {
