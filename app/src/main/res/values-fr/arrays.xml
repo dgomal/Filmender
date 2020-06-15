@@ -1,9 +1,9 @@
 <resources>
     <!-- Label ordering must match values -->
     <array name="type_labels">
-        <item>"All"</item>
-        <item>"Movies"</item>
-        <item>"TV Shows"</item>
+        <item>"Tout"</item>
+        <item>"Films"</item>
+        <item>"Émissions de télévision"</item>
     </array>
 
     <array name="type_values">
@@ -27,23 +27,23 @@
 
     <array name="genre_labels">
         <item>"Action"</item>
-        <item>"Adventure"</item>
+        <item>"Aventure"</item>
         <item>"Animation"</item>
-        <item>"Comedy"</item>
+        <item>"Comédie"</item>
         <item>"Crime"</item>
-        <item>"Documentary"</item>
-        <item>"Drama"</item>
-        <item>"Family"</item>
-        <item>"Fantasy"</item>
-        <item>"History"</item>
-        <item>"Horror"</item>
-        <item>"Music"</item>
-        <item>"Mystery"</item>
+        <item>"Documentaire"</item>
+        <item>"Drame"</item>
+        <item>"Famille"</item>
+        <item>"Fantaisie"</item>
+        <item>"Histoire"</item>
+        <item>"Horreur"</item>
+        <item>"Musique"</item>
+        <item>"Mystère"</item>
         <item>"Romance"</item>
         <item>"Science Fiction"</item>
-        <item>"TV Movie"</item>
-        <item>"Thriller"</item>
-        <item>"War"</item>
+        <item>"Téléfilm"</item>
+        <item>"Suspense"</item>
+        <item>"Guerre"</item>
         <item>"Western"</item>
     </array>
 
@@ -134,13 +134,13 @@
     </array>
 
     <array name="language_labels">
-        <item>"English"</item>
-        <item>"Spanish"</item>
-        <item>"Polish"</item>
-        <item>"German"</item>
-        <item>"French"</item>
-        <item>"Italian"</item>
-        <item>"Portuguese"</item>
+        <item>"Anglais"</item>
+        <item>"Espagnol"</item>
+        <item>"Polonais"</item>
+        <item>"Allemand"</item>
+        <item>"Français"</item>
+        <item>"Italien"</item>
+        <item>"Portugais"</item>
     </array>
 
     <array name="language_values">

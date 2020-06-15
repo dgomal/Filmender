@@ -14,7 +14,7 @@
 
     <string name="add_to_watchlist">Añadir a Mi Lista</string>
     <string name="header_image">Imagen De Cabecera</string>
-    <string name="feeling_lucky">Suerte</string>
+    <string name="feeling_lucky">Afortunado</string>
     <string name="movies_header">Películas</string>
     <string name="rating">Puntuación</string>
     <string name="runtime">Duración</string>
@@ -24,7 +24,7 @@
     <string name="seasons">Temporadas</string>
     <string name="profile_image">Imagen de Perfil</string>
     <string name="movie_poster">Castel de Película</string>
-    <string name="people_image">Cartel de Persona</string>
+    <string name="people_image">Imagen de Persona</string>
     <string name="network_image">Imagen de Red</string>
     <string name="tv_show_poster">Cartel de Serie</string>
     <string name="settings">Ajustes</string>

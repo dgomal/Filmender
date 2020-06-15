@@ -1,9 +1,9 @@
 <resources>
     <!-- Label ordering must match values -->
     <array name="type_labels">
-        <item>"All"</item>
-        <item>"Movies"</item>
-        <item>"TV Shows"</item>
+        <item>"Todos"</item>
+        <item>"Películas"</item>
+        <item>"Series"</item>
     </array>
 
     <array name="type_values">
@@ -26,24 +26,24 @@
     </array>
 
     <array name="genre_labels">
-        <item>"Action"</item>
-        <item>"Adventure"</item>
-        <item>"Animation"</item>
-        <item>"Comedy"</item>
-        <item>"Crime"</item>
-        <item>"Documentary"</item>
+        <item>"Acción"</item>
+        <item>"Aventuras"</item>
+        <item>"Animación"</item>
+        <item>"Comedia"</item>
+        <item>"Crimen"</item>
+        <item>"Documental"</item>
         <item>"Drama"</item>
-        <item>"Family"</item>
-        <item>"Fantasy"</item>
-        <item>"History"</item>
+        <item>"Familia"</item>
+        <item>"Fantasía"</item>
+        <item>"Historia"</item>
         <item>"Horror"</item>
-        <item>"Music"</item>
-        <item>"Mystery"</item>
+        <item>"Musical"</item>
+        <item>"Misterio"</item>
         <item>"Romance"</item>
-        <item>"Science Fiction"</item>
-        <item>"TV Movie"</item>
-        <item>"Thriller"</item>
-        <item>"War"</item>
+        <item>"Ciencia Ficción"</item>
+        <item>"Televisión"</item>
+        <item>"Suspense"</item>
+        <item>"Bélico"</item>
         <item>"Western"</item>
     </array>
 
@@ -134,13 +134,13 @@
     </array>
 
     <array name="language_labels">
-        <item>"English"</item>
-        <item>"Spanish"</item>
-        <item>"Polish"</item>
-        <item>"German"</item>
-        <item>"French"</item>
-        <item>"Italian"</item>
-        <item>"Portuguese"</item>
+        <item>"Inglés"</item>
+        <item>"Español"</item>
+        <item>"Polaco"</item>
+        <item>"Alemán"</item>
+        <item>"Francés"</item>
+        <item>"Italiano"</item>
+        <item>"Portugués"</item>
     </array>
 
     <array name="language_values">

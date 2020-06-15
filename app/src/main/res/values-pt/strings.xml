@@ -1,47 +1,47 @@
 <resources>
     <string name="app_name">Filmender</string>
-    <string name="title_activity_main">Main</string>
-    <string name="title_activity_event_detail">Detail</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_main">Principal</string>
+    <string name="title_activity_event_detail">Detalhe</string>
+    <string name="title_activity_settings">Definições</string>
 
     <!-- Async calls -->
-    <string name="call_successful">Call completed</string>
-    <string name="call_error">An error has occurred, please try again</string>
+    <string name="call_successful">Pedido concluído</string>
+    <string name="call_error">Ocorreu um erro, por favor, tente novamente</string>
 
     <!-- Dialog -->
-    <string name="please_wait">Please wait</string>
-    <string name="loading">Loading</string>
+    <string name="please_wait">Por favor, espere</string>
+    <string name="loading">Carregando</string>
 
-    <string name="add_to_watchlist">Add To Watchlist</string>
-    <string name="header_image">Header Image</string>
-    <string name="feeling_lucky">Feeling Lucky</string>
-    <string name="movies_header">Movies</string>
-    <string name="rating">Rating</string>
-    <string name="runtime">Runtime</string>
-    <string name="date">Date</string>
-    <string name="watch_trailer">Watch Trailer</string>
-    <string name="tv_shows_header">TV Shows</string>
-    <string name="seasons">Seasons</string>
-    <string name="profile_image">Profile Image</string>
-    <string name="movie_poster">Movie Poster</string>
-    <string name="people_image">People Image</string>
-    <string name="network_image">Network Image</string>
-    <string name="tv_show_poster">TV Show Poster</string>
-    <string name="settings">Settings</string>
-    <string name="discover">Discover</string>
-    <string name="watchlist">Watchlist</string>
-    <string name="number_of_results">Number of results</string>
-    <string name="results">Results</string>
-    <string name="filter_by_type">Filter by type</string>
-    <string name="type">Type</string>
-    <string name="filter_by_year">Filter by year</string>
-    <string name="from">From</string>
-    <string name="to">To</string>
-    <string name="filter_by_rating">Filter by rating</string>
-    <string name="minimum">Minimum</string>
-    <string name="filter_by_genre">Filter by genre</string>
-    <string name="genre">Genre</string>
-    <string name="genres">Genres</string>
-    <string name="filter_by_language">Filter by language</string>
-    <string name="original_language">Original Language</string>
+    <string name="add_to_watchlist">Adicionar à Minha Lista</string>
+    <string name="header_image">Imagem de Cabeçalho</string>
+    <string name="feeling_lucky">Afortunado</string>
+    <string name="movies_header">Filmes</string>
+    <string name="rating">Avaliação</string>
+    <string name="runtime">Duração</string>
+    <string name="date">Data</string>
+    <string name="watch_trailer">Ver Trailer</string>
+    <string name="tv_shows_header">Séries</string>
+    <string name="seasons">Temporadas</string>
+    <string name="profile_image">Imagem de Perfil</string>
+    <string name="movie_poster">Poster do Filme</string>
+    <string name="people_image">Imagem da Pessoa</string>
+    <string name="network_image">Imagem de Rede</string>
+    <string name="tv_show_poster">Poster do Série</string>
+    <string name="settings">Definições</string>
+    <string name="discover">Descobrir</string>
+    <string name="watchlist">Minha Lista</string>
+    <string name="number_of_results">Número de resultados</string>
+    <string name="results">Resultados</string>
+    <string name="filter_by_type">Filtrar por tipo</string>
+    <string name="type">Tipo</string>
+    <string name="filter_by_year">Filtrar por ano</string>
+    <string name="from">De</string>
+    <string name="to">Para</string>
+    <string name="filter_by_rating">Filtrar por classificação</string>
+    <string name="minimum">Mínimo</string>
+    <string name="filter_by_genre">Filtrar por gênero</string>
+    <string name="genre">Gênero</string>
+    <string name="genres">Géneros</string>
+    <string name="filter_by_language">Filtrar por idioma</string>
+    <string name="original_language">Linguagem original</string>
 </resources>
