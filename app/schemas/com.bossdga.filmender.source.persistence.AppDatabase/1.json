@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "79ad1f325362a46b88d0efe1af44c556",
+    "identityHash": "e97031fa496f79ccf68a75aa37d18e80",
     "entities": [
       {
         "tableName": "movie",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `imdb_id` TEXT, `poster_path` TEXT, `backdrop_path` TEXT, `title` TEXT NOT NULL, `overview` TEXT, `release_date` TEXT NOT NULL, `vote_average` TEXT NOT NULL, `vote_count` INTEGER NOT NULL, `runtime` INTEGER, `popularity` REAL NOT NULL, `genres` TEXT NOT NULL, `credits` TEXT NOT NULL, `images` TEXT NOT NULL, `videos` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `imdb_id` TEXT, `poster_path` TEXT, `backdrop_path` TEXT, `title` TEXT NOT NULL, `overview` TEXT, `release_date` TEXT NOT NULL, `vote_average` TEXT NOT NULL, `vote_count` INTEGER NOT NULL, `runtime` INTEGER NOT NULL, `popularity` REAL NOT NULL, `genres` TEXT NOT NULL, `credits` TEXT NOT NULL, `images` TEXT NOT NULL, `videos` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -66,7 +66,7 @@
             "fieldPath": "runtime",
             "columnName": "runtime",
             "affinity": "INTEGER",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "popularity",
@@ -248,7 +248,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '79ad1f325362a46b88d0efe1af44c556')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e97031fa496f79ccf68a75aa37d18e80')"
     ]
   }
 }
