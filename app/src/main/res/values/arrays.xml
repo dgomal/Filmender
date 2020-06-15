@@ -132,4 +132,24 @@
         <item>"2019"</item>
         <item>"2020"</item>
     </array>
+
+    <array name="language_labels">
+        <item>"English"</item>
+        <item>"Spanish"</item>
+        <item>"Polish"</item>
+        <item>"German"</item>
+        <item>"French"</item>
+        <item>"Italian"</item>
+        <item>"Portuguese"</item>
+    </array>
+
+    <array name="language_values">
+        <item>"en"</item>
+        <item>"es"</item>
+        <item>"pl"</item>
+        <item>"de"</item>
+        <item>"fr"</item>
+        <item>"it"</item>
+        <item>"pt"</item>
+    </array>
 </resources>

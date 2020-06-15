@@ -30,6 +30,9 @@ object ImageUtils {
             ImageType.PROFILE_LARGE -> {
                 size = "h632"
             }
+            ImageType.LOGO -> {
+                size = "w154"
+            }
         }
         image.load(PreferenceUtils.getImageUrl() + size + url) {
             crossfade(true)

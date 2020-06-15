@@ -18,11 +18,13 @@ class TVShowRepository(private val dao: TVShowDao, private val api: TVShowAPI) {
         return api.getTVShows(1, PreferenceUtils.getYearFrom(),
             PreferenceUtils.getYearTo(),
             PreferenceUtils.getRating(),
-            PreferenceUtils.getGenres())
+            PreferenceUtils.getGenres(),
+            PreferenceUtils.getOriginalLanguage())
             .flatMap{ tvShowResponse: TVShowResponse -> api.getTVShows(NumberUtils.getRandomNumberInRange(1, tvShowResponse.totalPages), PreferenceUtils.getYearFrom(),
                 PreferenceUtils.getYearTo(),
                 PreferenceUtils.getRating(),
-                PreferenceUtils.getGenres()) }
+                PreferenceUtils.getGenres(),
+                PreferenceUtils.getOriginalLanguage()) }
         // TODO Add local database access in case there is not network connectivity or for caching purposes
         //return dao.getTVShows();
     }

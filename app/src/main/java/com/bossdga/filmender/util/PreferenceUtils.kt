@@ -42,10 +42,14 @@ object PreferenceUtils {
     }
 
     fun getImageUrl(): String? {
-        return AppSettings(context, "SETTINGS_PREFERENCES").image_url
+        return AppSettings(context, "SETTINGS_PREFERENCES").imageUrl
     }
 
     fun setImageUrl(imageUrl: String) {
-        AppSettings(context, "SETTINGS_PREFERENCES").image_url = imageUrl
+        AppSettings(context, "SETTINGS_PREFERENCES").imageUrl = imageUrl
+    }
+
+    fun getOriginalLanguage(): String? {
+        return AppSettings(context, "SETTINGS_PREFERENCES").originalLanguage
     }
 }

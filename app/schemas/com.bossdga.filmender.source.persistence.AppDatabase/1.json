@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e97031fa496f79ccf68a75aa37d18e80",
+    "identityHash": "fa6bcc3758c264b6e799c3883df26ecd",
     "entities": [
       {
         "tableName": "movie",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `imdb_id` TEXT, `poster_path` TEXT, `backdrop_path` TEXT, `title` TEXT NOT NULL, `overview` TEXT, `release_date` TEXT NOT NULL, `vote_average` TEXT NOT NULL, `vote_count` INTEGER NOT NULL, `runtime` INTEGER NOT NULL, `popularity` REAL NOT NULL, `genres` TEXT NOT NULL, `credits` TEXT NOT NULL, `images` TEXT NOT NULL, `videos` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `imdb_id` TEXT, `poster_path` TEXT, `backdrop_path` TEXT, `title` TEXT NOT NULL, `original_language` TEXT NOT NULL, `overview` TEXT, `release_date` TEXT NOT NULL, `vote_average` TEXT NOT NULL, `vote_count` INTEGER NOT NULL, `runtime` INTEGER NOT NULL, `popularity` REAL NOT NULL, `genres` TEXT NOT NULL, `credits` TEXT NOT NULL, `images` TEXT NOT NULL, `videos` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -35,6 +35,12 @@
           {
             "fieldPath": "title",
             "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "originalLanguage",
+            "columnName": "original_language",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -110,7 +116,7 @@
       },
       {
         "tableName": "tv_show",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `imdb_id` TEXT, `poster_path` TEXT, `backdrop_path` TEXT, `name` TEXT NOT NULL, `overview` TEXT NOT NULL, `first_air_date` TEXT NOT NULL, `vote_average` TEXT NOT NULL, `vote_count` INTEGER NOT NULL, `number_of_seasons` INTEGER NOT NULL, `popularity` REAL NOT NULL, `genres` TEXT NOT NULL, `credits` TEXT NOT NULL, `images` TEXT NOT NULL, `videos` TEXT NOT NULL, `networks` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `imdb_id` TEXT, `poster_path` TEXT, `backdrop_path` TEXT, `name` TEXT NOT NULL, `original_language` TEXT NOT NULL, `overview` TEXT NOT NULL, `first_air_date` TEXT NOT NULL, `vote_average` TEXT NOT NULL, `vote_count` INTEGER NOT NULL, `number_of_seasons` INTEGER NOT NULL, `popularity` REAL NOT NULL, `genres` TEXT NOT NULL, `credits` TEXT NOT NULL, `images` TEXT NOT NULL, `videos` TEXT NOT NULL, `networks` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -139,6 +145,12 @@
           {
             "fieldPath": "title",
             "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "originalLanguage",
+            "columnName": "original_language",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -248,7 +260,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e97031fa496f79ccf68a75aa37d18e80')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fa6bcc3758c264b6e799c3883df26ecd')"
     ]
   }
 }

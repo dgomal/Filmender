@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_settings"
         android:enabled="true"
-        android:title="Settings"
+        android:title="@string/settings"
         android:icon="@mipmap/filter_red"
         app:showAsAction="ifRoom" />
 </menu>

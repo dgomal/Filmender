@@ -20,11 +20,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnImageClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.*
+import com.bossdga.filmender.presentation.adapter.NetworksAdapter
 import com.bossdga.filmender.presentation.adapter.PeopleAdapter
 import com.bossdga.filmender.presentation.viewmodel.TVShowDetailViewModel
 import com.bossdga.filmender.util.ImageUtils.setImage
 import com.bossdga.filmender.util.NumberUtils
-import com.bossdga.filmender.util.PreferenceUtils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -38,9 +38,12 @@ import io.reactivex.schedulers.Schedulers
  * A simple Fragment that will show a tv show
  */
 class TVShowDetailFragment : BaseFragment() {
-    private lateinit var adapter: PeopleAdapter
-    private lateinit var mRecyclerView: RecyclerView
-    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var peopleAdapter: PeopleAdapter
+    private lateinit var networksAdapter: NetworksAdapter
+    private lateinit var peopleRecyclerView: RecyclerView
+    private lateinit var networksRecyclerView: RecyclerView
+    private lateinit var peopleLayoutManager: LinearLayoutManager
+    private lateinit var networksLayoutManager: LinearLayoutManager
     private lateinit var tvShowDetailViewModel: TVShowDetailViewModel
     private var id: Int? = 0
     private var source: String? = ""
@@ -100,10 +103,10 @@ class TVShowDetailFragment : BaseFragment() {
             subscribeTVShow(tvShowDetailViewModel.loadTVShow(id, true))
         }
 
-        mRecyclerView = rootView.findViewById(R.id.recyclerView)
-        linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerView.setLayoutManager(linearLayoutManager)
-        adapter = PeopleAdapter(activity as Context, object : OnImageClickListener {
+        peopleLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
+        peopleRecyclerView = rootView.findViewById(R.id.peopleRecyclerView)
+        peopleRecyclerView.layoutManager = peopleLayoutManager
+        peopleAdapter = PeopleAdapter(activity as Context, object : OnImageClickListener {
             override fun onImageClick(people: People) {
                 if (people.profilePath != null) {
                     val view = LayoutInflater.from(activity as Context).inflate(R.layout.image_layout, container, false)
@@ -114,7 +117,13 @@ class TVShowDetailFragment : BaseFragment() {
                 }
             }
         })
-        mRecyclerView.setAdapter(adapter)
+        peopleRecyclerView.setAdapter(peopleAdapter)
+
+        networksLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
+        networksRecyclerView = rootView.findViewById(R.id.networksRecyclerView)
+        networksRecyclerView.layoutManager = networksLayoutManager
+        networksAdapter = NetworksAdapter(activity as Context)
+        networksRecyclerView.setAdapter(networksAdapter)
 
         return rootView
     }
@@ -161,7 +170,12 @@ class TVShowDetailFragment : BaseFragment() {
         date.text = tvShow.releaseDate.substringBefore("-")
         overview.text = tvShow.overview
         genre.text = tvShow.genres.joinToString(separator = " \u2022 ") { it.name }
-        adapter.setItems(tvShow.credits.cast)
+        if(tvShow.credits.cast.isNotEmpty()) {
+            peopleAdapter.setItems(tvShow.credits.cast)
+        }
+        if(tvShow.networks.isNotEmpty()) {
+            networksAdapter.setItems(tvShow.networks)
+        }
         if(!tvShow.videos.results.isEmpty()) {
             trailer.visibility = View.VISIBLE
         }

@@ -21,7 +21,8 @@ interface TVShowAPI {
                    @Query("first_air_date.gte") airDateGte: String?,
                    @Query("first_air_date.lte") airDateLte: String?,
                    @Query("vote_average.gte") voteAverageGte: String?,
-                   @Query("with_genres") withGenres: String?
+                   @Query("with_genres") withGenres: String?,
+                   @Query("with_original_language") withOriginalLanguage: String?
     ): Observable<TVShowResponse>
 
     /**

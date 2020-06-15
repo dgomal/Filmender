@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Filmender</string>
+    <string name="title_activity_main">Principal</string>
+    <string name="title_activity_event_detail">Detalles</string>
+    <string name="title_activity_settings">Ajustes</string>
+
+    <!-- Async calls -->
+    <string name="call_successful">Petición finalizada</string>
+    <string name="call_error">Ha habido un error, por favor inténtalo de nuevo</string>
+
+    <!-- Dialog -->
+    <string name="please_wait">Por favor espera</string>
+    <string name="loading">Cargando</string>
+
+    <string name="add_to_watchlist">Añadir a Mi Lista</string>
+    <string name="header_image">Imagen De Cabecera</string>
+    <string name="feeling_lucky">Suerte</string>
+    <string name="movies_header">Películas</string>
+    <string name="rating">Puntuación</string>
+    <string name="runtime">Duración</string>
+    <string name="date">Fecha</string>
+    <string name="watch_trailer">Ver Trailer</string>
+    <string name="tv_shows_header">Series</string>
+    <string name="seasons">Temporadas</string>
+    <string name="profile_image">Imagen de Perfil</string>
+    <string name="movie_poster">Castel de Película</string>
+    <string name="people_image">Cartel de Persona</string>
+    <string name="network_image">Imagen de Red</string>
+    <string name="tv_show_poster">Cartel de Serie</string>
+    <string name="settings">Ajustes</string>
+    <string name="discover">Explorar</string>
+    <string name="watchlist">Mi Lista</string>
+    <string name="number_of_results">Número de resultados</string>
+    <string name="results">Resultados</string>
+    <string name="filter_by_type">Filtrar por tipo</string>
+    <string name="type">Tipo</string>
+    <string name="filter_by_year">Filtrar por año</string>
+    <string name="from">Desde</string>
+    <string name="to">Hasta</string>
+    <string name="filter_by_rating">Filtrar por puntuación</string>
+    <string name="minimum">Mínimo</string>
+    <string name="filter_by_genre">Filtrar por género</string>
+    <string name="genre">Género</string>
+    <string name="genres">Géneros</string>
+    <string name="filter_by_language">Filtrar por idioma</string>
+    <string name="original_language">Idioma original</string>
+</resources>

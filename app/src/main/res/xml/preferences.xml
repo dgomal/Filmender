@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <PreferenceCategory android:title="Number of results">
+    <PreferenceCategory android:title="@string/number_of_results">
         <SeekBarPreference
             android:key="results"
-            android:title="Results"
+            android:title="@string/results"
             app:min="1"
             android:max="20"
             android:defaultValue="9"
             app:showSeekBarValue="true"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Filter by type">
+    <PreferenceCategory android:title="@string/filter_by_type">
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/type_labels"
             android:entryValues="@array/type_values"
             android:key="type"
-            android:title="Type"
+            android:title="@string/type"
             android:summary="%s"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Filter by year">
+    <PreferenceCategory android:title="@string/filter_by_year">
         <ListPreference
             android:defaultValue="1960"
             android:entries="@array/year_values"
             android:entryValues="@array/year_values"
             android:key="yearFrom"
-            android:title="From"
+            android:title="@string/from"
             android:summary="%s"/>
 
         <ListPreference
@@ -35,27 +35,37 @@
             android:entries="@array/year_values"
             android:entryValues="@array/year_values"
             android:key="yearTo"
-            android:title="To"
+            android:title="@string/to"
             android:summary="%s"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Filter by rating">
+    <PreferenceCategory android:title="@string/filter_by_rating">
         <ListPreference
             android:defaultValue="0"
             android:entries="@array/rating_values"
             android:entryValues="@array/rating_values"
             android:key="rating"
-            android:title="Minimum"
+            android:title="@string/minimum"
             android:summary="%s"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Filter by genre">
+    <PreferenceCategory android:title="@string/filter_by_genre">
         <MultiSelectListPreference
             android:entries="@array/genre_labels"
             android:entryValues="@array/genre_values"
             android:defaultValue="@array/genre_values"
             android:key="genres"
-            android:title="Genre"
-            android:dialogTitle="Genres"/>
+            android:title="@string/genre"
+            android:dialogTitle="@string/genres"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/filter_by_language">
+        <ListPreference
+            android:defaultValue="en"
+            android:entries="@array/language_labels"
+            android:entryValues="@array/language_values"
+            android:key="originalLanguage"
+            android:title="@string/original_language"
+            android:summary="%s"/>
     </PreferenceCategory>
 </PreferenceScreen>
