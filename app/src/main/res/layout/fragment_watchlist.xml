@@ -29,6 +29,11 @@
                 android:layout_height="wrap_content"
                 tools:layout="@layout/fragment_db_movie" />
 
+            <FrameLayout
+                android:id="@+id/AddFrame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/FragmentDBTVShow"
                 android:name="com.bossdga.filmender.presentation.ui.fragment.TVShowDBFragment"

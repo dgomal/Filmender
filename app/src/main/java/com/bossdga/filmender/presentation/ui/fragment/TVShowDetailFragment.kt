@@ -10,9 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +23,11 @@ import com.bossdga.filmender.presentation.adapter.PeopleAdapter
 import com.bossdga.filmender.presentation.viewmodel.TVShowDetailViewModel
 import com.bossdga.filmender.util.ImageUtils.setImage
 import com.bossdga.filmender.util.NumberUtils
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.formats.NativeAdOptions
+import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -38,6 +41,8 @@ import io.reactivex.schedulers.Schedulers
  * A simple Fragment that will show a tv show
  */
 class TVShowDetailFragment : BaseFragment() {
+    private lateinit var addFrame: FrameLayout
+
     private lateinit var peopleAdapter: PeopleAdapter
     private lateinit var networksAdapter: NetworksAdapter
     private lateinit var peopleRecyclerView: RecyclerView
@@ -63,11 +68,17 @@ class TVShowDetailFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         showProgressDialog()
+
+        refreshAd()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_tv_show_detail, container, false)
+
+        tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
+
+        addFrame = rootView.findViewById(R.id.AddFrame)
 
         image = requireActivity().findViewById(R.id.image)
         voteAverage = rootView.findViewById(R.id.voteAverage)
@@ -93,7 +104,6 @@ class TVShowDetailFragment : BaseFragment() {
             }
         }
 
-        tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
         id = extras?.getIntExtra("id", 0)
         source = extras?.getStringExtra("source")
         if(id == 0) {
@@ -229,5 +239,35 @@ class TVShowDetailFragment : BaseFragment() {
             view.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.white))
             view.supportImageTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.template_red))
         }
+    }
+
+    /**
+     * Creates a request for a new native ad based on the boolean parameters and calls the
+     * corresponding "populate" method when one is successfully returned.
+     *
+     */
+    private fun refreshAd() {
+        val builder = AdLoader.Builder(requireActivity(), getString(R.string.banner_test))
+
+        builder.forUnifiedNativeAd { unifiedNativeAd ->
+            // OnUnifiedNativeAdLoadedListener implementation.
+            val adView = layoutInflater
+                .inflate(R.layout.ad_unified, null) as UnifiedNativeAdView
+            populateUnifiedNativeAdView(unifiedNativeAd, adView)
+            addFrame.removeAllViews()
+            addFrame.addView(adView)
+        }
+
+        val adOptions = NativeAdOptions.Builder().build()
+
+        builder.withNativeAdOptions(adOptions)
+
+        val adLoader = builder.withAdListener(object : AdListener() {
+            override fun onAdFailedToLoad(errorCode: Int) {
+                Toast.makeText(requireActivity(), "Failed to load native ad: " + errorCode, Toast.LENGTH_SHORT).show()
+            }
+        }).build()
+
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 }

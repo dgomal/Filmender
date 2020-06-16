@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -16,11 +18,10 @@ import com.bossdga.filmender.presentation.ui.activity.TVShowDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
-import com.google.android.ads.nativetemplates.NativeTemplateStyle
-import com.google.android.ads.nativetemplates.TemplateView
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.formats.UnifiedNativeAd
+import com.google.android.gms.ads.formats.NativeAdOptions
 import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -32,6 +33,8 @@ import io.reactivex.schedulers.Schedulers
  * A simple Fragment that will show a list of movies and tv shows
  */
 class DiscoverFragment : BaseFragment() {
+    private lateinit var addFrame: FrameLayout
+
     private lateinit var fragmentMovie: MovieFragment
     private lateinit var fragmentTVShow: TVShowFragment
     private lateinit var mainViewModel: MainViewModel
@@ -43,19 +46,14 @@ class DiscoverFragment : BaseFragment() {
 
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
+        refreshAd()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_discover, container, false)
 
-        val adLoader = AdLoader.Builder(requireActivity(), getString(R.string.banner_test))
-            .forUnifiedNativeAd { unifiedNativeAd : UnifiedNativeAd ->
-
-            }.build()
-
-        adLoader.loadAd(AdRequest.Builder().build())
-
+        addFrame = rootView.findViewById(R.id.AddFrame)
         mSwipeRefreshLayout = rootView.findViewById(R.id.SwipeRefreshLayout)
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
         shuffleButton = rootView.findViewById(R.id.ShuffleButton)
@@ -78,6 +76,7 @@ class DiscoverFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
+        currentNativeAd?.destroy()
         super.onDestroyView()
 
         disposable.clear()
@@ -167,6 +166,36 @@ class DiscoverFragment : BaseFragment() {
                 shuffleButton.visibility = View.VISIBLE
             }
         })
+    }
+
+    /**
+     * Creates a request for a new native ad based on the boolean parameters and calls the
+     * corresponding "populate" method when one is successfully returned.
+     *
+     */
+    private fun refreshAd() {
+        val builder = AdLoader.Builder(requireActivity(), getString(R.string.banner_test))
+
+        builder.forUnifiedNativeAd { unifiedNativeAd ->
+            // OnUnifiedNativeAdLoadedListener implementation.
+            val adView = layoutInflater
+                .inflate(R.layout.ad_unified, null) as UnifiedNativeAdView
+            populateUnifiedNativeAdView(unifiedNativeAd, adView)
+            addFrame.removeAllViews()
+            addFrame.addView(adView)
+        }
+
+        val adOptions = NativeAdOptions.Builder().build()
+
+        builder.withNativeAdOptions(adOptions)
+
+        val adLoader = builder.withAdListener(object : AdListener() {
+            override fun onAdFailedToLoad(errorCode: Int) {
+                Toast.makeText(requireActivity(), "Failed to load native ad: " + errorCode, Toast.LENGTH_SHORT).show()
+            }
+        }).build()
+
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 
 }

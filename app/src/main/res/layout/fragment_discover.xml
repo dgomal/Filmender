@@ -34,10 +34,10 @@
                     android:layout_height="wrap_content"
                     tools:layout="@layout/fragment_movie" />
 
-                <include
+                <FrameLayout
+                    android:id="@+id/AddFrame"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/banner_full_width_small" />
+                    android:layout_height="wrap_content" />
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/FragmentTVShow"
@@ -45,11 +45,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:layout="@layout/fragment_tv_show" />
-
-                <include
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    layout="@layout/banner_full_width_small" />
 
             </LinearLayout>
 
