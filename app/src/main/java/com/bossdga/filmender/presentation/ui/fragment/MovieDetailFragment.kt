@@ -31,7 +31,6 @@ import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.observers.DisposableSingleObserver
@@ -239,7 +238,7 @@ class MovieDetailFragment : BaseFragment() {
         builder.forUnifiedNativeAd { unifiedNativeAd ->
             // OnUnifiedNativeAdLoadedListener implementation.
             val adView = layoutInflater
-                .inflate(R.layout.ad_unified, null) as UnifiedNativeAdView
+                .inflate(R.layout.ad_unified_small, null) as UnifiedNativeAdView
             populateUnifiedNativeAdView(unifiedNativeAd, adView)
             addFrame.removeAllViews()
             addFrame.addView(adView)

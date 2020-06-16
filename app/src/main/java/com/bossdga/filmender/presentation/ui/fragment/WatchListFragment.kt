@@ -5,7 +5,6 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.bossdga.filmender.R
-import com.bossdga.filmender.util.PreferenceUtils
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
@@ -67,7 +66,7 @@ class WatchListFragment : BaseFragment() {
         builder.forUnifiedNativeAd { unifiedNativeAd ->
             // OnUnifiedNativeAdLoadedListener implementation.
             val adView = layoutInflater
-                .inflate(R.layout.ad_unified, null) as UnifiedNativeAdView
+                .inflate(R.layout.ad_unified_small, null) as UnifiedNativeAdView
             populateUnifiedNativeAdView(unifiedNativeAd, adView)
             addFrame.removeAllViews()
             addFrame.addView(adView)
