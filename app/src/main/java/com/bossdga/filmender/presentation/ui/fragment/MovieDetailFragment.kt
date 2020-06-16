@@ -238,7 +238,7 @@ class MovieDetailFragment : BaseFragment() {
         builder.forUnifiedNativeAd { unifiedNativeAd ->
             // OnUnifiedNativeAdLoadedListener implementation.
             val adView = layoutInflater
-                .inflate(R.layout.ad_unified_small, null) as UnifiedNativeAdView
+                .inflate(R.layout.ad_unified_medium, null) as UnifiedNativeAdView
             populateUnifiedNativeAdView(unifiedNativeAd, adView)
             addFrame.removeAllViews()
             addFrame.addView(adView)
