@@ -16,10 +16,17 @@ import com.bossdga.filmender.presentation.ui.activity.TVShowDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
+import com.google.android.ads.nativetemplates.NativeTemplateStyle
+import com.google.android.ads.nativetemplates.TemplateView
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.formats.UnifiedNativeAd
+import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+
 
 /**
  * A simple Fragment that will show a list of movies and tv shows
@@ -35,11 +42,19 @@ class DiscoverFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_discover, container, false)
+
+        val adLoader = AdLoader.Builder(requireActivity(), getString(R.string.banner_test))
+            .forUnifiedNativeAd { unifiedNativeAd : UnifiedNativeAd ->
+
+            }.build()
+
+        adLoader.loadAd(AdRequest.Builder().build())
 
         mSwipeRefreshLayout = rootView.findViewById(R.id.SwipeRefreshLayout)
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)

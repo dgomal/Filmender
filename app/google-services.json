@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "290248710496",
+    "firebase_url": "https://filmender.firebaseio.com",
+    "project_id": "filmender",
+    "storage_bucket": "filmender.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:290248710496:android:e252452ca854efdf90e605",
+        "android_client_info": {
+          "package_name": "com.bossdga.filmender"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "290248710496-jdplupsvlc2nijac4gi07bjqc9qi2gjd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLe2h-WxVXX19ut4CmuI1Et-RleIE0OdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "290248710496-jdplupsvlc2nijac4gi07bjqc9qi2gjd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

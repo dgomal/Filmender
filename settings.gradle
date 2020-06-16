@@ -1,2 +1,2 @@
 rootProject.name='Filmender'
-include ':app'
+include ':app', ':nativetemplates'

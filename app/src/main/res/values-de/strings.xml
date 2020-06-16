@@ -4,6 +4,11 @@
     <string name="title_activity_event_detail">Detail</string>
     <string name="title_activity_settings">Einstellungen</string>
 
+    <!-- Admob -->
+    <string name="admob_app_id">ca-app-pub-4611536510095475~1617164071</string>
+    <string name="banner_test">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="banner_full_width">ca-app-pub-4611536510095475/7540694156</string>
+
     <!-- Async calls -->
     <string name="call_successful">Anruf abgeschlossen</string>
     <string name="call_error">Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut</string>
