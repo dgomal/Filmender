@@ -50,4 +50,5 @@
     <string name="genres">Generi</string>
     <string name="filter_by_language">Filtra per lingua</string>
     <string name="original_language">Lingua originale</string>
+    <string name="empty_watchlist">Non ci sono voci nella tua Watchlist. È possibile aggiungere film o spettacoli televisivi dalla schermata Discover.</string>
 </resources>

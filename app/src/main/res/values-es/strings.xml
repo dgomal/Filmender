@@ -50,4 +50,5 @@
     <string name="genres">Géneros</string>
     <string name="filter_by_language">Filtrar por idioma</string>
     <string name="original_language">Idioma original</string>
+    <string name="empty_watchlist">No hay entradas en tu Watchlist. Puedes añadir Peliculas o Series desde la pantalla Explorar.</string>
 </resources>

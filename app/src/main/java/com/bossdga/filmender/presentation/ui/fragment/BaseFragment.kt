@@ -6,17 +6,18 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.ViewGroup.OnHierarchyChangeListener
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.RatingBar
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.bossdga.filmender.ProgressDialogHandler
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.AdType
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.formats.MediaView
+import com.google.android.gms.ads.formats.NativeAdOptions
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import io.reactivex.disposables.CompositeDisposable
@@ -177,5 +178,41 @@ open class BaseFragment : Fragment(), ProgressDialogHandler {
         // This method tells the Google Mobile Ads SDK that you have finished populating your
         // native ad view with this native ad.
         adView.setNativeAd(nativeAd)
+    }
+
+    /**
+     * Creates a request for a new native ad based on the boolean parameters and calls the
+     * corresponding "populate" method when one is successfully returned.
+     *
+     */
+    protected fun refreshAd(adType: AdType, addFrame: FrameLayout) {
+        val builder = AdLoader.Builder(requireActivity(), getString(R.string.banner_test))
+
+        builder.forUnifiedNativeAd { unifiedNativeAd ->
+            // OnUnifiedNativeAdLoadedListener implementation.
+            val layout: Int = if (adType == AdType.MEDIUM) {
+                R.layout.ad_unified_medium
+            } else {
+                R.layout.ad_unified_small
+            }
+            if(isAdded) {
+                val adView = layoutInflater.inflate(layout, null) as UnifiedNativeAdView
+                populateUnifiedNativeAdView(unifiedNativeAd, adView, adType)
+                addFrame.removeAllViews()
+                addFrame.addView(adView)
+            }
+        }
+
+        val adOptions = NativeAdOptions.Builder().build()
+
+        builder.withNativeAdOptions(adOptions)
+
+        val adLoader = builder.withAdListener(object : AdListener() {
+            override fun onAdFailedToLoad(errorCode: Int) {
+                Toast.makeText(requireActivity(), "Failed to load native ad: " + errorCode, Toast.LENGTH_SHORT).show()
+            }
+        }).build()
+
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 }

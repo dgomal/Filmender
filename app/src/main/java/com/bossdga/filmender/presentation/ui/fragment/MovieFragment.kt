@@ -94,8 +94,8 @@ class MovieFragment : BaseFragment() {
                     override fun onNext(movieResponse: MovieResponse) {
                         val movieList: List<Movie> = movieResponse.results.shuffled().take(PreferenceUtils.getResults()!!)
                         adapter.setItems(movieList)
-                        mainViewModel.loaded.postValue("true")
                         moviesHeader.visibility = View.VISIBLE
+                        mainViewModel.loaded.postValue("true")
                     }
                 }))
     }

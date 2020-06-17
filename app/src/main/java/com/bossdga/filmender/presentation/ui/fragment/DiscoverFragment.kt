@@ -64,8 +64,6 @@ class DiscoverFragment : BaseFragment() {
 
         observeLoaded(mainViewModel)
 
-        refreshAd()
-
         return rootView
     }
 
@@ -77,13 +75,13 @@ class DiscoverFragment : BaseFragment() {
     }
 
     override fun onDestroyView() {
-        currentNativeAd?.destroy()
         super.onDestroyView()
 
         disposable.clear()
     }
 
     override fun onDestroy() {
+        currentNativeAd?.destroy()
         super.onDestroy()
 
         disposable.dispose()
@@ -111,6 +109,8 @@ class DiscoverFragment : BaseFragment() {
                 fragmentTVShow.refreshContent()
             }
         }
+
+        refreshAd(AdType.SMALL, addFrame)
     }
 
     private fun randomizeAndStart() {
@@ -167,35 +167,6 @@ class DiscoverFragment : BaseFragment() {
                 shuffleButton.visibility = View.VISIBLE
             }
         })
-    }
-
-    /**
-     * Creates a request for a new native ad based on the boolean parameters and calls the
-     * corresponding "populate" method when one is successfully returned.
-     *
-     */
-    private fun refreshAd() {
-        val builder = AdLoader.Builder(requireActivity(), getString(R.string.banner_test))
-
-        builder.forUnifiedNativeAd { unifiedNativeAd ->
-            // OnUnifiedNativeAdLoadedListener implementation.
-            val adView = layoutInflater.inflate(R.layout.ad_unified_small, null) as UnifiedNativeAdView
-            populateUnifiedNativeAdView(unifiedNativeAd, adView, AdType.SMALL)
-            addFrame.removeAllViews()
-            addFrame.addView(adView)
-        }
-
-        val adOptions = NativeAdOptions.Builder().build()
-
-        builder.withNativeAdOptions(adOptions)
-
-        val adLoader = builder.withAdListener(object : AdListener() {
-            override fun onAdFailedToLoad(errorCode: Int) {
-                Toast.makeText(requireActivity(), "Failed to load native ad: " + errorCode, Toast.LENGTH_SHORT).show()
-            }
-        }).build()
-
-        adLoader.loadAd(AdRequest.Builder().build())
     }
 
 }
