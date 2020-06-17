@@ -65,8 +65,6 @@ class MovieDetailFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         showProgressDialog()
-
-        refreshAd()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -125,6 +123,8 @@ class MovieDetailFragment : BaseFragment() {
             }
         })
         mRecyclerView.setAdapter(adapter)
+
+        refreshAd()
 
         return rootView
     }
@@ -237,9 +237,8 @@ class MovieDetailFragment : BaseFragment() {
 
         builder.forUnifiedNativeAd { unifiedNativeAd ->
             // OnUnifiedNativeAdLoadedListener implementation.
-            val adView = layoutInflater
-                .inflate(R.layout.ad_unified_medium, null) as UnifiedNativeAdView
-            populateUnifiedNativeAdView(unifiedNativeAd, adView)
+            val adView = layoutInflater.inflate(R.layout.ad_unified_medium, null) as UnifiedNativeAdView
+            populateUnifiedNativeAdView(unifiedNativeAd, adView, AdType.MEDIUM)
             addFrame.removeAllViews()
             addFrame.addView(adView)
         }

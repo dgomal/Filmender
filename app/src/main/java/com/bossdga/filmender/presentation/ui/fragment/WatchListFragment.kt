@@ -5,6 +5,7 @@ import android.view.*
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.bossdga.filmender.R
+import com.bossdga.filmender.model.content.AdType
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
@@ -25,8 +26,6 @@ class WatchListFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
-
-        refreshAd()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +35,8 @@ class WatchListFragment : BaseFragment() {
         addFrame = rootView.findViewById(R.id.AddFrame)
 
         loadFragments()
+
+        refreshAd()
 
         return rootView
     }
@@ -65,9 +66,8 @@ class WatchListFragment : BaseFragment() {
 
         builder.forUnifiedNativeAd { unifiedNativeAd ->
             // OnUnifiedNativeAdLoadedListener implementation.
-            val adView = layoutInflater
-                .inflate(R.layout.ad_unified_small, null) as UnifiedNativeAdView
-            populateUnifiedNativeAdView(unifiedNativeAd, adView)
+            val adView = layoutInflater.inflate(R.layout.ad_unified_small, null) as UnifiedNativeAdView
+            populateUnifiedNativeAdView(unifiedNativeAd, adView, AdType.SMALL)
             addFrame.removeAllViews()
             addFrame.addView(adView)
         }
