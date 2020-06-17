@@ -50,4 +50,5 @@
     <string name="genres">Genres</string>
     <string name="filter_by_language">Filtrer par langue</string>
     <string name="original_language">Langue originale</string>
+    <string name="empty_watchlist">Il n\'y a pas d\'entrées dans votre liste de surveillance. Vous pouvez ajouter des films ou des émissions de télévision à partir de l\'écran Découvrir.</string>
 </resources>

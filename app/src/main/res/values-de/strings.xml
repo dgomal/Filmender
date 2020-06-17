@@ -50,4 +50,5 @@
     <string name="genres">Genres</string>
     <string name="filter_by_language">Nach Sprache filtern</string>
     <string name="original_language">Ursprache</string>
+    <string name="empty_watchlist">Es gibt keine Einträge in Ihrer Watchlist. Sie können Filme oder Fernsehsendungen über den Bildschirm Entdecken hinzufügen.</string>
 </resources>

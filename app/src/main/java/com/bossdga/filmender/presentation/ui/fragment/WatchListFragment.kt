@@ -3,6 +3,7 @@ package com.bossdga.filmender.presentation.ui.fragment
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +28,7 @@ class WatchListFragment : BaseFragment() {
     private lateinit var fragmentTVShow: TVShowDBFragment
     private lateinit var mainViewModel: MainViewModel
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var empty: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,7 @@ class WatchListFragment : BaseFragment() {
 
         addFrame = rootView.findViewById(R.id.AddFrame)
 
+        empty = rootView.findViewById(R.id.empty)
         mSwipeRefreshLayout = rootView.findViewById(R.id.SwipeRefreshLayout)
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
 
@@ -89,8 +92,10 @@ class WatchListFragment : BaseFragment() {
                 mSwipeRefreshLayout.isRefreshing = !it.toBoolean()
                 if(!fragmentMovie.isEmpty() || !fragmentTVShow.isEmpty()) {
                     addFrame.visibility = View.VISIBLE
+                    empty.visibility = View.GONE
                 } else {
                     addFrame.visibility = View.GONE
+                    empty.visibility = View.VISIBLE
                 }
             }
         })

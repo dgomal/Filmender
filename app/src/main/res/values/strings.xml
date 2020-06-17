@@ -50,4 +50,5 @@
     <string name="genres">Genres</string>
     <string name="filter_by_language">Filter by language</string>
     <string name="original_language">Original language</string>
+    <string name="empty_watchlist">There are no entries in your Watchlist. You can add Movies or TV Shows from the Discover screen.</string>
 </resources>

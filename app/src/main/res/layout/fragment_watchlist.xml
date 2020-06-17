@@ -47,6 +47,19 @@
                     android:layout_height="wrap_content"
                     tools:layout="@layout/fragment_db_tv_show" />
 
+                <TextView
+                    android:id="@+id/empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/empty_watchlist"
+                    android:drawableTop="@mipmap/bookmarks_red"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:padding="@dimen/activity_horizontal_margin_16"
+                    android:gravity="center"/>
+
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

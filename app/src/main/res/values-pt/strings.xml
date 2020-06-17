@@ -50,4 +50,5 @@
     <string name="genres">Géneros</string>
     <string name="filter_by_language">Filtrar por idioma</string>
     <string name="original_language">Linguagem original</string>
+    <string name="empty_watchlist">Não existem entradas na sua lista de observação. Pode adicionar Filmes ou Programas de TV a partir do ecrã Discover.</string>
 </resources>
