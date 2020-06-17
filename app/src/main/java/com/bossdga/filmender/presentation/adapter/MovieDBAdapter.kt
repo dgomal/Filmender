@@ -36,7 +36,7 @@ class MovieDBAdapter(private var context: Context, private val listener: OnItemC
             setImage(image, movie.posterPath, ImageType.POSTER)
             voteAverage.text = movie.voteAverage
             runtime.text = DateUtils.fromMinutesToHHmm(movie.runtime)
-            date.text = movie.releaseDate
+            date.text = movie.releaseDate.substringBefore("-")
 
             itemView.setOnClickListener { listener.onItemClick(movie) }
         }

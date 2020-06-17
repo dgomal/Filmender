@@ -35,7 +35,7 @@ class TVShowDBAdapter(private var context: Context, private val listener: OnItem
             setImage(image, tvShow.posterPath, ImageType.POSTER)
             voteAverage.text = tvShow.voteAverage
             numberOfSeasons.text = tvShow.numberOfSeasons.toString()
-            date.text = tvShow.releaseDate
+            date.text = tvShow.releaseDate.substringBefore("-")
 
             itemView.setOnClickListener { listener.onItemClick(tvShow) }
         }
