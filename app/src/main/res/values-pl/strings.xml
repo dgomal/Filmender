@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Filmender</string>
-    <string name="title_activity_main">Main</string>
-    <string name="title_activity_event_detail">Detail</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_main">Główny</string>
+    <string name="title_activity_event_detail">Szczegóły</string>
+    <string name="title_activity_settings">Ustawienia</string>
 
     <!-- Admob -->
     <string name="admob_app_id">ca-app-pub-4611536510095475~1617164071</string>
@@ -11,43 +11,44 @@
     <string name="ad_attribution">Ad</string>
 
     <!-- Async calls -->
-    <string name="call_successful">Call completed</string>
-    <string name="call_error">An error has occurred, please try again</string>
+    <string name="call_successful">Połączenie zakończone</string>
+    <string name="call_error">Wystąpił błąd, proszę spróbować ponownie</string>
 
     <!-- Dialog -->
-    <string name="please_wait">Please wait</string>
+    <string name="please_wait">Proszę zaczekać</string>
     <string name="loading">Loading</string>
 
-    <string name="add_to_watchlist">Add To Watchlist</string>
-    <string name="header_image">Header Image</string>
-    <string name="feeling_lucky">Feeling Lucky</string>
-    <string name="movies_header">Movies</string>
-    <string name="rating">Rating</string>
-    <string name="runtime">Runtime</string>
-    <string name="date">Date</string>
-    <string name="watch_trailer">Watch Trailer</string>
+    <string name="add_to_watchlist">Dodaj do listy</string>
+    <string name="header_image">Główny obrazek</string>
+    <string name="feeling_lucky">Szczęśliwy Traf</string>
+    <string name="movies_header">Filmy</string>
+    <string name="rating">Ranking</string>
+    <string name="runtime">Czas trwania</string>
+    <string name="date">Data</string>
+    <string name="watch_trailer">Zobacz Zwiastun</string>
     <string name="tv_shows_header">TV Shows</string>
-    <string name="seasons">Seasons</string>
-    <string name="profile_image">Profile Image</string>
-    <string name="movie_poster">Movie Poster</string>
+    <string name="seasons">Sezon</string>
+    <string name="profile_image">Zdjęcie profilowe</string>
+    <string name="movie_poster">Plakat filmowy</string>
     <string name="people_image">People Image</string>
-    <string name="network_image">Network Image</string>
+    <string name="network_image">Dystrybutor</string>
     <string name="tv_show_poster">TV Show Poster</string>
-    <string name="settings">Settings</string>
-    <string name="discover">Discover</string>
-    <string name="watchlist">Watchlist</string>
-    <string name="number_of_results">Number of results</string>
+    <string name="settings">Ustawienia</string>
+    <string name="discover">Odkryj</string>
+    <string name="watchlist">Moja lista</string>
+    <string name="number_of_results">Liczba wyników</string>
     <string name="results">Results</string>
-    <string name="filter_by_type">Filter by type</string>
+    <string name="filter_by_type">Filtr według typu</string>
     <string name="type">Type</string>
-    <string name="filter_by_year">Filter by year</string>
-    <string name="from">From</string>
-    <string name="to">To</string>
-    <string name="filter_by_rating">Filter by rating</string>
-    <string name="minimum">Minimum</string>
-    <string name="filter_by_genre">Filter by genre</string>
-    <string name="genre">Genre</string>
-    <string name="genres">Genres</string>
-    <string name="filter_by_language">Filter by language</string>
-    <string name="original_language">Original Language</string>
+    <string name="filter_by_year">Filtr według roku</string>
+    <string name="from">Od</string>
+    <string name="to">Do</string>
+    <string name="filter_by_rating">Filtruj według rankingu</string>
+    <string name="minimum">Minimalny</string>
+    <string name="filter_by_genre">Filtr według gatunku</string>
+    <string name="genre">Gatunek</string>
+    <string name="genres">Gatunki</string>
+    <string name="filter_by_language">Filtr według języka</string>
+    <string name="original_language">Język oryginalny</string>
+    <string name="empty_watchlist">Na Twojej liście nie ma żadnych filmów. Filmy i seriale można dodawać z ekranu Odkryj.</string>
 </resources>
