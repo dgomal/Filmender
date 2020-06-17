@@ -26,24 +26,24 @@
     </array>
 
     <array name="genre_labels">
-        <item>"Film akcji"</item>
-        <item>"Film przygodowy"</item>
-        <item>"Film animowany"</item>
+        <item>"Film Akcji"</item>
+        <item>"Film Przygodowy"</item>
+        <item>"Film Animowany"</item>
         <item>"Komedia"</item>
         <item>"Kryminał"</item>
         <item>"Dokumentalny"</item>
         <item>"Dramat"</item>
         <item>"Rodzinny"</item>
         <item>"Fantastyka"</item>
-        <item>"Film historyczny"</item>
+        <item>"Film Historyczny"</item>
         <item>"Horror"</item>
-        <item>"Film muzyczny"</item>
+        <item>"Film Muzyczny"</item>
         <item>"Zagadka"</item>
         <item>"Romans"</item>
-        <item>"Film sensacyjny"</item>
-        <item>"TV Movie"</item>
+        <item>"Film Sensacyjny"</item>
+        <item>"Film Telewizyjny"</item>
         <item>"Thriller"</item>
-        <item>"Film wojenny"</item>
+        <item>"Film Wojenny"</item>
         <item>"Western"</item>
     </array>
 
@@ -134,13 +134,13 @@
     </array>
 
     <array name="language_labels">
-        <item>"English"</item>
-        <item>"Spanish"</item>
-        <item>"Polish"</item>
-        <item>"German"</item>
-        <item>"French"</item>
-        <item>"Italian"</item>
-        <item>"Portuguese"</item>
+        <item>"Angielski"</item>
+        <item>"Hiszpański"</item>
+        <item>"Polski"</item>
+        <item>"Niemiecki"</item>
+        <item>"Francuski"</item>
+        <item>"Włoski"</item>
+        <item>"Portugalski"</item>
     </array>
 
     <array name="language_values">

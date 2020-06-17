@@ -16,7 +16,7 @@
 
     <!-- Dialog -->
     <string name="please_wait">Proszę zaczekać</string>
-    <string name="loading">Loading</string>
+    <string name="loading">Ładowanie</string>
 
     <string name="add_to_watchlist">Dodaj do listy</string>
     <string name="header_image">Główny obrazek</string>
@@ -26,20 +26,20 @@
     <string name="runtime">Czas trwania</string>
     <string name="date">Data</string>
     <string name="watch_trailer">Zobacz Zwiastun</string>
-    <string name="tv_shows_header">TV Shows</string>
+    <string name="tv_shows_header">Seriale</string>
     <string name="seasons">Sezon</string>
     <string name="profile_image">Zdjęcie profilowe</string>
     <string name="movie_poster">Plakat filmowy</string>
     <string name="people_image">Obraz ludzi</string>
     <string name="network_image">Dystrybutor</string>
-    <string name="tv_show_poster">Plakat TV Show</string>
+    <string name="tv_show_poster">Plakat Serialu</string>
     <string name="settings">Ustawienia</string>
     <string name="discover">Odkryj</string>
     <string name="watchlist">Moja lista</string>
     <string name="number_of_results">Liczba wyników</string>
-    <string name="results">Results</string>
+    <string name="results">Wyniki</string>
     <string name="filter_by_type">Filtr według typu</string>
-    <string name="type">Type</string>
+    <string name="type">Typ</string>
     <string name="filter_by_year">Filtr według roku</string>
     <string name="from">Od</string>
     <string name="to">Do</string>
