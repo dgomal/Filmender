@@ -90,8 +90,8 @@ class TVShowFragment : BaseFragment() {
                     override fun onNext(tvShowResponse: TVShowResponse) {
                         val showList: List<TVShow> = tvShowResponse.results.shuffled().take(PreferenceUtils.getResults()!!)
                         adapter.setItems(showList)
-                        mainViewModel.loaded.postValue("true")
                         showsHeader.visibility = View.VISIBLE
+                        mainViewModel.loaded.postValue("true")
                     }
                 }))
     }

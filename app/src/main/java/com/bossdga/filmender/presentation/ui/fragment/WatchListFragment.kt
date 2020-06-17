@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.AdType
+import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
@@ -21,11 +25,15 @@ class WatchListFragment : BaseFragment() {
 
     private lateinit var fragmentMovie: MovieDBFragment
     private lateinit var fragmentTVShow: TVShowDBFragment
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
+
+        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -34,16 +42,33 @@ class WatchListFragment : BaseFragment() {
 
         addFrame = rootView.findViewById(R.id.AddFrame)
 
+        mSwipeRefreshLayout = rootView.findViewById(R.id.SwipeRefreshLayout)
+        mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
+
         loadFragments()
 
-        refreshAd()
+        observeLoaded(mainViewModel)
+
+        refreshAd(AdType.SMALL, addFrame)
 
         return rootView
+    }
+
+    /**
+     * Listener for swipe to refresh functionality
+     */
+    private val onRefreshListener = SwipeRefreshLayout.OnRefreshListener {
+        loadFragments()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
+    }
+
+    override fun onDestroy() {
+        currentNativeAd?.destroy()
+        super.onDestroy()
     }
 
     private fun loadFragments() {
@@ -54,35 +79,21 @@ class WatchListFragment : BaseFragment() {
         attachFragment(fragmentTVShow)
         fragmentMovie.refreshContent()
         fragmentTVShow.refreshContent()
+
+        refreshAd(AdType.SMALL, addFrame)
     }
 
-    /**
-     * Creates a request for a new native ad based on the boolean parameters and calls the
-     * corresponding "populate" method when one is successfully returned.
-     *
-     */
-    private fun refreshAd() {
-        val builder = AdLoader.Builder(requireActivity(), getString(R.string.banner_test))
-
-        builder.forUnifiedNativeAd { unifiedNativeAd ->
-            // OnUnifiedNativeAdLoadedListener implementation.
-            val adView = layoutInflater.inflate(R.layout.ad_unified_small, null) as UnifiedNativeAdView
-            populateUnifiedNativeAdView(unifiedNativeAd, adView, AdType.SMALL)
-            addFrame.removeAllViews()
-            addFrame.addView(adView)
-        }
-
-        val adOptions = NativeAdOptions.Builder().build()
-
-        builder.withNativeAdOptions(adOptions)
-
-        val adLoader = builder.withAdListener(object : AdListener() {
-            override fun onAdFailedToLoad(errorCode: Int) {
-                Toast.makeText(requireActivity(), "Failed to load native ad: " + errorCode, Toast.LENGTH_SHORT).show()
+    private fun observeLoaded(mainViewModel: MainViewModel) {
+        mainViewModel.loadedDB.observe(requireActivity(), Observer {
+            it?.let {
+                mSwipeRefreshLayout.isRefreshing = !it.toBoolean()
+                if(!fragmentMovie.isEmpty() || !fragmentTVShow.isEmpty()) {
+                    addFrame.visibility = View.VISIBLE
+                } else {
+                    addFrame.visibility = View.GONE
+                }
             }
-        }).build()
-
-        adLoader.loadAd(AdRequest.Builder().build())
+        })
     }
 
 }

@@ -133,7 +133,7 @@ class TVShowDetailFragment : BaseFragment() {
         networksAdapter = NetworksAdapter(activity as Context)
         networksRecyclerView.setAdapter(networksAdapter)
 
-        refreshAd()
+        refreshAd(AdType.MEDIUM, addFrame)
 
         return rootView
     }
@@ -145,6 +145,7 @@ class TVShowDetailFragment : BaseFragment() {
     }
 
     override fun onDestroy() {
+        currentNativeAd?.destroy()
         super.onDestroy()
 
         disposable.dispose()
@@ -239,34 +240,5 @@ class TVShowDetailFragment : BaseFragment() {
             view.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.white))
             view.supportImageTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.template_red))
         }
-    }
-
-    /**
-     * Creates a request for a new native ad based on the boolean parameters and calls the
-     * corresponding "populate" method when one is successfully returned.
-     *
-     */
-    private fun refreshAd() {
-        val builder = AdLoader.Builder(requireActivity(), getString(R.string.banner_test))
-
-        builder.forUnifiedNativeAd { unifiedNativeAd ->
-            // OnUnifiedNativeAdLoadedListener implementation.
-            val adView = layoutInflater.inflate(R.layout.ad_unified_medium, null) as UnifiedNativeAdView
-            populateUnifiedNativeAdView(unifiedNativeAd, adView, AdType.MEDIUM)
-            addFrame.removeAllViews()
-            addFrame.addView(adView)
-        }
-
-        val adOptions = NativeAdOptions.Builder().build()
-
-        builder.withNativeAdOptions(adOptions)
-
-        val adLoader = builder.withAdListener(object : AdListener() {
-            override fun onAdFailedToLoad(errorCode: Int) {
-                Toast.makeText(requireActivity(), "Failed to load native ad: " + errorCode, Toast.LENGTH_SHORT).show()
-            }
-        }).build()
-
-        adLoader.loadAd(AdRequest.Builder().build())
     }
 }

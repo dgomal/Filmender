@@ -31,6 +31,7 @@ class TVShowDBFragment : BaseFragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var mainViewModel: MainViewModel
     private lateinit var showsHeader: TextView
+    private var isEmpty: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,14 +88,23 @@ class TVShowDBFragment : BaseFragment() {
 
                 override fun onNext(shows: List<TVShow>) {
                     adapter.setItems(shows)
-                    if(shows.isNotEmpty()) {
+                    if(shows.isEmpty()) {
+                        showsHeader.visibility = View.GONE
+                        isEmpty = true
+                    } else {
                         showsHeader.visibility = View.VISIBLE
+                        isEmpty = false
                     }
+                    mainViewModel.loadedDB.postValue("true")
                 }
             }))
     }
 
     fun refreshContent() {
         subscribeTVShowsFromDB(mainViewModel.loadTVShowsFromDB())
+    }
+
+    fun isEmpty(): Boolean {
+        return isEmpty
     }
 }

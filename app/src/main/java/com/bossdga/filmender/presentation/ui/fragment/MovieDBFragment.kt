@@ -32,6 +32,7 @@ class MovieDBFragment : BaseFragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var mainViewModel: MainViewModel
     private lateinit var moviesHeader: TextView
+    private var isEmpty: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,14 +91,23 @@ class MovieDBFragment : BaseFragment() {
 
                 override fun onNext(movies: List<Movie>) {
                     adapter.setItems(movies)
-                    if(movies.isNotEmpty()) {
+                    if(movies.isEmpty()) {
+                        moviesHeader.visibility = View.GONE
+                        isEmpty = true
+                    } else {
                         moviesHeader.visibility = View.VISIBLE
+                        isEmpty = false
                     }
+                    mainViewModel.loadedDB.postValue("true")
                 }
             }))
     }
 
     fun refreshContent() {
         subscribeMoviesFromDB(mainViewModel.loadMoviesFromDB())
+    }
+
+    fun isEmpty(): Boolean {
+        return isEmpty
     }
 }
