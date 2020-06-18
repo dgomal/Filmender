@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bossdga.filmender.R
 import com.bossdga.filmender.presentation.ui.fragment.DiscoverFragment
@@ -19,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : BaseActivity<BaseViewModel>() {
     private lateinit var fragmentDiscover: DiscoverFragment
     private lateinit var fragmentWatchList: WatchListFragment
+    private lateinit var activeFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +33,10 @@ class MainActivity : BaseActivity<BaseViewModel>() {
 
         fragmentDiscover = DiscoverFragment()
         fragmentWatchList = WatchListFragment()
+        activeFragment = fragmentDiscover
 
-        replaceFragment(fragmentDiscover, R.id.FragmentContainer)
+        addHideFragment(R.id.FragmentContainer, fragmentWatchList, "fragmentWatchList")
+        addFragment(R.id.FragmentContainer, fragmentDiscover, "fragmentDiscover")
     }
 
     override fun createViewModel(): MainViewModel {
@@ -59,11 +63,13 @@ class MainActivity : BaseActivity<BaseViewModel>() {
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.action_discover -> {
-                replaceFragment(fragmentDiscover, R.id.FragmentContainer)
+                hideShowFragment(activeFragment, fragmentDiscover)
+                activeFragment = fragmentDiscover;
                 return@OnNavigationItemSelectedListener true
             }
             R.id.action_watchlist -> {
-                replaceFragment(fragmentWatchList, R.id.FragmentContainer)
+                hideShowFragment(activeFragment, fragmentWatchList)
+                activeFragment = fragmentWatchList;
                 return@OnNavigationItemSelectedListener true
             }
             else -> false

@@ -59,8 +59,8 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
         beginTransaction().func().commit()
     }
 
-    protected fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int){
-        supportFragmentManager.inTransaction { add(frameId, fragment) }
+    protected fun AppCompatActivity.addFragment(frameId: Int, fragment: Fragment, fragmentTag: String?){
+        supportFragmentManager.inTransaction { add(frameId, fragment, fragmentTag) }
     }
 
     protected fun AppCompatActivity.attachFragment(fragment: Fragment){
@@ -75,7 +75,19 @@ abstract class BaseActivity<VM : BaseViewModel> : AppCompatActivity() {
         supportFragmentManager.inTransaction{ detach(fragment) }
     }
 
-    protected fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
-        supportFragmentManager.inTransaction{ replace(frameId, fragment) }
+    protected fun AppCompatActivity.hideFragment(fragment: Fragment){
+        supportFragmentManager.inTransaction { hide(fragment) }
+    }
+
+    protected fun AppCompatActivity.addHideFragment(frameId: Int, fragment: Fragment, fragmentTag: String?){
+        supportFragmentManager.inTransaction { add(frameId, fragment, fragmentTag).hide(fragment) }
+    }
+
+    protected fun AppCompatActivity.hideShowFragment(fragmentHide: Fragment, fragmentShow: Fragment){
+        supportFragmentManager.inTransaction { hide(fragmentHide).show(fragmentShow) }
+    }
+
+    protected fun AppCompatActivity.replaceFragment(frameId: Int, fragment: Fragment, fragmentTag: String?) {
+        supportFragmentManager.inTransaction{ replace(frameId, fragment, fragmentTag) }
     }
 }

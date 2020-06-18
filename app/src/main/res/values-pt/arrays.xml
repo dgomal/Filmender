@@ -134,6 +134,7 @@
     </array>
 
     <array name="language_labels">
+        <item>"Todos"</item>
         <item>"Inglês"</item>
         <item>"Espanhol"</item>
         <item>"Polonês"</item>
@@ -144,6 +145,7 @@
     </array>
 
     <array name="language_values">
+        <item>""</item>
         <item>"en"</item>
         <item>"es"</item>
         <item>"pl"</item>
