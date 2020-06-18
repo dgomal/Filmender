@@ -12,7 +12,6 @@ import com.bossdga.filmender.presentation.ui.fragment.DiscoverFragment
 import com.bossdga.filmender.presentation.ui.fragment.WatchListFragment
 import com.bossdga.filmender.presentation.viewmodel.BaseViewModel
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
-import com.bossdga.filmender.util.InstallationUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 /**
