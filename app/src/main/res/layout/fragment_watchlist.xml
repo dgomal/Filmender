@@ -55,10 +55,11 @@
                     android:drawableTop="@mipmap/bookmark_grey"
                     android:drawablePadding="@dimen/activity_vertical_margin_32"
                     android:textColor="@color/template_grey_medium_light"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:visibility="gone"
                     android:padding="@dimen/activity_horizontal_margin_16"
+                    android:layout_marginTop="@dimen/activity_vertical_margin_64"
                     android:gravity="center"/>
 
             </LinearLayout>
