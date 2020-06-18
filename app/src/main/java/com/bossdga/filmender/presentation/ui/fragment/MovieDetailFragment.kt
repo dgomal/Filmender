@@ -10,7 +10,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,15 +23,12 @@ import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.*
 import com.bossdga.filmender.presentation.adapter.PeopleAdapter
 import com.bossdga.filmender.presentation.viewmodel.MovieDetailViewModel
+import com.bossdga.filmender.util.AnalyticsUtils
 import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
 import com.bossdga.filmender.util.NumberUtils
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdLoader
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.formats.NativeAdOptions
-import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -90,13 +90,18 @@ class MovieDetailFragment : BaseFragment() {
         addToWatchlist = requireActivity().findViewById(R.id.AddToWatchlist)
         switchViewState(true, addToWatchlist)
         addToWatchlist.setOnClickListener {
+            val itemName: String
             if(addToWatchlist.tag.equals("selected")) {
                 switchViewState(false, addToWatchlist)
                 movieDetailViewModel.deleteMovie(this.movie)
+                itemName = "action_add_movie_watchlist"
             } else {
                 switchViewState(true, addToWatchlist)
                 movieDetailViewModel.saveMovie(this.movie)
+                itemName = "action_delete_movie_watchlist"
             }
+            bundle = AnalyticsUtils.selectContent(resources.getResourceEntryName(R.id.AddToWatchlist), itemName, "button")
+            firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
         }
 
         id = extras?.getIntExtra("id", 0)
@@ -119,6 +124,9 @@ class MovieDetailFragment : BaseFragment() {
                     setImage(imageView, people.profilePath, ImageType.PROFILE_LARGE)
                     val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(activity as Context)
                     alertDialogBuilder.setView(view).show()
+
+                    bundle = AnalyticsUtils.selectContent(resources.getResourceEntryName(R.id.ProfileImage), "action_view_movie_cast", "image_view")
+                    firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
                 }
             }
         })
@@ -180,6 +188,9 @@ class MovieDetailFragment : BaseFragment() {
     }
 
     private fun watchYoutubeVideo(id: String) {
+        bundle = AnalyticsUtils.selectContent(resources.getResourceEntryName(R.id.TrailerButton), "action_watch_movie_trailer", "button")
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+
         val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$id"))
         val webIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$id"))
         try {

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -17,13 +16,10 @@ import com.bossdga.filmender.model.content.AdType
 import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.ui.activity.TVShowDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
+import com.bossdga.filmender.util.AnalyticsUtils
 import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdLoader
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.formats.NativeAdOptions
-import com.google.android.gms.ads.formats.UnifiedNativeAdView
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -114,6 +110,9 @@ class DiscoverFragment : BaseFragment() {
     }
 
     private fun randomizeAndStart() {
+        bundle = AnalyticsUtils.selectContent(resources.getResourceEntryName(R.id.ShuffleButton), "action_feeling_lucky", "button")
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+
         val random: Int = NumberUtils.getRandomNumberInRange(1, 2)
 
         when (PreferenceUtils.getType()) {

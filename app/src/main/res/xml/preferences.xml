@@ -61,7 +61,7 @@
 
     <PreferenceCategory android:title="@string/filter_by_language">
         <ListPreference
-            android:defaultValue="en"
+            android:defaultValue=""
             android:entries="@array/language_labels"
             android:entryValues="@array/language_values"
             android:key="originalLanguage"

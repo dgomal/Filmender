@@ -20,10 +20,13 @@ import com.google.android.gms.ads.formats.MediaView
 import com.google.android.gms.ads.formats.NativeAdOptions
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.gms.ads.formats.UnifiedNativeAdView
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.disposables.CompositeDisposable
 
 
 open class BaseFragment : Fragment(), ProgressDialogHandler {
+    protected var bundle = Bundle()
+    protected lateinit var firebaseAnalytics: FirebaseAnalytics
     protected var currentNativeAd: UnifiedNativeAd? = null
 
     protected lateinit var mProgressDialog: ProgressDialog
@@ -34,6 +37,7 @@ open class BaseFragment : Fragment(), ProgressDialogHandler {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        firebaseAnalytics = FirebaseAnalytics.getInstance(requireActivity());
         extras = requireActivity().intent
     }
 
