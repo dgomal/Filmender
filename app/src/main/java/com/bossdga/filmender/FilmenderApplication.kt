@@ -15,7 +15,5 @@ class FilmenderApplication : Application() {
         PreferenceUtils.initWith(this)
 
         PreferenceManager.setDefaultValues(this, "SETTINGS_PREFERENCES", Context.MODE_PRIVATE, R.xml.preferences, false)
-
-        MobileAds.initialize(this)
     }
 }
