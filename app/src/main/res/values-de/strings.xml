@@ -2,7 +2,7 @@
     <string name="app_name">Filmender</string>
     <string name="title_activity_main">Main</string>
     <string name="title_activity_event_detail">Detail</string>
-    <string name="title_activity_settings">Einstellungen</string>
+    <string name="title_activity_settings">Filter</string>
 
     <!-- Admob -->
     <string name="admob_app_id">ca-app-pub-4611536510095475~1617164071</string>
@@ -33,7 +33,7 @@
     <string name="people_image">Menschen Bild</string>
     <string name="network_image">Netzwerk-Image</string>
     <string name="tv_show_poster">TV-Show-Plakat</string>
-    <string name="settings">Einstellungen</string>
+    <string name="filter">Filter</string>
     <string name="discover">Entdecken</string>
     <string name="watchlist">Meine Liste</string>
     <string name="number_of_results">Anzahl der Ergebnisse</string>

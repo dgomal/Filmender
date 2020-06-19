@@ -2,7 +2,7 @@
     <string name="app_name">Filmender</string>
     <string name="title_activity_main">Principale</string>
     <string name="title_activity_event_detail">Dettaglio</string>
-    <string name="title_activity_settings">Impostazioni</string>
+    <string name="title_activity_settings">Filtro</string>
 
     <!-- Admob -->
     <string name="admob_app_id">ca-app-pub-4611536510095475~1617164071</string>
@@ -33,7 +33,7 @@
     <string name="people_image">Immagine di Persone</string>
     <string name="network_image">Immagine di Rete</string>
     <string name="tv_show_poster">Poster di Programmi TV</string>
-    <string name="settings">Impostazioni</string>
+    <string name="filter">Filtro</string>
     <string name="discover">Scoprire</string>
     <string name="watchlist">Mia Lista</string>
     <string name="number_of_results">Numero di risultati</string>
