@@ -4,18 +4,12 @@ import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.AdType
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdLoader
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.formats.NativeAdOptions
-import com.google.android.gms.ads.formats.UnifiedNativeAdView
 
 
 /**

@@ -68,13 +68,13 @@ class TVShowDetailFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         showProgressDialog()
+
+        tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_tv_show_detail, container, false)
-
-        tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
 
         addFrame = rootView.findViewById(R.id.AddFrame)
 

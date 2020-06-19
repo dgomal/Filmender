@@ -65,13 +65,13 @@ class MovieDetailFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
 
         showProgressDialog()
+
+        movieDetailViewModel = ViewModelProvider(requireActivity()).get(MovieDetailViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false)
-
-        movieDetailViewModel = ViewModelProvider(requireActivity()).get(MovieDetailViewModel::class.java)
 
         addFrame = rootView.findViewById(R.id.AddFrame)
 
