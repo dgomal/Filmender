@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.preference.PreferenceManager
 import com.bossdga.filmender.source.network.RetrofitService
 import com.bossdga.filmender.util.PreferenceUtils
-import com.google.android.gms.ads.MobileAds
 
 class FilmenderApplication : Application() {
     override fun onCreate() {
