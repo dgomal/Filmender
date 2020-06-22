@@ -4,6 +4,6 @@
     <item android:id="@+id/action_settings"
         android:enabled="true"
         android:title="@string/filter"
-        android:icon="@mipmap/filter_red"
+        android:icon="@drawable/filter_red"
         app:showAsAction="ifRoom" />
 </menu>

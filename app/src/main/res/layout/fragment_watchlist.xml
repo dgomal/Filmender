@@ -52,7 +52,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/empty_watchlist"
-                    android:drawableTop="@mipmap/bookmark_grey"
+                    android:drawableTop="@drawable/bookmark_grey"
                     android:drawablePadding="@dimen/activity_vertical_margin_32"
                     android:textColor="@color/template_grey_medium_light"
                     android:textSize="18sp"

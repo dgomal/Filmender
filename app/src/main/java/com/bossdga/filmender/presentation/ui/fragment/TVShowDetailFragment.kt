@@ -242,12 +242,12 @@ class TVShowDetailFragment : BaseFragment() {
         view as FloatingActionButton
         if(select) {
             view.tag = "selected"
-            view.setImageResource(R.mipmap.bookmark_white)
+            view.setImageResource(R.drawable.bookmark_white)
             view.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.template_red))
             view.supportImageTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.white))
         } else {
             view.tag = "not_selected"
-            view.setImageResource(R.mipmap.bookmark_red)
+            view.setImageResource(R.drawable.bookmark_red)
             view.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.white))
             view.supportImageTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.template_red))
         }

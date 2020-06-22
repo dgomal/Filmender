@@ -18,7 +18,7 @@
         android:id="@+id/AddToWatchlist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/bookmark_red"
+        android:src="@drawable/bookmark_red"
         android:contentDescription="@string/add_to_watchlist"
         app:layout_anchor="@id/CollapsingAppBar"
         app:layout_anchorGravity="bottom|end"

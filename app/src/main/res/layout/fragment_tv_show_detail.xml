@@ -31,7 +31,7 @@
                     android:id="@+id/RatingImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/rating_black"
+                    android:src="@drawable/rating_black"
                     android:contentDescription="@string/rating"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin_12"
                     android:layout_marginStart="@dimen/activity_horizontal_margin_12"/>
@@ -51,7 +51,7 @@
                     android:id="@+id/SeasonImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/season_black"
+                    android:src="@drawable/season_black"
                     android:contentDescription="@string/seasons"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin_24"
                     android:layout_marginStart="@dimen/activity_horizontal_margin_24"/>
@@ -70,7 +70,7 @@
                     android:id="@+id/DateImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/calendar_black"
+                    android:src="@drawable/calendar_black"
                     android:contentDescription="@string/date"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin_24"
                     android:layout_marginStart="@dimen/activity_horizontal_margin_24"/>

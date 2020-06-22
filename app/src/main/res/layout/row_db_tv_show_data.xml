@@ -49,8 +49,8 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:drawableLeft="@mipmap/rating_black"
-            android:drawableStart="@mipmap/rating_black"
+            android:drawableLeft="@drawable/rating_black"
+            android:drawableStart="@drawable/rating_black"
             android:drawablePadding="@dimen/activity_vertical_margin_8"
             android:layout_marginTop="@dimen/activity_vertical_margin_12"/>
 
@@ -61,8 +61,8 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:drawableLeft="@mipmap/season_black"
-            android:drawableStart="@mipmap/season_black"
+            android:drawableLeft="@drawable/season_black"
+            android:drawableStart="@drawable/season_black"
             android:drawablePadding="@dimen/activity_vertical_margin_8"
             android:layout_marginTop="@dimen/activity_vertical_margin_4"/>
 
@@ -73,8 +73,8 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold"
-            android:drawableLeft="@mipmap/calendar_black"
-            android:drawableStart="@mipmap/calendar_black"
+            android:drawableLeft="@drawable/calendar_black"
+            android:drawableStart="@drawable/calendar_black"
             android:drawablePadding="@dimen/activity_vertical_margin_8"
             android:layout_marginTop="@dimen/activity_vertical_margin_4"/>
 
