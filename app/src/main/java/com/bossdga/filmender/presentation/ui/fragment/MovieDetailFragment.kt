@@ -43,8 +43,8 @@ import io.reactivex.schedulers.Schedulers
 class MovieDetailFragment : BaseFragment() {
     private lateinit var addFrame: FrameLayout
 
-    private lateinit var adapter: PeopleAdapter
-    private lateinit var mRecyclerView: RecyclerView
+    private lateinit var peopleAdapter: PeopleAdapter
+    private lateinit var peopleRecyclerView: RecyclerView
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var movieDetailViewModel: MovieDetailViewModel
     private var id: Int? = 0
@@ -113,10 +113,10 @@ class MovieDetailFragment : BaseFragment() {
             subscribeMovie(movieDetailViewModel.loadMovie(id, true))
         }
 
-        mRecyclerView = rootView.findViewById(R.id.recyclerView)
+        peopleRecyclerView = rootView.findViewById(R.id.peopleRecyclerView)
         linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        mRecyclerView.setLayoutManager(linearLayoutManager)
-        adapter = PeopleAdapter(activity as Context, object : OnImageClickListener {
+        peopleRecyclerView.setLayoutManager(linearLayoutManager)
+        peopleAdapter = PeopleAdapter(activity as Context, object : OnImageClickListener {
             override fun onImageClick(people: People) {
                 if (people.profilePath != null) {
                     val view = LayoutInflater.from(activity as Context).inflate(R.layout.image_layout, container, false)
@@ -130,7 +130,7 @@ class MovieDetailFragment : BaseFragment() {
                 }
             }
         })
-        mRecyclerView.setAdapter(adapter)
+        peopleRecyclerView.setAdapter(peopleAdapter)
 
         refreshAd(AdType.MEDIUM, addFrame)
 
@@ -180,7 +180,7 @@ class MovieDetailFragment : BaseFragment() {
         date.text = movie.releaseDate.substringBefore("-")
         overview.text = movie.overview
         genre.text = movie.genres.joinToString(separator = " \u2022 ") { it.name }
-        adapter.setItems(movie.credits.cast)
+        peopleAdapter.setItems(movie.credits.cast)
         if(!movie.videos.results.isEmpty()) {
             trailer.visibility = View.VISIBLE
         }
