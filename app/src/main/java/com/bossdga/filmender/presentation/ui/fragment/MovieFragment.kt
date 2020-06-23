@@ -19,6 +19,7 @@ import com.bossdga.filmender.presentation.adapter.MovieAdapter
 import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.bossdga.filmender.util.PreferenceUtils
+import com.google.android.material.internal.ViewUtils.dpToPx
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
