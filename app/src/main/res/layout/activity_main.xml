@@ -21,24 +21,17 @@
         app:layout_constraintTop_toBottomOf="@id/AppBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/BottomNavigationLayout"/>
+        app:layout_constraintBottom_toTopOf="@id/BottomNavigation"/>
 
-    <LinearLayout
-        android:id="@+id/BottomNavigationLayout"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/BottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:menu="@menu/bottom_navigation"
+        android:background="@color/white"
+        style="bottomNavigationStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/BottomNavigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:menu="@menu/bottom_navigation"
-            android:background="@color/white"
-            style="bottomNavigationStyle"/>
-
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

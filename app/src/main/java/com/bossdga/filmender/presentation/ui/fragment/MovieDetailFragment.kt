@@ -113,9 +113,10 @@ class MovieDetailFragment : BaseFragment() {
             subscribeMovie(movieDetailViewModel.loadMovie(id, true))
         }
 
-        peopleRecyclerView = rootView.findViewById(R.id.peopleRecyclerView)
         linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        peopleRecyclerView.setLayoutManager(linearLayoutManager)
+        peopleRecyclerView = rootView.findViewById(R.id.peopleRecyclerView)
+        peopleRecyclerView.isNestedScrollingEnabled = false
+        peopleRecyclerView.layoutManager = linearLayoutManager
         peopleAdapter = PeopleAdapter(activity as Context, object : OnImageClickListener {
             override fun onImageClick(people: People) {
                 if (people.profilePath != null) {

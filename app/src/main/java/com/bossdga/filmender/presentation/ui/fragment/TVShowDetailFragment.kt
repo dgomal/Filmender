@@ -118,6 +118,7 @@ class TVShowDetailFragment : BaseFragment() {
 
         peopleLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
         peopleRecyclerView = rootView.findViewById(R.id.peopleRecyclerView)
+        peopleRecyclerView.isNestedScrollingEnabled = false
         peopleRecyclerView.layoutManager = peopleLayoutManager
         peopleAdapter = PeopleAdapter(activity as Context, object : OnImageClickListener {
             override fun onImageClick(people: People) {
@@ -137,6 +138,7 @@ class TVShowDetailFragment : BaseFragment() {
 
         networksLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
         networksRecyclerView = rootView.findViewById(R.id.networksRecyclerView)
+        networksRecyclerView.isNestedScrollingEnabled = false
         networksRecyclerView.layoutManager = networksLayoutManager
         networksAdapter = NetworksAdapter(activity as Context)
         networksRecyclerView.setAdapter(networksAdapter)
