@@ -188,7 +188,7 @@ open class BaseFragment : Fragment(), ProgressDialogHandler {
      * corresponding "populate" method when one is successfully returned.
      *
      */
-    protected fun refreshAd(adType: AdType, addFrame: FrameLayout) {
+    protected fun refreshAd(adType: AdType, adFrame: FrameLayout) {
         val builder = AdLoader.Builder(requireActivity(), getString(R.string.banner_test))
 
         builder.forUnifiedNativeAd { unifiedNativeAd ->
@@ -201,8 +201,8 @@ open class BaseFragment : Fragment(), ProgressDialogHandler {
             if(isAdded) {
                 val adView = layoutInflater.inflate(layout, null) as UnifiedNativeAdView
                 populateUnifiedNativeAdView(unifiedNativeAd, adView, adType)
-                addFrame.removeAllViews()
-                addFrame.addView(adView)
+                adFrame.removeAllViews()
+                adFrame.addView(adView)
             }
         }
 

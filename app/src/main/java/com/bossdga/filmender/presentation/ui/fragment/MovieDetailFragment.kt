@@ -41,7 +41,7 @@ import io.reactivex.schedulers.Schedulers
  * A simple Fragment that will show a movie
  */
 class MovieDetailFragment : BaseFragment() {
-    private lateinit var addFrame: FrameLayout
+    private lateinit var adFrame: FrameLayout
 
     private lateinit var peopleAdapter: PeopleAdapter
     private lateinit var peopleRecyclerView: RecyclerView
@@ -73,7 +73,7 @@ class MovieDetailFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false)
 
-        addFrame = rootView.findViewById(R.id.AddFrame)
+        adFrame = rootView.findViewById(R.id.AdFrame)
 
         image = requireActivity().findViewById(R.id.image)
         voteAverage = rootView.findViewById(R.id.voteAverage)
@@ -133,7 +133,7 @@ class MovieDetailFragment : BaseFragment() {
         })
         peopleRecyclerView.setAdapter(peopleAdapter)
 
-        refreshAd(AdType.MEDIUM, addFrame)
+        refreshAd(AdType.MEDIUM, adFrame)
 
         return rootView
     }

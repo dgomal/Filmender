@@ -41,7 +41,7 @@ import io.reactivex.schedulers.Schedulers
  * A simple Fragment that will show a tv show
  */
 class TVShowDetailFragment : BaseFragment() {
-    private lateinit var addFrame: FrameLayout
+    private lateinit var adFrame: FrameLayout
 
     private lateinit var peopleAdapter: PeopleAdapter
     private lateinit var networksAdapter: NetworksAdapter
@@ -76,7 +76,7 @@ class TVShowDetailFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_tv_show_detail, container, false)
 
-        addFrame = rootView.findViewById(R.id.AddFrame)
+        adFrame = rootView.findViewById(R.id.AdFrame)
 
         image = requireActivity().findViewById(R.id.image)
         voteAverage = rootView.findViewById(R.id.voteAverage)
@@ -143,7 +143,7 @@ class TVShowDetailFragment : BaseFragment() {
         networksAdapter = NetworksAdapter(activity as Context)
         networksRecyclerView.setAdapter(networksAdapter)
 
-        refreshAd(AdType.MEDIUM, addFrame)
+        refreshAd(AdType.MEDIUM, adFrame)
 
         return rootView
     }

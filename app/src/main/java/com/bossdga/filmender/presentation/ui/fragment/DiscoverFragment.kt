@@ -30,7 +30,7 @@ import io.reactivex.schedulers.Schedulers
  * A simple Fragment that will show a list of movies and tv shows
  */
 class DiscoverFragment : BaseFragment() {
-    private lateinit var addFrame: FrameLayout
+    private lateinit var adFrame: FrameLayout
 
     private lateinit var fragmentMovie: MovieFragment
     private lateinit var fragmentTVShow: TVShowFragment
@@ -48,7 +48,7 @@ class DiscoverFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_discover, container, false)
 
-        addFrame = rootView.findViewById(R.id.AddFrame)
+        adFrame = rootView.findViewById(R.id.AdFrame)
         mSwipeRefreshLayout = rootView.findViewById(R.id.SwipeRefreshLayout)
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
         shuffleButton = rootView.findViewById(R.id.ShuffleButton)
@@ -106,7 +106,7 @@ class DiscoverFragment : BaseFragment() {
             }
         }
 
-        refreshAd(AdType.SMALL, addFrame)
+        refreshAd(AdType.SMALL, adFrame)
     }
 
     private fun randomizeAndStart() {

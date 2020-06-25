@@ -6,16 +6,23 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+ext.versionMajor = 0
+ext.versionMinor = 0
+ext.versionPatch = 1
+ext.versionClassifier = "beta"
+ext.isSnapshot = false
+ext.minimumSdkVersion = 16
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
     defaultConfig {
         applicationId "com.bossdga.filmender"
-        minSdkVersion 16
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion project.ext.minimumSdkVersion
+        versionCode generateVersionCode()
+        versionName generateVersionName()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -40,6 +47,22 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+}
+
+private Integer generateVersionCode() {
+    return ext.minimumSdkVersion * 10000000 + ext.versionMajor * 10000 + ext.versionMinor * 100 + ext.versionPatch
+}
+
+private String generateVersionName() {
+    String versionName = "${ext.versionMajor}.${ext.versionMinor}.${ext.versionPatch}"
+    if (ext.versionClassifier == null && ext.isSnapshot) {
+        ext.versionClassifier = "SNAPSHOT"
+    }
+
+    if (ext.versionClassifier != null) {
+        versionName += "-" + ext.versionClassifier
+    }
+    return versionName
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {

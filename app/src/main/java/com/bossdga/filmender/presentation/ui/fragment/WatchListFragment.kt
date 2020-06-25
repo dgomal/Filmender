@@ -16,7 +16,7 @@ import com.bossdga.filmender.presentation.viewmodel.MainViewModel
  * A simple Fragment that will show a Watch List
  */
 class WatchListFragment : BaseFragment() {
-    private lateinit var addFrame: FrameLayout
+    private lateinit var adFrame: FrameLayout
 
     private lateinit var fragmentMovie: MovieDBFragment
     private lateinit var fragmentTVShow: TVShowDBFragment
@@ -36,7 +36,7 @@ class WatchListFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_watchlist, container, false)
 
-        addFrame = rootView.findViewById(R.id.AddFrame)
+        adFrame = rootView.findViewById(R.id.AdFrame)
 
         empty = rootView.findViewById(R.id.empty)
         mSwipeRefreshLayout = rootView.findViewById(R.id.SwipeRefreshLayout)
@@ -75,7 +75,7 @@ class WatchListFragment : BaseFragment() {
         fragmentMovie.refreshContent()
         fragmentTVShow.refreshContent()
 
-        refreshAd(AdType.SMALL, addFrame)
+        refreshAd(AdType.SMALL, adFrame)
     }
 
     private fun observeLoaded(mainViewModel: MainViewModel) {
@@ -83,10 +83,10 @@ class WatchListFragment : BaseFragment() {
             it?.let {
                 mSwipeRefreshLayout.isRefreshing = !it.toBoolean()
                 if(!fragmentMovie.isEmpty() || !fragmentTVShow.isEmpty()) {
-                    addFrame.visibility = View.VISIBLE
+                    adFrame.visibility = View.VISIBLE
                     empty.visibility = View.GONE
                 } else {
-                    addFrame.visibility = View.GONE
+                    adFrame.visibility = View.GONE
                     empty.visibility = View.VISIBLE
                 }
             }

@@ -36,7 +36,7 @@
                     tools:layout="@layout/fragment_db_movie" />
 
                 <FrameLayout
-                    android:id="@+id/AddFrame"
+                    android:id="@+id/AdFrame"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
