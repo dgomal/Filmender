@@ -16,12 +16,16 @@ import io.reactivex.Single
  */
 class MovieRepository(private val dao: MovieDao, private val api: MovieAPI) {
     fun getMovies(): Observable<MovieResponse> {
-        return api.getMovies(1, PreferenceUtils.getYearFrom(),
+        return api.getMovies(1,
+            PreferenceUtils.getSort(),
+            PreferenceUtils.getYearFrom(),
             PreferenceUtils.getYearTo(),
             PreferenceUtils.getRating(),
             PreferenceUtils.getGenres(),
             PreferenceUtils.getOriginalLanguage())
-            .flatMap{ movieResponse: MovieResponse -> api.getMovies(NumberUtils.getRandomNumberInRange(1, movieResponse.totalPages), PreferenceUtils.getYearFrom(),
+            .flatMap{ movieResponse: MovieResponse -> api.getMovies(NumberUtils.getRandomNumberInRange(1, movieResponse.totalPages),
+                PreferenceUtils.getSort(),
+                PreferenceUtils.getYearFrom(),
                 PreferenceUtils.getYearTo(),
                 PreferenceUtils.getRating(),
                 PreferenceUtils.getGenres(),

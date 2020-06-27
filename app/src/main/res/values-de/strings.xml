@@ -40,6 +40,8 @@
     <string name="results">Ergebnisse</string>
     <string name="filter_by_type">Nach Typ filtern</string>
     <string name="type">Typ</string>
+    <string name="sort_results">Ergebnisse sortieren</string>
+    <string name="by">Nach</string>
     <string name="filter_by_year">Nach Jahr filtern</string>
     <string name="from">Von</string>
     <string name="to">To</string>

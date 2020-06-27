@@ -52,4 +52,8 @@ object PreferenceUtils {
     fun getOriginalLanguage(): String? {
         return AppSettings(context, "SETTINGS_PREFERENCES").originalLanguage
     }
+
+    fun getSort(): String? {
+        return AppSettings(context, "SETTINGS_PREFERENCES").sort
+    }
 }

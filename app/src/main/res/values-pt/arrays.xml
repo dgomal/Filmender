@@ -12,6 +12,18 @@
         <item>"2"</item>
     </array>
 
+    <array name="sort_labels">
+        <item>"Popularidade"</item>
+        <item>"Classificação"</item>
+        <item>"Data"</item>
+    </array>
+
+    <array name="sort_values">
+        <item>"popularity.desc"</item>
+        <item>"vote_average.desc"</item>
+        <item>"release_date.desc"</item>
+    </array>
+
     <array name="rating_values">
         <item>"0"</item>
         <item>"1"</item>

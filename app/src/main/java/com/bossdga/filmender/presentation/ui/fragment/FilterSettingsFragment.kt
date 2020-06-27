@@ -68,6 +68,11 @@ class FilterSettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnS
             itemName = "action_preference_originalLanguage"
             value = language
         }
+        if (key.equals("sort")) {
+            itemId = "sort"
+            itemName = "action_preference_sort"
+            value = PreferenceUtils.getSort().toString()
+        }
         bundle = AnalyticsUtils.selectContent(itemId, itemName, "preference", value)
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
     }

@@ -11,6 +11,16 @@
             app:showSeekBarValue="true"/>
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/sort_results">
+        <ListPreference
+            android:defaultValue="popularity.desc"
+            android:entries="@array/sort_labels"
+            android:entryValues="@array/sort_values"
+            android:key="sort"
+            android:title="@string/by"
+            android:summary="%s"/>
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/filter_by_type">
         <ListPreference
             android:defaultValue="0"

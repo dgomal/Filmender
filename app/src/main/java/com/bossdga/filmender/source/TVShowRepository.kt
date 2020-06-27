@@ -15,12 +15,21 @@ import io.reactivex.Single
  */
 class TVShowRepository(private val dao: TVShowDao, private val api: TVShowAPI) {
     fun getTVShows(): Observable<TVShowResponse> {
-        return api.getTVShows(1, PreferenceUtils.getYearFrom(),
+        val sort = if(PreferenceUtils.getSort().equals("release_date.desc")) {
+            "first_air_date.desc"
+        } else {
+            PreferenceUtils.getSort()
+        }
+        return api.getTVShows(1,
+            sort,
+            PreferenceUtils.getYearFrom(),
             PreferenceUtils.getYearTo(),
             PreferenceUtils.getRating(),
             PreferenceUtils.getGenres(),
             PreferenceUtils.getOriginalLanguage())
-            .flatMap{ tvShowResponse: TVShowResponse -> api.getTVShows(NumberUtils.getRandomNumberInRange(1, tvShowResponse.totalPages), PreferenceUtils.getYearFrom(),
+            .flatMap{ tvShowResponse: TVShowResponse -> api.getTVShows(NumberUtils.getRandomNumberInRange(1, tvShowResponse.totalPages),
+                sort,
+                PreferenceUtils.getYearFrom(),
                 PreferenceUtils.getYearTo(),
                 PreferenceUtils.getRating(),
                 PreferenceUtils.getGenres(),
