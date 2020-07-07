@@ -47,7 +47,7 @@ class TVShowFragment : BaseFragment() {
         showsHeader = rootView.findViewById(R.id.ShowsHeader)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
         gridLayoutManager = GridLayoutManager(activity, 3)
-        mRecyclerView.setLayoutManager(gridLayoutManager)
+        mRecyclerView.layoutManager = gridLayoutManager
         adapter = TVShowAdapter(activity as Context, object : OnItemClickListener {
             override fun onItemClick(content: BaseContent) {
                 val intent = Intent(activity, TVShowDetailActivity::class.java)

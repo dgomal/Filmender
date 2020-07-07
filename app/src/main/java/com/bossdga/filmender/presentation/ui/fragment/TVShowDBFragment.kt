@@ -46,7 +46,7 @@ class TVShowDBFragment : BaseFragment() {
         showsHeader = rootView.findViewById(R.id.ShowsHeader)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
         linearLayoutManager = LinearLayoutManager(activity)
-        mRecyclerView.setLayoutManager(linearLayoutManager)
+        mRecyclerView.layoutManager = linearLayoutManager
         adapter = TVShowDBAdapter(activity as Context, object : OnItemClickListener {
             override fun onItemClick(content: BaseContent) {
                 val intent = Intent(activity, TVShowDetailActivity::class.java)

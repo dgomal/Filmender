@@ -47,7 +47,7 @@ class MovieDBFragment : BaseFragment() {
         moviesHeader = rootView.findViewById(R.id.MoviesHeader)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
         linearLayoutManager = LinearLayoutManager(activity)
-        mRecyclerView.setLayoutManager(linearLayoutManager)
+        mRecyclerView.layoutManager = linearLayoutManager
         adapter = MovieDBAdapter(activity as Context, object : OnItemClickListener {
             override fun onItemClick(content: BaseContent) {
                 val intent = Intent(activity, MovieDetailActivity::class.java)

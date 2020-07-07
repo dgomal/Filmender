@@ -19,7 +19,6 @@ import com.bossdga.filmender.presentation.adapter.MovieAdapter
 import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.bossdga.filmender.util.PreferenceUtils
-import com.google.android.material.internal.ViewUtils.dpToPx
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -49,7 +48,7 @@ class MovieFragment : BaseFragment() {
         moviesHeader = rootView.findViewById(R.id.MoviesHeader)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
         gridLayoutManager = GridLayoutManager(activity, 3)
-        mRecyclerView.setLayoutManager(gridLayoutManager)
+        mRecyclerView.layoutManager = gridLayoutManager
         adapter = MovieAdapter(activity as Context, object : OnItemClickListener {
             override fun onItemClick(content: BaseContent) {
                 val intent = Intent(activity, MovieDetailActivity::class.java)
