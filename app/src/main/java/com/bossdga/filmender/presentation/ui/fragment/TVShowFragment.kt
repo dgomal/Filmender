@@ -9,13 +9,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
-import com.bossdga.filmender.model.content.BaseContent
-import com.bossdga.filmender.model.content.TVShow
-import com.bossdga.filmender.model.content.TVShowResponse
+import com.bossdga.filmender.model.content.*
+import com.bossdga.filmender.presentation.adapter.MovieAdapter
 import com.bossdga.filmender.presentation.adapter.TVShowAdapter
+import com.bossdga.filmender.presentation.adapter.ViewHolderType
+import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.ui.activity.TVShowDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.bossdga.filmender.util.PreferenceUtils
@@ -28,14 +30,28 @@ import io.reactivex.schedulers.Schedulers
  * Fragment that will show a list of tv shows
  */
 class TVShowFragment : BaseFragment() {
+    private lateinit var viewHolderType: ViewHolderType
     private lateinit var adapter: TVShowAdapter
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mainViewModel: MainViewModel
     private lateinit var showsHeader: TextView
+    private var isEmpty: Boolean = false
+
+    companion object {
+        private const val ARG_VIEW_HOLDER_TYPE = "viewHolderType"
+
+        fun newInstance(type: ViewHolderType) = TVShowFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable(ARG_VIEW_HOLDER_TYPE, type)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.get("ARG_VIEW_HOLDER_TYPE")?.let {
+            viewHolderType = it as ViewHolderType
+        }
 
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
     }
@@ -46,15 +62,20 @@ class TVShowFragment : BaseFragment() {
 
         showsHeader = rootView.findViewById(R.id.ShowsHeader)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
-        gridLayoutManager = GridLayoutManager(activity, 3)
-        mRecyclerView.layoutManager = gridLayoutManager
-        adapter = TVShowAdapter(activity as Context, object : OnItemClickListener {
+
+        mRecyclerView.layoutManager = when (viewHolderType) {
+            ViewHolderType.SIMPLE -> GridLayoutManager(activity, 3)
+            ViewHolderType.COMPLEX -> LinearLayoutManager(activity)
+        }
+
+        adapter = TVShowAdapter(activity as Context, viewHolderType, object : OnItemClickListener {
             override fun onItemClick(content: BaseContent) {
                 val intent = Intent(activity, TVShowDetailActivity::class.java)
                 intent.putExtra("id", content.id)
                 requireActivity().startActivity(intent)
             }
         })
+
         mRecyclerView.setAdapter(adapter)
 
         return rootView
@@ -78,25 +99,37 @@ class TVShowFragment : BaseFragment() {
      */
     private fun subscribeTVShows(tvShowsObservable: Observable<TVShowResponse>) {
         disposable.add(tvShowsObservable
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableObserver<TVShowResponse>() {
-                    override fun onComplete() {}
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableObserver<TVShowResponse>() {
+                override fun onComplete() {
 
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                    }
+                }
 
-                    override fun onNext(tvShowResponse: TVShowResponse) {
-                        val showList: List<TVShow> = tvShowResponse.results.shuffled().take(PreferenceUtils.getResults()!!)
-                        adapter.setItems(showList)
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+
+                override fun onNext(tvShowResponse: TVShowResponse) {
+                    val showList: List<TVShow> = tvShowResponse.results.shuffled().take(PreferenceUtils.getResults()!!)
+                    adapter.setItems(showList)
+                    if(showList.isEmpty()) {
+                        showsHeader.visibility = View.GONE
+                        isEmpty = true
+                    } else {
                         showsHeader.visibility = View.VISIBLE
-                        mainViewModel.loaded.postValue("true")
+                        isEmpty = false
                     }
-                }))
+                    mainViewModel.loaded.postValue("true")
+                }
+            }))
     }
 
     fun refreshContent() {
         subscribeTVShows(mainViewModel.loadTVShows())
+    }
+
+    fun isEmpty(): Boolean {
+        return isEmpty
     }
 }

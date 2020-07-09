@@ -46,7 +46,7 @@ class NetworksAdapter(private var context: Context) : RecyclerView.Adapter<Netwo
      */
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.row_networks_data, viewGroup, false)
+                .inflate(R.layout.row_network, viewGroup, false)
         return ViewHolder(v)
     }
 

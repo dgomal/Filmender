@@ -123,7 +123,7 @@ class TVShowDetailFragment : BaseFragment() {
         peopleAdapter = PeopleAdapter(activity as Context, object : OnImageClickListener {
             override fun onImageClick(people: People) {
                 if (people.profilePath != null) {
-                    val view = LayoutInflater.from(activity as Context).inflate(R.layout.image_layout, container, false)
+                    val view = LayoutInflater.from(activity as Context).inflate(R.layout.people_image_layout, container, false)
                     val imageView: ImageView = view.findViewById(R.id.ProfileImage)
                     setImage(imageView, people.profilePath, ImageType.PROFILE_LARGE)
                     val alertDialogBuilder: AlertDialog.Builder = AlertDialog.Builder(activity as Context)

@@ -11,32 +11,59 @@ import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
 import com.bossdga.filmender.model.content.Movie
+import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
 import java.util.*
 
 /**
  * Provide views to RecyclerView with data from apps.
  */
-class MovieAdapter(private var context: Context, private val listener: OnItemClickListener) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+class MovieAdapter(private var context: Context, private var viewHolderType: ViewHolderType, private val listener: OnItemClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
     private var movieList: List<Movie> = ArrayList()
+
+    companion object {
+        private const val TYPE_SIMPLE = 0
+        private const val TYPE_COMPLEX = 1
+    }
 
     /**
      * Provide a reference to the type of views used (custom ViewHolder)
      */
-    inner class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+    inner class SimpleViewHolder(v: View) : BaseViewHolder<Movie>(v) {
         private val image: ImageView = v.findViewById(R.id.Image)
         private val title: TextView = v.findViewById(R.id.Title)
 
-        fun bind(movie: Movie, listener: OnItemClickListener) {
-            if(movie.posterPath == null) {
-                title.text = movie.title
+        override fun bind(item: Movie, listener: OnItemClickListener) {
+            if(item.posterPath == null) {
+                title.text = item.title
                 title.visibility = View.VISIBLE
             } else {
                 title.visibility = View.GONE
             }
-            setImage(image, movie.posterPath, ImageType.POSTER)
+            setImage(image, item.posterPath, ImageType.POSTER)
 
-            itemView.setOnClickListener { listener.onItemClick(movie) }
+            itemView.setOnClickListener { listener.onItemClick(item) }
+        }
+    }
+
+    /**
+     * Provide a reference to the type of views used (custom ViewHolder)
+     */
+    inner class ComplexViewHolder(v: View) : BaseViewHolder<Movie>(v) {
+        private val image: ImageView = v.findViewById(R.id.Image)
+        private val title: TextView = v.findViewById(R.id.Title)
+        private val voteAverage: TextView = v.findViewById(R.id.voteAverage)
+        private val runtime: TextView = v.findViewById(R.id.runtime)
+        private val date: TextView = v.findViewById(R.id.date)
+
+        override fun bind(item: Movie, listener: OnItemClickListener) {
+            title.text = item.title
+            setImage(image, item.posterPath, ImageType.POSTER)
+            voteAverage.text = item.voteAverage
+            runtime.text = DateUtils.fromMinutesToHHmm(item.runtime)
+            date.text = item.releaseDate.substringBefore("-")
+
+            itemView.setOnClickListener { listener.onItemClick(item) }
         }
     }
 
@@ -55,10 +82,18 @@ class MovieAdapter(private var context: Context, private val listener: OnItemCli
      * @param viewType
      * @return
      */
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.row_movie_data, viewGroup, false)
-        return ViewHolder(v)
+    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): BaseViewHolder<*> {
+        return when (viewType) {
+            TYPE_SIMPLE -> {
+                val view = LayoutInflater.from(context).inflate(R.layout.row_movie_simple, viewGroup, false)
+                SimpleViewHolder(view)
+            }
+            TYPE_COMPLEX -> {
+                val view = LayoutInflater.from(context).inflate(R.layout.row_movie_complex, viewGroup, false)
+                ComplexViewHolder(view)
+            }
+            else -> throw IllegalArgumentException("Invalid view type")
+        }
     }
 
     /**
@@ -66,8 +101,23 @@ class MovieAdapter(private var context: Context, private val listener: OnItemCli
      * @param viewHolder
      * @param position
      */
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.bind(movieList[position], listener)
+    override fun onBindViewHolder(viewHolder: BaseViewHolder<*>, position: Int) {
+        val element = movieList[position]
+        when (viewHolder) {
+            is SimpleViewHolder -> viewHolder.bind(element, listener)
+            is ComplexViewHolder -> viewHolder.bind(element, listener)
+            else -> throw IllegalArgumentException()
+        }
+    }
+
+    /**
+     *
+     */
+    override fun getItemViewType(position: Int): Int {
+        return when (viewHolderType) {
+            ViewHolderType.SIMPLE -> TYPE_SIMPLE
+            ViewHolderType.COMPLEX -> TYPE_COMPLEX
+        }
     }
 
     /**

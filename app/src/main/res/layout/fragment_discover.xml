@@ -27,24 +27,20 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <androidx.fragment.app.FragmentContainerView
+                <FrameLayout
                     android:id="@+id/FragmentMovie"
-                    android:name="com.bossdga.filmender.presentation.ui.fragment.MovieFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_movie" />
+                    android:layout_height="wrap_content" />
 
                 <FrameLayout
                     android:id="@+id/AdFrame"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
-                <androidx.fragment.app.FragmentContainerView
+                <FrameLayout
                     android:id="@+id/FragmentTVShow"
-                    android:name="com.bossdga.filmender.presentation.ui.fragment.TVShowFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:layout="@layout/fragment_tv_show" />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

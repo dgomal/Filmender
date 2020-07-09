@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
@@ -16,6 +17,7 @@ import com.bossdga.filmender.model.content.BaseContent
 import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.model.content.MovieResponse
 import com.bossdga.filmender.presentation.adapter.MovieAdapter
+import com.bossdga.filmender.presentation.adapter.ViewHolderType
 import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.bossdga.filmender.util.PreferenceUtils
@@ -29,14 +31,28 @@ import io.reactivex.schedulers.Schedulers
  * Fragment that will show a list of movies
  */
 class MovieFragment : BaseFragment() {
+    private lateinit var viewHolderType: ViewHolderType
     private lateinit var adapter: MovieAdapter
     private lateinit var mRecyclerView: RecyclerView
-    private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var mainViewModel: MainViewModel
     private lateinit var moviesHeader: TextView
+    private var isEmpty: Boolean = false
+
+    companion object {
+        private const val ARG_VIEW_HOLDER_TYPE = "viewHolderType"
+
+        fun newInstance(type: ViewHolderType) = MovieFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable(ARG_VIEW_HOLDER_TYPE, type)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.get("ARG_VIEW_HOLDER_TYPE")?.let {
+            viewHolderType = it as ViewHolderType
+        }
 
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
     }
@@ -47,15 +63,20 @@ class MovieFragment : BaseFragment() {
 
         moviesHeader = rootView.findViewById(R.id.MoviesHeader)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
-        gridLayoutManager = GridLayoutManager(activity, 3)
-        mRecyclerView.layoutManager = gridLayoutManager
-        adapter = MovieAdapter(activity as Context, object : OnItemClickListener {
+
+        mRecyclerView.layoutManager = when (viewHolderType) {
+            ViewHolderType.SIMPLE -> GridLayoutManager(activity, 3)
+            ViewHolderType.COMPLEX -> LinearLayoutManager(activity)
+        }
+
+        adapter = MovieAdapter(activity as Context, viewHolderType, object : OnItemClickListener {
             override fun onItemClick(content: BaseContent) {
                 val intent = Intent(activity, MovieDetailActivity::class.java)
                 intent.putExtra("id", content.id)
                 requireActivity().startActivity(intent)
             }
         })
+
         mRecyclerView.setAdapter(adapter)
 
         return rootView
@@ -93,7 +114,13 @@ class MovieFragment : BaseFragment() {
                     override fun onNext(movieResponse: MovieResponse) {
                         val movieList: List<Movie> = movieResponse.results.shuffled().take(PreferenceUtils.getResults()!!)
                         adapter.setItems(movieList)
-                        moviesHeader.visibility = View.VISIBLE
+                        if(movieList.isEmpty()) {
+                            moviesHeader.visibility = View.GONE
+                            isEmpty = true
+                        } else {
+                            moviesHeader.visibility = View.VISIBLE
+                            isEmpty = false
+                        }
                         mainViewModel.loaded.postValue("true")
                     }
                 }))
@@ -101,5 +128,9 @@ class MovieFragment : BaseFragment() {
 
     fun refreshContent() {
         subscribeMovies(mainViewModel.loadMovies())
+    }
+
+    fun isEmpty(): Boolean {
+        return isEmpty
     }
 }

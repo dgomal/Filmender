@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.AdType
+import com.bossdga.filmender.presentation.adapter.ViewHolderType
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 
 
@@ -18,8 +19,8 @@ import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 class WatchListFragment : BaseFragment() {
     private lateinit var adFrame: FrameLayout
 
-    private lateinit var fragmentMovie: MovieDBFragment
-    private lateinit var fragmentTVShow: TVShowDBFragment
+    private lateinit var fragmentMovie: MovieFragment
+    private lateinit var fragmentTVShow: TVShowFragment
     private lateinit var mainViewModel: MainViewModel
     private lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
     private lateinit var empty: TextView
@@ -42,11 +43,15 @@ class WatchListFragment : BaseFragment() {
         mSwipeRefreshLayout = rootView.findViewById(R.id.SwipeRefreshLayout)
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
 
-        loadFragments()
-
         observeLoaded(mainViewModel)
 
         return rootView
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        loadFragments()
     }
 
     /**
@@ -67,8 +72,8 @@ class WatchListFragment : BaseFragment() {
     }
 
     private fun loadFragments() {
-        fragmentMovie = childFragmentManager.findFragmentById(R.id.FragmentDBMovie) as MovieDBFragment
-        fragmentTVShow = childFragmentManager.findFragmentById(R.id.FragmentDBTVShow) as TVShowDBFragment
+        fragmentMovie = MovieFragment.newInstance(ViewHolderType.COMPLEX)
+        fragmentTVShow = TVShowFragment.newInstance(ViewHolderType.COMPLEX)
 
         attachFragment(fragmentMovie)
         attachFragment(fragmentTVShow)

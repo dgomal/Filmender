@@ -52,7 +52,7 @@ class PeopleAdapter(private var context: Context, private val listener: OnImageC
      */
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.row_people_data, viewGroup, false)
+                .inflate(R.layout.row_people, viewGroup, false)
         return ViewHolder(v)
     }
 
