@@ -57,15 +57,11 @@ class DiscoverFragment : BaseFragment() {
 
         subscribeApiConfig(mainViewModel.loadApiConfig())
 
+        loadFragments()
+
         observeLoaded(mainViewModel)
 
         return rootView
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        loadFragments()
     }
 
     /**

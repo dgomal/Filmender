@@ -43,15 +43,11 @@ class WatchListFragment : BaseFragment() {
         mSwipeRefreshLayout = rootView.findViewById(R.id.SwipeRefreshLayout)
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
 
+        loadFragments()
+
         observeLoaded(mainViewModel)
 
         return rootView
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        loadFragments()
     }
 
     /**
