@@ -17,7 +17,7 @@ import java.util.*
 /**
  * Provide views to RecyclerView with data from apps.
  */
-class TVShowAdapter(private var context: Context, private var viewHolderType: ViewHolderType, private val listener: OnItemClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+class TVShowAdapter(private var context: Context, private var fromDB: Boolean, private val listener: OnItemClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
     private var tvShowList: List<TVShow> = ArrayList()
 
     companion object {
@@ -113,9 +113,9 @@ class TVShowAdapter(private var context: Context, private var viewHolderType: Vi
      *
      */
     override fun getItemViewType(position: Int): Int {
-        return when (viewHolderType) {
-            ViewHolderType.SIMPLE -> TYPE_SIMPLE
-            ViewHolderType.COMPLEX -> TYPE_COMPLEX
+        return when (fromDB) {
+            true -> TYPE_COMPLEX
+            false -> TYPE_SIMPLE
         }
     }
 

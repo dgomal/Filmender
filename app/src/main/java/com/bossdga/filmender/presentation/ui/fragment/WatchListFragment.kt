@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.AdType
-import com.bossdga.filmender.presentation.adapter.ViewHolderType
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 
 
@@ -68,13 +67,11 @@ class WatchListFragment : BaseFragment() {
     }
 
     private fun loadFragments() {
-        fragmentMovie = MovieFragment.newInstance(ViewHolderType.COMPLEX)
-        fragmentTVShow = TVShowFragment.newInstance(ViewHolderType.COMPLEX)
+        fragmentMovie = MovieFragment.newInstance(true)
+        fragmentTVShow = TVShowFragment.newInstance(true)
 
-        attachFragment(fragmentMovie)
-        attachFragment(fragmentTVShow)
-        fragmentMovie.refreshContent()
-        fragmentTVShow.refreshContent()
+        addFragment(R.id.FragmentMovie, fragmentMovie, "fragmentMovie")
+        addFragment(R.id.FragmentTVShow, fragmentTVShow, "fragmentTVShow")
 
         refreshAd(AdType.SMALL, adFrame)
     }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -74,8 +75,8 @@ open class BaseFragment : Fragment(), ProgressDialogHandler {
         beginTransaction().func().commit()
     }
 
-    protected fun addFragment(fragment: Fragment, frameId: Int){
-        childFragmentManager.inTransaction { add(frameId, fragment) }
+    protected fun addFragment(frameId: Int, fragment: Fragment, fragmentTag: String?){
+        childFragmentManager.inTransaction { add(frameId, fragment, fragmentTag) }
     }
 
     protected fun attachFragment(fragment: Fragment){
@@ -90,8 +91,20 @@ open class BaseFragment : Fragment(), ProgressDialogHandler {
         childFragmentManager.inTransaction{ detach(fragment) }
     }
 
-    protected fun replaceFragment(fragment: Fragment, frameId: Int) {
-        childFragmentManager.inTransaction{ replace(frameId, fragment) }
+    protected fun hideFragment(fragment: Fragment){
+        childFragmentManager.inTransaction { hide(fragment) }
+    }
+
+    protected fun addHideFragment(frameId: Int, fragment: Fragment, fragmentTag: String?){
+        childFragmentManager.inTransaction { add(frameId, fragment, fragmentTag).hide(fragment) }
+    }
+
+    protected fun hideShowFragment(fragmentHide: Fragment, fragmentShow: Fragment){
+        childFragmentManager.inTransaction { hide(fragmentHide).show(fragmentShow) }
+    }
+
+    protected fun replaceFragment(frameId: Int, fragment: Fragment, fragmentTag: String?) {
+        childFragmentManager.inTransaction{ replace(frameId, fragment, fragmentTag) }
     }
 
     /**

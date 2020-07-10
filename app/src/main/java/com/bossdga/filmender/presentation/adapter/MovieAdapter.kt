@@ -18,7 +18,7 @@ import java.util.*
 /**
  * Provide views to RecyclerView with data from apps.
  */
-class MovieAdapter(private var context: Context, private var viewHolderType: ViewHolderType, private val listener: OnItemClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+class MovieAdapter(private var context: Context, private var fromDB: Boolean, private val listener: OnItemClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
     private var movieList: List<Movie> = ArrayList()
 
     companion object {
@@ -114,9 +114,9 @@ class MovieAdapter(private var context: Context, private var viewHolderType: Vie
      *
      */
     override fun getItemViewType(position: Int): Int {
-        return when (viewHolderType) {
-            ViewHolderType.SIMPLE -> TYPE_SIMPLE
-            ViewHolderType.COMPLEX -> TYPE_COMPLEX
+        return when (fromDB) {
+            true -> TYPE_COMPLEX
+            false -> TYPE_SIMPLE
         }
     }
 

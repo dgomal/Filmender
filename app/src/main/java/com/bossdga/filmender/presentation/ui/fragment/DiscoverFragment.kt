@@ -13,7 +13,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.ApiConfig
 import com.bossdga.filmender.model.content.AdType
-import com.bossdga.filmender.presentation.adapter.ViewHolderType
 import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.ui.activity.TVShowDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
@@ -85,25 +84,21 @@ class DiscoverFragment : BaseFragment() {
     }
 
     private fun loadFragments() {
-        fragmentMovie = MovieFragment.newInstance(ViewHolderType.SIMPLE)
-        fragmentTVShow = TVShowFragment.newInstance(ViewHolderType.SIMPLE)
+        fragmentMovie = MovieFragment.newInstance(false)
+        fragmentTVShow = TVShowFragment.newInstance(false)
 
         when (PreferenceUtils.getType()) {
             "0" -> {
-                attachFragment(fragmentMovie)
-                attachFragment(fragmentTVShow)
-                fragmentMovie.refreshContent()
-                fragmentTVShow.refreshContent()
+                addFragment(R.id.FragmentMovie, fragmentMovie, "fragmentMovie")
+                addFragment(R.id.FragmentTVShow, fragmentTVShow, "fragmentTVShow")
             }
             "1" -> {
-                attachFragment(fragmentMovie)
-                detachFragment(fragmentTVShow)
-                fragmentMovie.refreshContent()
+                addFragment(R.id.FragmentMovie, fragmentMovie, "fragmentMovie")
+                removeFragment(fragmentTVShow)
             }
             else -> {
-                attachFragment(fragmentTVShow)
-                detachFragment(fragmentMovie)
-                fragmentTVShow.refreshContent()
+                addFragment(R.id.FragmentTVShow, fragmentTVShow, "fragmentTVShow")
+                removeFragment(fragmentMovie)
             }
         }
 

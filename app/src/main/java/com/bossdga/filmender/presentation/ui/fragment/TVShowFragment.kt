@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.*
-import com.bossdga.filmender.presentation.adapter.MovieAdapter
 import com.bossdga.filmender.presentation.adapter.TVShowAdapter
-import com.bossdga.filmender.presentation.adapter.ViewHolderType
-import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.ui.activity.TVShowDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
 import com.bossdga.filmender.util.PreferenceUtils
@@ -30,7 +27,7 @@ import io.reactivex.schedulers.Schedulers
  * Fragment that will show a list of tv shows
  */
 class TVShowFragment : BaseFragment() {
-    private lateinit var viewHolderType: ViewHolderType
+    private var fromDB: Boolean = false
     private lateinit var adapter: TVShowAdapter
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
@@ -38,22 +35,24 @@ class TVShowFragment : BaseFragment() {
     private var isEmpty: Boolean = false
 
     companion object {
-        private const val ARG_VIEW_HOLDER_TYPE = "viewHolderType"
+        private const val ARG_FROM_DB = "fromDB"
 
-        fun newInstance(type: ViewHolderType) = TVShowFragment().apply {
+        fun newInstance(fromDB: Boolean) = TVShowFragment().apply {
             arguments = Bundle().apply {
-                putSerializable(ARG_VIEW_HOLDER_TYPE, type)
+                putBoolean(ARG_FROM_DB, fromDB)
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.get("ARG_VIEW_HOLDER_TYPE")?.let {
-            viewHolderType = it as ViewHolderType
+        arguments?.getBoolean(ARG_FROM_DB)?.let {
+            fromDB = it as Boolean
         }
 
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+
+        refreshContent()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -63,12 +62,12 @@ class TVShowFragment : BaseFragment() {
         showsHeader = rootView.findViewById(R.id.ShowsHeader)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
 
-        mRecyclerView.layoutManager = when (viewHolderType) {
-            ViewHolderType.SIMPLE -> GridLayoutManager(activity, 3)
-            ViewHolderType.COMPLEX -> LinearLayoutManager(activity)
+        mRecyclerView.layoutManager = when (fromDB) {
+            true -> LinearLayoutManager(activity)
+            false -> GridLayoutManager(activity, 3)
         }
 
-        adapter = TVShowAdapter(activity as Context, viewHolderType, object : OnItemClickListener {
+        adapter = TVShowAdapter(activity as Context, fromDB, object : OnItemClickListener {
             override fun onItemClick(content: BaseContent) {
                 val intent = Intent(activity, TVShowDetailActivity::class.java)
                 intent.putExtra("id", content.id)
@@ -155,9 +154,9 @@ class TVShowFragment : BaseFragment() {
     }
 
     fun refreshContent() {
-        when (viewHolderType) {
-            ViewHolderType.SIMPLE -> subscribeTVShows(mainViewModel.loadTVShows())
-            ViewHolderType.COMPLEX -> subscribeTVShowsFromDB(mainViewModel.loadTVShowsFromDB())
+        when (fromDB) {
+            true -> subscribeTVShowsFromDB(mainViewModel.loadTVShowsFromDB())
+            false -> subscribeTVShows(mainViewModel.loadTVShows())
         }
     }
 
