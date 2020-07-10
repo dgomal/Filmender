@@ -104,15 +104,6 @@ class MovieDetailFragment : BaseFragment() {
             firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
         }
 
-        id = extras?.getIntExtra("id", 0)
-        source = extras?.getStringExtra("source")
-        if(id == 0) {
-            switchViewState(false, addToWatchlist)
-            subscribeMovies(movieDetailViewModel.loadMovies())
-        } else {
-            subscribeMovie(movieDetailViewModel.loadMovie(id, true))
-        }
-
         linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         peopleRecyclerView = rootView.findViewById(R.id.peopleRecyclerView)
         peopleRecyclerView.isNestedScrollingEnabled = false
@@ -132,6 +123,8 @@ class MovieDetailFragment : BaseFragment() {
             }
         })
         peopleRecyclerView.setAdapter(peopleAdapter)
+
+        loadContent()
 
         refreshAd(AdType.MEDIUM, adFrame)
 
@@ -237,6 +230,17 @@ class MovieDetailFragment : BaseFragment() {
             view.setImageResource(R.drawable.bookmark_red)
             view.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.white))
             view.supportImageTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.template_red))
+        }
+    }
+
+    private fun loadContent() {
+        id = extras?.getIntExtra("id", 0)
+        source = extras?.getStringExtra("source")
+        if(id == 0) {
+            switchViewState(false, addToWatchlist)
+            subscribeMovies(movieDetailViewModel.loadMovies())
+        } else {
+            subscribeMovie(movieDetailViewModel.loadMovie(id, true))
         }
     }
 }

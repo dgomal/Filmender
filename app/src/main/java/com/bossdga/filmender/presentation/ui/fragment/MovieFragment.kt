@@ -54,8 +54,6 @@ class MovieFragment : BaseFragment() {
         }
 
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-
-        refreshContent()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -79,6 +77,8 @@ class MovieFragment : BaseFragment() {
         })
 
         mRecyclerView.setAdapter(adapter)
+
+        loadContent()
 
         return rootView
     }
@@ -158,7 +158,7 @@ class MovieFragment : BaseFragment() {
             }))
     }
 
-    fun refreshContent() {
+    private fun loadContent() {
         when (fromDB) {
             true -> subscribeMoviesFromDB(mainViewModel.loadMoviesFromDB())
             false -> subscribeMovies(mainViewModel.loadMovies())

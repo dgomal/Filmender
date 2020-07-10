@@ -107,15 +107,6 @@ class TVShowDetailFragment : BaseFragment() {
             firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
         }
 
-        id = extras?.getIntExtra("id", 0)
-        source = extras?.getStringExtra("source")
-        if(id == 0) {
-            switchViewState(false, addToWatchlist)
-            subscribeTVShows(tvShowDetailViewModel.loadTVShows())
-        } else {
-            subscribeTVShow(tvShowDetailViewModel.loadTVShow(id, true))
-        }
-
         peopleLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
         peopleRecyclerView = rootView.findViewById(R.id.peopleRecyclerView)
         peopleRecyclerView.isNestedScrollingEnabled = false
@@ -142,6 +133,8 @@ class TVShowDetailFragment : BaseFragment() {
         networksRecyclerView.layoutManager = networksLayoutManager
         networksAdapter = NetworksAdapter(activity as Context)
         networksRecyclerView.setAdapter(networksAdapter)
+
+        loadContent()
 
         refreshAd(AdType.MEDIUM, adFrame)
 
@@ -252,6 +245,17 @@ class TVShowDetailFragment : BaseFragment() {
             view.setImageResource(R.drawable.bookmark_red)
             view.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.white))
             view.supportImageTintList = ColorStateList.valueOf(ContextCompat.getColor(activity as Context, R.color.template_red))
+        }
+    }
+
+    private fun loadContent() {
+        id = extras?.getIntExtra("id", 0)
+        source = extras?.getStringExtra("source")
+        if (id == 0) {
+            switchViewState(false, addToWatchlist)
+            subscribeTVShows(tvShowDetailViewModel.loadTVShows())
+        } else {
+            subscribeTVShow(tvShowDetailViewModel.loadTVShow(id, true))
         }
     }
 }

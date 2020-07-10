@@ -51,8 +51,6 @@ class TVShowFragment : BaseFragment() {
         }
 
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
-
-        refreshContent()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -76,6 +74,8 @@ class TVShowFragment : BaseFragment() {
         })
 
         mRecyclerView.setAdapter(adapter)
+
+        loadContent()
 
         return rootView
     }
@@ -153,7 +153,7 @@ class TVShowFragment : BaseFragment() {
             }))
     }
 
-    fun refreshContent() {
+    private fun loadContent() {
         when (fromDB) {
             true -> subscribeTVShowsFromDB(mainViewModel.loadTVShowsFromDB())
             false -> subscribeTVShows(mainViewModel.loadTVShows())
