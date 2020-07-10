@@ -58,7 +58,7 @@ class TVShowAdapter(private var context: Context, private var fromDB: Boolean, p
         override fun bind(item: TVShow, listener: OnItemClickListener) {
             title.text = item.title
             setImage(image, item.posterPath, ImageType.POSTER)
-            voteAverage.text = item.voteAverage
+            voteAverage.text = item.voteAverage.toString()
             numberOfSeasons.text = item.numberOfSeasons.toString()
             date.text = item.releaseDate.substringBefore("-")
 

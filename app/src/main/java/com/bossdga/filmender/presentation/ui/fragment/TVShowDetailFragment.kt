@@ -179,7 +179,7 @@ class TVShowDetailFragment : BaseFragment() {
 
     private fun renderView(tvShow: TVShow) {
         setImage(image, tvShow.backdropPath, ImageType.BACK_DROP)
-        voteAverage.text = tvShow.voteAverage
+        voteAverage.text = tvShow.voteAverage.toString()
         numberOfSeasons.text = tvShow.numberOfSeasons.toString().plus(" Seasons")
         date.text = tvShow.releaseDate.substringBefore("-")
         overview.text = tvShow.overview

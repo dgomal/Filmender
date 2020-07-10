@@ -169,7 +169,7 @@ class MovieDetailFragment : BaseFragment() {
 
     private fun renderView(movie: Movie) {
         setImage(image, movie.backdropPath, ImageType.BACK_DROP)
-        voteAverage.text = movie.voteAverage
+        voteAverage.text = movie.voteAverage.toString()
         runtime.text = DateUtils.fromMinutesToHHmm(movie.runtime)
         date.text = movie.releaseDate.substringBefore("-")
         overview.text = movie.overview

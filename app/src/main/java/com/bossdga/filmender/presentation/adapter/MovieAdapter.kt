@@ -59,7 +59,7 @@ class MovieAdapter(private var context: Context, private var fromDB: Boolean, pr
         override fun bind(item: Movie, listener: OnItemClickListener) {
             title.text = item.title
             setImage(image, item.posterPath, ImageType.POSTER)
-            voteAverage.text = item.voteAverage
+            voteAverage.text = item.voteAverage.toString()
             runtime.text = DateUtils.fromMinutesToHHmm(item.runtime)
             date.text = item.releaseDate.substringBefore("-")
 
