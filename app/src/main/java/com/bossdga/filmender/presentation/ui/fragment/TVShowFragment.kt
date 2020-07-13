@@ -27,7 +27,7 @@ import io.reactivex.schedulers.Schedulers
  * Fragment that will show a list of tv shows
  */
 class TVShowFragment : BaseFragment() {
-    private var fromDB: Boolean = false
+    private lateinit var layoutType: LayoutType
     private lateinit var adapter: TVShowAdapter
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
@@ -35,19 +35,19 @@ class TVShowFragment : BaseFragment() {
     private var isEmpty: Boolean = false
 
     companion object {
-        private const val ARG_FROM_DB = "fromDB"
+        private const val ARG_LAYOUT_TYPE = "layoutType"
 
-        fun newInstance(fromDB: Boolean) = TVShowFragment().apply {
+        fun newInstance(layoutType: LayoutType) = TVShowFragment().apply {
             arguments = Bundle().apply {
-                putBoolean(ARG_FROM_DB, fromDB)
+                putSerializable(ARG_LAYOUT_TYPE, layoutType)
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.getBoolean(ARG_FROM_DB)?.let {
-            fromDB = it as Boolean
+        arguments?.getSerializable(ARG_LAYOUT_TYPE)?.let {
+            layoutType = it as LayoutType
         }
 
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
@@ -60,12 +60,13 @@ class TVShowFragment : BaseFragment() {
         showsHeader = rootView.findViewById(R.id.ShowsHeader)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
 
-        mRecyclerView.layoutManager = when (fromDB) {
-            true -> LinearLayoutManager(activity)
-            false -> GridLayoutManager(activity, 3)
+        mRecyclerView.layoutManager = when (layoutType) {
+            LayoutType.COMPLEX -> LinearLayoutManager(activity)
+            LayoutType.SIMPLE -> GridLayoutManager(activity, 3)
+            else -> GridLayoutManager(activity, 3)
         }
 
-        adapter = TVShowAdapter(activity as Context, fromDB, object : OnItemClickListener {
+        adapter = TVShowAdapter(activity as Context, layoutType, object : OnItemClickListener {
             override fun onItemClick(content: BaseContent) {
                 val intent = Intent(activity, TVShowDetailActivity::class.java)
                 intent.putExtra("id", content.id)
@@ -154,9 +155,10 @@ class TVShowFragment : BaseFragment() {
     }
 
     private fun loadContent() {
-        when (fromDB) {
-            true -> subscribeTVShowsFromDB(mainViewModel.loadTVShowsFromDB())
-            false -> subscribeTVShows(mainViewModel.loadTVShows())
+        when (layoutType) {
+            LayoutType.COMPLEX -> subscribeTVShowsFromDB(mainViewModel.loadTVShowsFromDB())
+            LayoutType.SIMPLE -> subscribeTVShows(mainViewModel.loadTVShows())
+            else -> subscribeTVShows(mainViewModel.loadTVShows())
         }
     }
 

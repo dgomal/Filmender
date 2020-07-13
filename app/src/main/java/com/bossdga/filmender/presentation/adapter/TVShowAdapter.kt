@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
+import com.bossdga.filmender.model.content.LayoutType
 import com.bossdga.filmender.model.content.TVShow
 import com.bossdga.filmender.util.ImageUtils.setImage
 import java.util.*
@@ -17,7 +18,7 @@ import java.util.*
 /**
  * Provide views to RecyclerView with data from apps.
  */
-class TVShowAdapter(private var context: Context, private var fromDB: Boolean, private val listener: OnItemClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+class TVShowAdapter(private var context: Context, private var layoutType: LayoutType, private val listener: OnItemClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
     private var tvShowList: List<TVShow> = ArrayList()
 
     companion object {
@@ -113,9 +114,10 @@ class TVShowAdapter(private var context: Context, private var fromDB: Boolean, p
      *
      */
     override fun getItemViewType(position: Int): Int {
-        return when (fromDB) {
-            true -> TYPE_COMPLEX
-            false -> TYPE_SIMPLE
+        return when (layoutType) {
+            LayoutType.COMPLEX -> TYPE_COMPLEX
+            LayoutType.SIMPLE -> TYPE_SIMPLE
+            else -> TYPE_SIMPLE
         }
     }
 

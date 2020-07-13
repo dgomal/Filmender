@@ -13,6 +13,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.ApiConfig
 import com.bossdga.filmender.model.content.AdType
+import com.bossdga.filmender.model.content.LayoutType
 import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.ui.activity.TVShowDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
@@ -84,8 +85,8 @@ class DiscoverFragment : BaseFragment() {
     }
 
     private fun loadFragments() {
-        fragmentMovie = MovieFragment.newInstance(false)
-        fragmentTVShow = TVShowFragment.newInstance(false)
+        fragmentMovie = MovieFragment.newInstance(LayoutType.SIMPLE)
+        fragmentTVShow = TVShowFragment.newInstance(LayoutType.SIMPLE)
 
         when (PreferenceUtils.getType()) {
             "0" -> {

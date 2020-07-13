@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.BaseContent
+import com.bossdga.filmender.model.content.LayoutType
 import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.model.content.MovieResponse
 import com.bossdga.filmender.presentation.adapter.MovieAdapter
@@ -30,7 +31,7 @@ import io.reactivex.schedulers.Schedulers
  * Fragment that will show a list of movies
  */
 class MovieFragment : BaseFragment() {
-    private var fromDB: Boolean = false
+    private lateinit var layoutType: LayoutType
     private lateinit var adapter: MovieAdapter
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mainViewModel: MainViewModel
@@ -38,19 +39,19 @@ class MovieFragment : BaseFragment() {
     private var isEmpty: Boolean = false
 
     companion object {
-        private const val ARG_FROM_DB = "fromDB"
+        private const val ARG_LAYOUT_TYPE = "layoutType"
 
-        fun newInstance(fromDB: Boolean) = MovieFragment().apply {
+        fun newInstance(layoutType: LayoutType) = MovieFragment().apply {
             arguments = Bundle().apply {
-                putBoolean(ARG_FROM_DB, fromDB)
+                putSerializable(ARG_LAYOUT_TYPE, layoutType)
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.getBoolean(ARG_FROM_DB)?.let {
-            fromDB = it as Boolean
+        arguments?.getSerializable(ARG_LAYOUT_TYPE)?.let {
+            layoutType = it as LayoutType
         }
 
         mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
@@ -63,12 +64,13 @@ class MovieFragment : BaseFragment() {
         moviesHeader = rootView.findViewById(R.id.MoviesHeader)
         mRecyclerView = rootView.findViewById(R.id.recyclerView)
 
-        mRecyclerView.layoutManager = when (fromDB) {
-            true -> LinearLayoutManager(activity)
-            false -> GridLayoutManager(activity, 3)
+        mRecyclerView.layoutManager = when (layoutType) {
+            LayoutType.COMPLEX -> LinearLayoutManager(activity)
+            LayoutType.SIMPLE -> GridLayoutManager(activity, 3)
+            else -> GridLayoutManager(activity, 3)
         }
 
-        adapter = MovieAdapter(activity as Context, fromDB, object : OnItemClickListener {
+        adapter = MovieAdapter(activity as Context, layoutType, object : OnItemClickListener {
             override fun onItemClick(content: BaseContent) {
                 val intent = Intent(activity, MovieDetailActivity::class.java)
                 intent.putExtra("id", content.id)
@@ -159,9 +161,10 @@ class MovieFragment : BaseFragment() {
     }
 
     private fun loadContent() {
-        when (fromDB) {
-            true -> subscribeMoviesFromDB(mainViewModel.loadMoviesFromDB())
-            false -> subscribeMovies(mainViewModel.loadMovies())
+        when (layoutType) {
+            LayoutType.COMPLEX -> subscribeMoviesFromDB(mainViewModel.loadMoviesFromDB())
+            LayoutType.SIMPLE -> subscribeMovies(mainViewModel.loadMovies())
+            else -> subscribeMovies(mainViewModel.loadMovies())
         }
     }
 

@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bossdga.filmender.OnItemClickListener
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.ImageType
+import com.bossdga.filmender.model.content.LayoutType
 import com.bossdga.filmender.model.content.Movie
 import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
@@ -18,7 +21,7 @@ import java.util.*
 /**
  * Provide views to RecyclerView with data from apps.
  */
-class MovieAdapter(private var context: Context, private var fromDB: Boolean, private val listener: OnItemClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
+class MovieAdapter(private var context: Context, private var layoutType: LayoutType, private val listener: OnItemClickListener) : RecyclerView.Adapter<BaseViewHolder<*>>() {
     private var movieList: List<Movie> = ArrayList()
 
     companion object {
@@ -114,9 +117,10 @@ class MovieAdapter(private var context: Context, private var fromDB: Boolean, pr
      *
      */
     override fun getItemViewType(position: Int): Int {
-        return when (fromDB) {
-            true -> TYPE_COMPLEX
-            false -> TYPE_SIMPLE
+        return when (layoutType) {
+            LayoutType.COMPLEX -> TYPE_COMPLEX
+            LayoutType.SIMPLE -> TYPE_SIMPLE
+            else -> TYPE_SIMPLE
         }
     }
 
