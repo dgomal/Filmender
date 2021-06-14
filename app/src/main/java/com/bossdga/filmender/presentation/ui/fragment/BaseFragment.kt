@@ -1,16 +1,12 @@
 package com.bossdga.filmender.presentation.ui.fragment
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import com.bossdga.filmender.ProgressDialogHandler
 import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.AdType
 import com.google.android.gms.ads.AdListener
@@ -24,13 +20,11 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.disposables.CompositeDisposable
 
 
-open class BaseFragment : Fragment(), ProgressDialogHandler {
+open class BaseFragment : Fragment() {
     protected var bundle = Bundle()
     protected lateinit var firebaseAnalytics: FirebaseAnalytics
     protected var currentNativeAd: UnifiedNativeAd? = null
 
-    protected lateinit var mProgressDialog: ProgressDialog
-    protected var showDialog = false
     protected var disposable = CompositeDisposable()
     protected var extras: Intent? = null
 
@@ -39,36 +33,6 @@ open class BaseFragment : Fragment(), ProgressDialogHandler {
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(requireActivity());
         extras = requireActivity().intent
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-        showDialog = false
-    }
-
-    /**
-     * Creates and shows a ProgressDialog
-     */
-    override fun showProgressDialog() {
-        showDialog = true
-
-        Handler().postDelayed({
-            if (showDialog) {
-                mProgressDialog = ProgressDialog(activity)
-                mProgressDialog.setTitle(R.string.please_wait)
-                mProgressDialog.setMessage(resources.getString(R.string.loading))
-                mProgressDialog.show()
-            }
-        }, 1)
-    }
-
-    /**
-     * Hides the ProgressDialog
-     */
-    override fun hideProgressDialog() {
-        showDialog = false
-        mProgressDialog.dismiss()
     }
 
     private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {

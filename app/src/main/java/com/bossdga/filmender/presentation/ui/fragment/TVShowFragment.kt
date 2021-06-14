@@ -17,6 +17,7 @@ import com.bossdga.filmender.model.content.*
 import com.bossdga.filmender.presentation.adapter.TVShowAdapter
 import com.bossdga.filmender.presentation.ui.activity.TVShowDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
+import com.bossdga.filmender.presentation.viewmodel.ViewModelFactory
 import com.bossdga.filmender.util.PreferenceUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -50,7 +51,7 @@ class TVShowFragment : BaseFragment() {
             layoutType = it as LayoutType
         }
 
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity(), ViewModelFactory.getInstance(requireActivity().application)).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

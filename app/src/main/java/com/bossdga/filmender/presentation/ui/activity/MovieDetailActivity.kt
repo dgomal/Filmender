@@ -17,7 +17,7 @@ class MovieDetailActivity : BaseActivity<BaseViewModel>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
 
-        movieDetailViewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
+        movieDetailViewModel = viewModel as MovieDetailViewModel
 
         observeLoaded(movieDetailViewModel)
     }

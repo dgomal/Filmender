@@ -11,6 +11,7 @@ import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.AdType
 import com.bossdga.filmender.model.content.LayoutType
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
+import com.bossdga.filmender.presentation.viewmodel.ViewModelFactory
 
 
 /**
@@ -30,7 +31,7 @@ class WatchListFragment : BaseFragment() {
 
         setHasOptionsMenu(true)
 
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity(), ViewModelFactory.getInstance(requireActivity().application)).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -74,7 +75,7 @@ class WatchListFragment : BaseFragment() {
         addFragment(R.id.FragmentMovie, fragmentMovie, "fragmentMovie")
         addFragment(R.id.FragmentTVShow, fragmentTVShow, "fragmentTVShow")
 
-        refreshAd(AdType.SMALL, adFrame)
+        //refreshAd(AdType.SMALL, adFrame)
     }
 
     private fun observeLoaded(mainViewModel: MainViewModel) {

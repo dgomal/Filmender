@@ -17,7 +17,7 @@ class TVShowDetailActivity : BaseActivity<BaseViewModel>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tv_show_detail)
 
-        tvShowDetailViewModel = ViewModelProvider(this).get(TVShowDetailViewModel::class.java)
+        tvShowDetailViewModel = viewModel as TVShowDetailViewModel
 
         observeLoaded(tvShowDetailViewModel)
     }

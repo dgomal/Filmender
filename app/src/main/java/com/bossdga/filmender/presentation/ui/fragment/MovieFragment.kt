@@ -20,6 +20,7 @@ import com.bossdga.filmender.model.content.MovieResponse
 import com.bossdga.filmender.presentation.adapter.MovieAdapter
 import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
+import com.bossdga.filmender.presentation.viewmodel.ViewModelFactory
 import com.bossdga.filmender.util.PreferenceUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -54,7 +55,7 @@ class MovieFragment : BaseFragment() {
             layoutType = it as LayoutType
         }
 
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity(), ViewModelFactory.getInstance(requireActivity().application)).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

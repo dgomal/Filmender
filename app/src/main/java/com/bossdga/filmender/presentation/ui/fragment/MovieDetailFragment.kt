@@ -23,6 +23,7 @@ import com.bossdga.filmender.R
 import com.bossdga.filmender.model.content.*
 import com.bossdga.filmender.presentation.adapter.PeopleAdapter
 import com.bossdga.filmender.presentation.viewmodel.MovieDetailViewModel
+import com.bossdga.filmender.presentation.viewmodel.ViewModelFactory
 import com.bossdga.filmender.util.AnalyticsUtils
 import com.bossdga.filmender.util.DateUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
@@ -64,9 +65,7 @@ class MovieDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        showProgressDialog()
-
-        movieDetailViewModel = ViewModelProvider(requireActivity()).get(MovieDetailViewModel::class.java)
+        movieDetailViewModel = ViewModelProvider(requireActivity(), ViewModelFactory.getInstance(requireActivity().application)).get(MovieDetailViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -126,7 +125,7 @@ class MovieDetailFragment : BaseFragment() {
 
         loadContent()
 
-        refreshAd(AdType.MEDIUM, adFrame)
+        //refreshAd(AdType.MEDIUM, adFrame)
 
         return rootView
     }
@@ -162,7 +161,6 @@ class MovieDetailFragment : BaseFragment() {
                 override fun onSuccess(movie: Movie) {
                     renderView(movie)
                     movieDetailViewModel.loaded.postValue(movie.title)
-                    hideProgressDialog()
                 }
             }))
     }

@@ -17,6 +17,7 @@ import com.bossdga.filmender.model.content.LayoutType
 import com.bossdga.filmender.presentation.ui.activity.MovieDetailActivity
 import com.bossdga.filmender.presentation.ui.activity.TVShowDetailActivity
 import com.bossdga.filmender.presentation.viewmodel.MainViewModel
+import com.bossdga.filmender.presentation.viewmodel.ViewModelFactory
 import com.bossdga.filmender.util.AnalyticsUtils
 import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
@@ -42,7 +43,7 @@ class DiscoverFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity(), ViewModelFactory.getInstance(requireActivity().application)).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -103,7 +104,7 @@ class DiscoverFragment : BaseFragment() {
             }
         }
 
-        refreshAd(AdType.SMALL, adFrame)
+        //refreshAd(AdType.SMALL, adFrame)
     }
 
     private fun randomizeAndStart() {

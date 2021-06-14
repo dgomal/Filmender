@@ -24,6 +24,7 @@ import com.bossdga.filmender.model.content.*
 import com.bossdga.filmender.presentation.adapter.NetworksAdapter
 import com.bossdga.filmender.presentation.adapter.PeopleAdapter
 import com.bossdga.filmender.presentation.viewmodel.TVShowDetailViewModel
+import com.bossdga.filmender.presentation.viewmodel.ViewModelFactory
 import com.bossdga.filmender.util.AnalyticsUtils
 import com.bossdga.filmender.util.ImageUtils.setImage
 import com.bossdga.filmender.util.NumberUtils
@@ -67,9 +68,7 @@ class TVShowDetailFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        showProgressDialog()
-
-        tvShowDetailViewModel = ViewModelProvider(requireActivity()).get(TVShowDetailViewModel::class.java)
+        tvShowDetailViewModel = ViewModelProvider(requireActivity(), ViewModelFactory.getInstance(requireActivity().application)).get(TVShowDetailViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -136,7 +135,7 @@ class TVShowDetailFragment : BaseFragment() {
 
         loadContent()
 
-        refreshAd(AdType.MEDIUM, adFrame)
+        //refreshAd(AdType.MEDIUM, adFrame)
 
         return rootView
     }
@@ -172,7 +171,6 @@ class TVShowDetailFragment : BaseFragment() {
                 override fun onSuccess(tvShow: TVShow) {
                     renderView(tvShow)
                     tvShowDetailViewModel.loaded.postValue(tvShow.title)
-                    hideProgressDialog()
                 }
             }))
     }
