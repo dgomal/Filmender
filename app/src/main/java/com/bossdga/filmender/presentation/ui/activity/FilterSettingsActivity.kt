@@ -32,6 +32,7 @@ class FilterSettingsActivity : BaseActivity<BaseViewModel>() {
     }
 
     override fun onBackPressed() {
+        finish()
         startActivity(Intent(this, MainActivity::class.java))
     }
 }
