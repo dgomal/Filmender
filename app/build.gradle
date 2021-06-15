@@ -9,7 +9,7 @@ apply plugin: 'kotlin-kapt'
 ext.versionMajor = 1
 ext.versionMinor = 1
 ext.versionPatch = 0
-ext.versionClassifier = "beta"
+ext.versionClassifier = "release"
 ext.isSnapshot = false
 ext.minimumSdkVersion = 16
 
