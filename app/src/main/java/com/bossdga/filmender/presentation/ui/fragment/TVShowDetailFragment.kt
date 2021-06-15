@@ -75,8 +75,8 @@ class TVShowDetailFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_tv_show_detail, container, false)
 
+        progressBar = rootView.findViewById(R.id.progressBar)
         adFrame = rootView.findViewById(R.id.AdFrame)
-
         image = requireActivity().findViewById(R.id.image)
         voteAverage = rootView.findViewById(R.id.voteAverage)
         date = rootView.findViewById(R.id.date)
@@ -171,6 +171,8 @@ class TVShowDetailFragment : BaseFragment() {
                 override fun onSuccess(tvShow: TVShow) {
                     renderView(tvShow)
                     tvShowDetailViewModel.loaded.postValue(tvShow.title)
+
+                    hideLoading()
                 }
             }))
     }
@@ -227,6 +229,8 @@ class TVShowDetailFragment : BaseFragment() {
                         val content: BaseContent = tvShowResponse.results.get(NumberUtils.getRandomNumberInRange(0, tvShowResponse.results.size.minus(1)))
                         subscribeTVShow(tvShowDetailViewModel.loadTVShow(content.id, false))
                     }
+
+                    hideLoading()
                 }
             }))
     }
@@ -247,6 +251,8 @@ class TVShowDetailFragment : BaseFragment() {
     }
 
     private fun loadContent() {
+        showLoading()
+
         id = extras?.getIntExtra("id", 0)
         source = extras?.getStringExtra("source")
         if (id == 0) {

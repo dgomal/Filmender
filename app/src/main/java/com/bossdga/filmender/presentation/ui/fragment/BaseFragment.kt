@@ -28,6 +28,8 @@ open class BaseFragment : Fragment() {
     protected var disposable = CompositeDisposable()
     protected var extras: Intent? = null
 
+    protected lateinit var progressBar: ProgressBar
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -195,4 +197,13 @@ open class BaseFragment : Fragment() {
 
         adLoader.loadAd(AdRequest.Builder().build())
     }
+
+    protected fun showLoading() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    protected fun hideLoading() {
+        progressBar.visibility = View.GONE
+    }
+
 }

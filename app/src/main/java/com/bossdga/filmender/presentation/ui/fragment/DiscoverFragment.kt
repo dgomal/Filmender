@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ProgressBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -21,6 +22,7 @@ import com.bossdga.filmender.presentation.viewmodel.ViewModelFactory
 import com.bossdga.filmender.util.AnalyticsUtils
 import com.bossdga.filmender.util.NumberUtils
 import com.bossdga.filmender.util.PreferenceUtils
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -50,6 +52,7 @@ class DiscoverFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_discover, container, false)
 
+        progressBar = rootView.findViewById(R.id.progressBar)
         adFrame = rootView.findViewById(R.id.AdFrame)
         mSwipeRefreshLayout = rootView.findViewById(R.id.SwipeRefreshLayout)
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
@@ -86,6 +89,8 @@ class DiscoverFragment : BaseFragment() {
     }
 
     private fun loadFragments() {
+        showLoading()
+
         fragmentMovie = MovieFragment.newInstance(LayoutType.SIMPLE)
         fragmentTVShow = TVShowFragment.newInstance(LayoutType.SIMPLE)
 
@@ -162,6 +167,7 @@ class DiscoverFragment : BaseFragment() {
             it?.let {
                 mSwipeRefreshLayout.isRefreshing = !it.toBoolean()
                 shuffleButton.visibility = View.VISIBLE
+                hideLoading()
             }
         })
     }

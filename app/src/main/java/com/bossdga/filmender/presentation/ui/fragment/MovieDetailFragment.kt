@@ -72,8 +72,8 @@ class MovieDetailFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false)
 
+        progressBar = rootView.findViewById(R.id.progressBar)
         adFrame = rootView.findViewById(R.id.AdFrame)
-
         image = requireActivity().findViewById(R.id.image)
         voteAverage = rootView.findViewById(R.id.voteAverage)
         date = rootView.findViewById(R.id.date)
@@ -161,6 +161,8 @@ class MovieDetailFragment : BaseFragment() {
                 override fun onSuccess(movie: Movie) {
                     renderView(movie)
                     movieDetailViewModel.loaded.postValue(movie.title)
+
+                    hideLoading()
                 }
             }))
     }
@@ -212,6 +214,8 @@ class MovieDetailFragment : BaseFragment() {
                         val content: BaseContent = movieResponse.results.get(NumberUtils.getRandomNumberInRange(0, movieResponse.results.size.minus(1)))
                         subscribeMovie(movieDetailViewModel.loadMovie(content.id, false))
                     }
+
+                    hideLoading()
                 }
             }))
     }
@@ -232,6 +236,8 @@ class MovieDetailFragment : BaseFragment() {
     }
 
     private fun loadContent() {
+        showLoading()
+
         id = extras?.getIntExtra("id", 0)
         source = extras?.getStringExtra("source")
         if(id == 0) {

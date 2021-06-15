@@ -38,8 +38,8 @@ class WatchListFragment : BaseFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_watchlist, container, false)
 
+        progressBar = rootView.findViewById(R.id.progressBar)
         adFrame = rootView.findViewById(R.id.AdFrame)
-
         empty = rootView.findViewById(R.id.empty)
         mSwipeRefreshLayout = rootView.findViewById(R.id.SwipeRefreshLayout)
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener)
@@ -69,6 +69,8 @@ class WatchListFragment : BaseFragment() {
     }
 
     private fun loadFragments() {
+        showLoading()
+
         fragmentMovie = MovieFragment.newInstance(LayoutType.COMPLEX)
         fragmentTVShow = TVShowFragment.newInstance(LayoutType.COMPLEX)
 
@@ -89,6 +91,8 @@ class WatchListFragment : BaseFragment() {
                     adFrame.visibility = View.GONE
                     empty.visibility = View.VISIBLE
                 }
+
+                hideLoading()
             }
         })
     }
